@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { useOS, AppId } from './OSContext';
+import OSEntryScreen from './OSEntryScreen';
 import TopMenuBar from './TopMenuBar';
 import Dock from './Dock';
 import WindowFrame from './WindowFrame';
@@ -9,38 +10,44 @@ import CommandPalette from './CommandPalette';
 import EngineeringCanvasBackground from './EngineeringCanvasBackground';
 
 // App content components
+import SystemApp from './apps/SystemApp';
 import ForgeIQApp from './apps/ForgeIQApp';
-import TerminalApp from './TerminalApp';
+import EngineeringLabApp from './apps/EngineeringLabApp';
+import OpenSourceApp from './apps/OpenSourceApp';
+import WritingApp from './apps/WritingApp';
+import ProfileApp from './apps/ProfileApp';
+
+// Specialized helper tools
 import CadTopologyCanvas from './CadTopologyCanvas';
+import TerminalApp from './TerminalApp';
 import ArchitectureApp from './apps/ArchitectureApp';
 import AIEvalApp from './apps/AIEvalApp';
 import PatternsApp from './apps/PatternsApp';
 import LearningsApp from './apps/LearningsApp';
-import OpenSourceApp from './apps/OpenSourceApp';
-import WritingApp from './apps/WritingApp';
 import LeetCodeApp from './apps/LeetCodeApp';
 import AboutApp from './apps/AboutApp';
 import ContactApp from './apps/ContactApp';
 
 import { 
+  Terminal as TerminalIcon, 
   Zap, 
-  Terminal, 
+  Cpu, 
+  Package, 
+  BookOpen, 
+  User, 
   Layers, 
   FileText, 
   Activity, 
-  Cpu, 
   AlertCircle, 
-  Package, 
-  BookOpen, 
   Code2, 
-  User, 
   Mail,
   FileDown
 } from 'lucide-react';
 
 interface DesktopIcon {
   id?: AppId;
-  title: string;
+  label: string;
+  moduleCode: string;
   icon: React.ReactNode;
   color: string;
   isExternal?: boolean;
@@ -48,84 +55,61 @@ interface DesktopIcon {
 }
 
 export default function DesktopWorkspace() {
-  const { openWindow } = useOS();
+  const { hasEnteredWorkspace, openWindow } = useOS();
 
-  const desktopIcons: DesktopIcon[] = [
+  // If user has not yet entered workspace, render the technical Entry Screen
+  if (!hasEnteredWorkspace) {
+    return <OSEntryScreen />;
+  }
+
+  // The 6 Primary Application Modules
+  const primaryDesktopIcons: DesktopIcon[] = [
     {
-      id: 'forgeiq',
-      title: 'ForgeIQ.app',
-      icon: <Zap size={28} />,
-      color: '#3b82f6'
-    },
-    {
-      id: 'terminal',
-      title: 'Terminal.app',
-      icon: <Terminal size={28} />,
+      id: 'system',
+      moduleCode: '01',
+      label: 'SYSTEM',
+      icon: <TerminalIcon size={26} />,
       color: '#10b981'
     },
     {
-      id: 'cad-viewer',
-      title: 'CAD_Viewer.app',
-      icon: <Layers size={28} />,
+      id: 'forgeiq',
+      moduleCode: '02',
+      label: 'FORGEIQ',
+      icon: <Zap size={26} />,
+      color: '#3b82f6'
+    },
+    {
+      id: 'lab',
+      moduleCode: '03',
+      label: 'ENGINEERING LAB',
+      icon: <Cpu size={26} />,
       color: '#a855f7'
     },
     {
-      id: 'adrs',
-      title: 'ADRs_10.app',
-      icon: <FileText size={28} />,
-      color: '#60a5fa'
-    },
-    {
-      id: 'eval-lab',
-      title: 'AI_Eval_Lab.app',
-      icon: <Activity size={28} />,
-      color: '#ec4899'
-    },
-    {
-      id: 'patterns',
-      title: 'Patterns.app',
-      icon: <Cpu size={28} />,
-      color: '#f59e0b'
-    },
-    {
-      id: 'learnings',
-      title: 'Learnings.app',
-      icon: <AlertCircle size={28} />,
-      color: '#ef4444'
-    },
-    {
       id: 'opensource',
-      title: 'OpenSource.app',
-      icon: <Package size={28} />,
+      moduleCode: '04',
+      label: 'OPEN SOURCE',
+      icon: <Package size={26} />,
       color: '#06b6d4'
     },
     {
-      id: 'writing',
-      title: 'Notes.app',
-      icon: <BookOpen size={28} />,
-      color: '#8b5cf6'
+      id: 'notes',
+      moduleCode: '05',
+      label: 'NOTES',
+      icon: <BookOpen size={26} />,
+      color: '#f59e0b'
     },
     {
-      id: 'leetcode',
-      title: 'LeetCode_100+.app',
-      icon: <Code2 size={28} />,
-      color: '#f97316'
-    },
-    {
-      id: 'about',
-      title: 'About_BMSCE.app',
-      icon: <User size={28} />,
+      id: 'profile',
+      moduleCode: '06',
+      label: 'PROFILE',
+      icon: <User size={26} />,
       color: '#94a3b8'
     },
     {
-      id: 'contact',
-      title: 'Contact.app',
-      icon: <Mail size={28} />,
-      color: '#14b8a6'
-    },
-    {
-      title: 'Resume.pdf',
-      icon: <FileDown size={28} />,
+      moduleCode: 'DOC',
+      label: 'RESUME.PDF',
+      icon: <FileDown size={26} />,
       color: '#e2e8f0',
       isExternal: true,
       href: '/resume.pdf'
@@ -137,12 +121,12 @@ export default function DesktopWorkspace() {
       {/* 1. Top Operating System Status Bar */}
       <TopMenuBar />
 
-      {/* 2. Background Interactive Canvas */}
+      {/* 2. Background Interactive Engineering Canvas */}
       <EngineeringCanvasBackground />
 
-      {/* 3. Desktop Shortcut Icons Grid */}
+      {/* 3. Desktop Shortcut Icons Grid (The 6 Primary Modules) */}
       <div className="os-desktop-icons-grid">
-        {desktopIcons.map((d, i) => {
+        {primaryDesktopIcons.map((d, i) => {
           if (d.isExternal && d.href) {
             return (
               <a 
@@ -155,7 +139,10 @@ export default function DesktopWorkspace() {
                 <div className="os-icon-graphic" style={{ color: d.color, background: `${d.color}15`, borderColor: `${d.color}35` }}>
                   {d.icon}
                 </div>
-                <span className="os-icon-label">{d.title}</span>
+                <div className="os-icon-meta-label">
+                  <span className="os-icon-mod-code">{d.moduleCode}</span>
+                  <span className="os-icon-label">{d.label}</span>
+                </div>
               </a>
             );
           }
@@ -170,23 +157,47 @@ export default function DesktopWorkspace() {
               <div className="os-icon-graphic" style={{ color: d.color, background: `${d.color}15`, borderColor: `${d.color}35` }}>
                 {d.icon}
               </div>
-              <span className="os-icon-label">{d.title}</span>
+              <div className="os-icon-meta-label">
+                <span className="os-icon-mod-code">{d.moduleCode}</span>
+                <span className="os-icon-label">{d.label}</span>
+              </div>
             </button>
           );
         })}
       </div>
 
-      {/* 4. Draggable, Resizable Floating Windows */}
+      {/* 4. Draggable, Resizable Floating Windows for the 6 Primary Modules */}
+      <WindowFrame id="system">
+        <SystemApp />
+      </WindowFrame>
+
       <WindowFrame id="forgeiq" externalLink="/forgeiq-case-study">
         <ForgeIQApp />
       </WindowFrame>
 
-      <WindowFrame id="terminal">
-        <TerminalApp />
+      <WindowFrame id="lab" externalLink="/engineering/decisions">
+        <EngineeringLabApp />
       </WindowFrame>
 
+      <WindowFrame id="opensource" externalLink="/opensource">
+        <OpenSourceApp />
+      </WindowFrame>
+
+      <WindowFrame id="notes" externalLink="/writing">
+        <WritingApp />
+      </WindowFrame>
+
+      <WindowFrame id="profile" externalLink="/about">
+        <ProfileApp />
+      </WindowFrame>
+
+      {/* Specialized Tool Sub-windows (Launched via ForgeIQ, Lab, or Terminal) */}
       <WindowFrame id="cad-viewer">
         <CadTopologyCanvas />
+      </WindowFrame>
+
+      <WindowFrame id="terminal">
+        <TerminalApp />
       </WindowFrame>
 
       <WindowFrame id="adrs" externalLink="/engineering/decisions">
@@ -203,10 +214,6 @@ export default function DesktopWorkspace() {
 
       <WindowFrame id="learnings" externalLink="/engineering/learnings">
         <LearningsApp />
-      </WindowFrame>
-
-      <WindowFrame id="opensource" externalLink="/opensource">
-        <OpenSourceApp />
       </WindowFrame>
 
       <WindowFrame id="writing" externalLink="/writing">

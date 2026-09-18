@@ -19,7 +19,8 @@ export default function TopMenuBar() {
     activeWindowId, 
     windows, 
     toggleCommandPalette, 
-    openWindow 
+    openWindow,
+    exitWorkspace
   } = useOS();
   const [timeStr, setTimeStr] = useState('');
   const [systemMenuOpen, setSystemMenuOpen] = useState(false);
@@ -59,22 +60,27 @@ export default function TopMenuBar() {
         {/* System Dropdown */}
         {systemMenuOpen && (
           <div className="os-dropdown-menu" onMouseLeave={() => setSystemMenuOpen(false)}>
-            <div className="os-dropdown-item" onClick={() => { openWindow('about'); setSystemMenuOpen(false); }}>
+            <div className="os-dropdown-item" onClick={() => { openWindow('profile'); setSystemMenuOpen(false); }}>
               <Cpu size={14} />
-              <span>About This Engineer</span>
+              <span>About This Engineer (Profile)</span>
             </div>
             <div className="os-dropdown-item" onClick={() => { openWindow('forgeiq'); setSystemMenuOpen(false); }}>
               <ShieldCheck size={14} />
-              <span>ForgeIQ Architecture</span>
+              <span>ForgeIQ Flagship</span>
             </div>
-            <div className="os-dropdown-item" onClick={() => { openWindow('terminal'); setSystemMenuOpen(false); }}>
+            <div className="os-dropdown-item" onClick={() => { openWindow('system'); setSystemMenuOpen(false); }}>
               <Terminal size={14} />
-              <span>Launch bhuvan-sh</span>
+              <span>System & Shell Diagnostics</span>
             </div>
             <div className="os-dropdown-divider" />
             <div className="os-dropdown-item" onClick={() => { toggleMode(); setSystemMenuOpen(false); }}>
               <BookOpen size={14} />
               <span>Switch to {mode === 'os' ? 'Editorial Mode' : 'OS Desktop Mode'}</span>
+            </div>
+            <div className="os-dropdown-divider" />
+            <div className="os-dropdown-item" onClick={() => { exitWorkspace(); setSystemMenuOpen(false); }}>
+              <span style={{ color: '#ef4444' }}>⎋</span>
+              <span style={{ color: '#ef4444' }}>Lock Screen / Exit Workspace</span>
             </div>
           </div>
         )}

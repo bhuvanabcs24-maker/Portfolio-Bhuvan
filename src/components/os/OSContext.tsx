@@ -3,14 +3,18 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export type AppId = 
+  | 'system'
   | 'forgeiq'
+  | 'lab'
+  | 'opensource'
+  | 'notes'
+  | 'profile'
   | 'terminal'
   | 'cad-viewer'
   | 'adrs'
   | 'eval-lab'
   | 'patterns'
   | 'learnings'
-  | 'opensource'
   | 'writing'
   | 'leetcode'
   | 'about'
@@ -32,6 +36,9 @@ interface OSContextType {
   mode: 'os' | 'editorial';
   setMode: (mode: 'os' | 'editorial') => void;
   toggleMode: () => void;
+  hasEnteredWorkspace: boolean;
+  enterWorkspace: () => void;
+  exitWorkspace: () => void;
   windows: Record<AppId, WindowState>;
   openWindow: (id: AppId) => void;
   closeWindow: (id: AppId) => void;
@@ -47,25 +54,80 @@ interface OSContextType {
 }
 
 const DEFAULT_WINDOWS: Record<AppId, WindowState> = {
-  forgeiq: {
-    id: 'forgeiq',
-    title: 'ForgeIQ — CAD & Quotation Platform',
-    icon: 'Zap',
-    isOpen: true,
-    isMinimized: false,
-    isMaximized: false,
-    zIndex: 10,
-    position: { x: 40, y: 50 },
-    size: { width: 780, height: 560 }
-  },
-  terminal: {
-    id: 'terminal',
-    title: 'bhuvan-sh (zsh) — v2.4.0',
+  system: {
+    id: 'system',
+    title: 'SYSTEM — Shell, Diagnostics & Benchmarks',
     icon: 'Terminal',
     isOpen: true,
     isMinimized: false,
     isMaximized: false,
     zIndex: 11,
+    position: { x: 500, y: 65 },
+    size: { width: 660, height: 470 }
+  },
+  forgeiq: {
+    id: 'forgeiq',
+    title: 'FORGEIQ — AI Manufacturing Intelligence Flagship',
+    icon: 'Zap',
+    isOpen: true,
+    isMinimized: false,
+    isMaximized: false,
+    zIndex: 10,
+    position: { x: 40, y: 55 },
+    size: { width: 780, height: 580 }
+  },
+  lab: {
+    id: 'lab',
+    title: 'ENGINEERING LAB — ADRs, AI Eval & Retrospectives',
+    icon: 'Cpu',
+    isOpen: false,
+    isMinimized: false,
+    isMaximized: false,
+    zIndex: 5,
+    position: { x: 90, y: 70 },
+    size: { width: 790, height: 560 }
+  },
+  opensource: {
+    id: 'opensource',
+    title: 'OPEN SOURCE — dxf-contour-extractor',
+    icon: 'Package',
+    isOpen: false,
+    isMinimized: false,
+    isMaximized: false,
+    zIndex: 5,
+    position: { x: 120, y: 80 },
+    size: { width: 750, height: 530 }
+  },
+  notes: {
+    id: 'notes',
+    title: 'NOTES — Technical Writing & Engineering Systems',
+    icon: 'BookOpen',
+    isOpen: false,
+    isMinimized: false,
+    isMaximized: false,
+    zIndex: 5,
+    position: { x: 140, y: 85 },
+    size: { width: 760, height: 540 }
+  },
+  profile: {
+    id: 'profile',
+    title: 'PROFILE — Bhuvan A B (BMSCE)',
+    icon: 'User',
+    isOpen: false,
+    isMinimized: false,
+    isMaximized: false,
+    zIndex: 5,
+    position: { x: 160, y: 90 },
+    size: { width: 750, height: 540 }
+  },
+  terminal: {
+    id: 'terminal',
+    title: 'bhuvan-sh (zsh) — v2.4.0',
+    icon: 'Terminal',
+    isOpen: false,
+    isMinimized: false,
+    isMaximized: false,
+    zIndex: 5,
     position: { x: 480, y: 140 },
     size: { width: 620, height: 420 }
   },
@@ -124,17 +186,6 @@ const DEFAULT_WINDOWS: Record<AppId, WindowState> = {
     position: { x: 160, y: 100 },
     size: { width: 720, height: 500 }
   },
-  opensource: {
-    id: 'opensource',
-    title: 'Open Source — dxf-contour-extractor',
-    icon: 'Package',
-    isOpen: false,
-    isMinimized: false,
-    isMaximized: false,
-    zIndex: 5,
-    position: { x: 110, y: 80 },
-    size: { width: 740, height: 520 }
-  },
   writing: {
     id: 'writing',
     title: 'Technical Writing & Notes',
@@ -185,8 +236,9 @@ const OSContext = createContext<OSContextType | undefined>(undefined);
 
 export function OSProvider({ children }: { children: ReactNode }) {
   const [mode, setModeState] = useState<'os' | 'editorial'>('os');
+  const [hasEnteredWorkspace, setHasEnteredWorkspace] = useState(false);
   const [windows, setWindows] = useState<Record<AppId, WindowState>>(DEFAULT_WINDOWS);
-  const [activeWindowId, setActiveWindowId] = useState<AppId | null>('terminal');
+  const [activeWindowId, setActiveWindowId] = useState<AppId | null>('forgeiq');
   const [highestZIndex, setHighestZIndex] = useState(12);
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
 
@@ -197,10 +249,28 @@ export function OSProvider({ children }: { children: ReactNode }) {
       if (savedMode === 'editorial' || savedMode === 'os') {
         setModeState(savedMode);
       }
+      const savedEntry = sessionStorage.getItem('bhuvan_os_entered');
+      if (savedEntry === 'true') {
+        setHasEnteredWorkspace(true);
+      }
     } catch {
       // Ignore localstorage errors
     }
   }, []);
+
+  const enterWorkspace = () => {
+    setHasEnteredWorkspace(true);
+    try {
+      sessionStorage.setItem('bhuvan_os_entered', 'true');
+    } catch {}
+  };
+
+  const exitWorkspace = () => {
+    setHasEnteredWorkspace(false);
+    try {
+      sessionStorage.removeItem('bhuvan_os_entered');
+    } catch {}
+  };
 
   const setMode = (newMode: 'os' | 'editorial') => {
     setModeState(newMode);
@@ -316,6 +386,9 @@ export function OSProvider({ children }: { children: ReactNode }) {
         mode,
         setMode,
         toggleMode,
+        hasEnteredWorkspace,
+        enterWorkspace,
+        exitWorkspace,
         windows,
         openWindow,
         closeWindow,

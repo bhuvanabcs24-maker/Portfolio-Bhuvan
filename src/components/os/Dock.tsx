@@ -3,18 +3,12 @@
 import React from 'react';
 import { useOS, AppId } from './OSContext';
 import { 
+  Terminal as TerminalIcon, 
   Zap, 
-  Terminal, 
-  Layers, 
-  FileText, 
-  Activity, 
   Cpu, 
-  AlertCircle, 
   Package, 
   BookOpen, 
-  Code2, 
   User, 
-  Mail,
   FileDown
 } from 'lucide-react';
 
@@ -32,79 +26,43 @@ export default function Dock() {
 
   const dockItems: DockItem[] = [
     {
+      id: 'system',
+      title: '01 SYSTEM (Shell & Telemetry)',
+      icon: <TerminalIcon size={22} />,
+      color: '#10b981'
+    },
+    {
       id: 'forgeiq',
-      title: 'ForgeIQ Flagship',
+      title: '02 FORGEIQ (Flagship Platform)',
       icon: <Zap size={22} />,
       color: '#3b82f6'
     },
     {
-      id: 'terminal',
-      title: 'bhuvan-sh (zsh)',
-      icon: <Terminal size={22} />,
-      color: '#10b981'
-    },
-    {
-      id: 'cad-viewer',
-      title: 'CAD Topology Visualizer',
-      icon: <Layers size={22} />,
+      id: 'lab',
+      title: '03 ENGINEERING LAB (ADRs & Eval)',
+      icon: <Cpu size={22} />,
       color: '#a855f7'
     },
     {
-      id: 'adrs',
-      title: 'Architecture ADRs (10)',
-      icon: <FileText size={22} />,
-      color: '#60a5fa'
-    },
-    {
-      id: 'eval-lab',
-      title: 'AI Evaluation Lab',
-      icon: <Activity size={22} />,
-      color: '#ec4899'
-    },
-    {
-      id: 'patterns',
-      title: 'Design Patterns',
-      icon: <Cpu size={22} />,
-      color: '#f59e0b'
-    },
-    {
-      id: 'learnings',
-      title: 'Engineering Learnings',
-      icon: <AlertCircle size={22} />,
-      color: '#ef4444'
-    },
-    {
       id: 'opensource',
-      title: 'Open Source Packages',
+      title: '04 OPEN SOURCE (dxf-contour-extractor)',
       icon: <Package size={22} />,
       color: '#06b6d4'
     },
     {
-      id: 'writing',
-      title: 'Technical Notes',
+      id: 'notes',
+      title: '05 NOTES (Technical Writing)',
       icon: <BookOpen size={22} />,
-      color: '#8b5cf6'
+      color: '#f59e0b'
     },
     {
-      id: 'leetcode',
-      title: 'LeetCode (100+ Solved)',
-      icon: <Code2 size={22} />,
-      color: '#f97316'
-    },
-    {
-      id: 'about',
-      title: 'About BMSCE',
+      id: 'profile',
+      title: '06 PROFILE (Bhuvan A B · BMSCE)',
       icon: <User size={22} />,
-      color: '#64748b'
+      color: '#94a3b8'
     },
     {
-      id: 'contact',
-      title: 'Recruiter Contact',
-      icon: <Mail size={22} />,
-      color: '#14b8a6'
-    },
-    {
-      title: 'Resume (PDF)',
+      title: 'Resume (PDF Document)',
       icon: <FileDown size={22} />,
       isExternal: true,
       href: '/resume.pdf',
@@ -113,50 +71,57 @@ export default function Dock() {
   ];
 
   return (
-    <div className="os-dock-container">
+    <nav className="os-dock-container" aria-label="System Dock">
       <div className="os-dock">
-        {dockItems.map((item, idx) => {
+        {dockItems.map((item, index) => {
           if (item.isExternal && item.href) {
             return (
               <a
-                key={idx}
+                key={index}
                 href={item.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="os-dock-item"
-                data-tooltip={item.title}
-                style={{ color: item.color }}
+                title={item.title}
               >
-                <div className="os-dock-icon-wrapper" style={{ background: `${item.color}18`, borderColor: `${item.color}35` }}>
+                <div 
+                  className="os-dock-icon-wrapper" 
+                  style={{ color: item.color }}
+                >
                   {item.icon}
                 </div>
+                <span className="os-dock-tooltip">{item.title}</span>
               </a>
             );
           }
 
-          const isOpen = item.id ? windows[item.id]?.isOpen : false;
-          const isActive = item.id === activeWindowId && isOpen;
+          const win = item.id ? windows[item.id] : null;
+          const isOpen = win?.isOpen && !win?.isMinimized;
+          const isActive = item.id && activeWindowId === item.id && isOpen;
 
           return (
             <button
-              key={idx}
-              className={`os-dock-item ${isActive ? 'dock-item-active' : ''}`}
-              data-tooltip={item.title}
-              onClick={() => {
-                if (item.id) {
-                  openWindow(item.id);
-                }
-              }}
-              style={{ color: item.color }}
+              key={index}
+              className={`os-dock-item ${isActive ? 'active' : ''}`}
+              onClick={() => item.id && openWindow(item.id)}
+              title={item.title}
             >
-              <div className="os-dock-icon-wrapper" style={{ background: `${item.color}18`, borderColor: `${item.color}35` }}>
+              <div 
+                className="os-dock-icon-wrapper" 
+                style={{ color: item.color }}
+              >
                 {item.icon}
               </div>
-              {isOpen && <span className="os-dock-dot" />}
+              
+              {/* Active Indicator Dot under running app */}
+              {isOpen && <span className="os-dock-running-dot" />}
+              
+              {/* Tooltip Label */}
+              <span className="os-dock-tooltip">{item.title}</span>
             </button>
           );
         })}
       </div>
-    </div>
+    </nav>
   );
 }
