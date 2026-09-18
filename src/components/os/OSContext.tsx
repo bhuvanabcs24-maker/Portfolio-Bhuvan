@@ -18,7 +18,9 @@ export type AppId =
   | 'writing'
   | 'leetcode'
   | 'about'
-  | 'contact';
+  | 'contact'
+  | 'qwait'
+  | 'certifications';
 
 export interface WindowState {
   id: AppId;
@@ -229,6 +231,28 @@ const DEFAULT_WINDOWS: Record<AppId, WindowState> = {
     zIndex: 5,
     position: { x: 220, y: 130 },
     size: { width: 600, height: 460 }
+  },
+  qwait: {
+    id: 'qwait',
+    title: 'QWait Estimator — Clinical Queue Telematics',
+    icon: 'Clock',
+    isOpen: false,
+    isMinimized: false,
+    isMaximized: false,
+    zIndex: 5,
+    position: { x: 180, y: 100 },
+    size: { width: 720, height: 520 }
+  },
+  certifications: {
+    id: 'certifications',
+    title: 'Verified Certifications Registry',
+    icon: 'Award',
+    isOpen: false,
+    isMinimized: false,
+    isMaximized: false,
+    zIndex: 5,
+    position: { x: 200, y: 110 },
+    size: { width: 700, height: 500 }
   }
 };
 

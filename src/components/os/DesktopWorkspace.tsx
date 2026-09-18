@@ -9,24 +9,35 @@ import WindowFrame from './WindowFrame';
 import CommandPalette from './CommandPalette';
 import EngineeringCanvasBackground from './EngineeringCanvasBackground';
 
-// App content components
-import SystemApp from './apps/SystemApp';
-import ForgeIQApp from './apps/ForgeIQApp';
-import EngineeringLabApp from './apps/EngineeringLabApp';
-import OpenSourceApp from './apps/OpenSourceApp';
-import WritingApp from './apps/WritingApp';
-import ProfileApp from './apps/ProfileApp';
+import dynamic from 'next/dynamic';
 
-// Specialized helper tools
-import CadTopologyCanvas from './CadTopologyCanvas';
-import TerminalApp from './TerminalApp';
-import ArchitectureApp from './apps/ArchitectureApp';
-import AIEvalApp from './apps/AIEvalApp';
-import PatternsApp from './apps/PatternsApp';
-import LearningsApp from './apps/LearningsApp';
-import LeetCodeApp from './apps/LeetCodeApp';
-import AboutApp from './apps/AboutApp';
-import ContactApp from './apps/ContactApp';
+const LoadingSkeleton = () => (
+  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', minHeight: '220px', gap: '0.5rem', fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: '#94a3b8' }}>
+    <span className="os-status-dot-sm" />
+    <span>Loading module environment...</span>
+  </div>
+);
+
+// Lazy-loaded App content components (Minimal initial blocking JS)
+const SystemApp = dynamic(() => import('./apps/SystemApp'), { ssr: false, loading: () => <LoadingSkeleton /> });
+const ForgeIQApp = dynamic(() => import('./apps/ForgeIQApp'), { ssr: false, loading: () => <LoadingSkeleton /> });
+const EngineeringLabApp = dynamic(() => import('./apps/EngineeringLabApp'), { ssr: false, loading: () => <LoadingSkeleton /> });
+const OpenSourceApp = dynamic(() => import('./apps/OpenSourceApp'), { ssr: false, loading: () => <LoadingSkeleton /> });
+const WritingApp = dynamic(() => import('./apps/WritingApp'), { ssr: false, loading: () => <LoadingSkeleton /> });
+const ProfileApp = dynamic(() => import('./apps/ProfileApp'), { ssr: false, loading: () => <LoadingSkeleton /> });
+const ContactApp = dynamic(() => import('./apps/ContactApp'), { ssr: false, loading: () => <LoadingSkeleton /> });
+const QWaitApp = dynamic(() => import('./apps/QWaitApp'), { ssr: false, loading: () => <LoadingSkeleton /> });
+const CertificationsApp = dynamic(() => import('./apps/CertificationsApp'), { ssr: false, loading: () => <LoadingSkeleton /> });
+
+// Specialized helper tools (Lazy-loaded on demand)
+const CadTopologyCanvas = dynamic(() => import('./CadTopologyCanvas'), { ssr: false, loading: () => <LoadingSkeleton /> });
+const TerminalApp = dynamic(() => import('./TerminalApp'), { ssr: false, loading: () => <LoadingSkeleton /> });
+const ArchitectureApp = dynamic(() => import('./apps/ArchitectureApp'), { ssr: false, loading: () => <LoadingSkeleton /> });
+const AIEvalApp = dynamic(() => import('./apps/AIEvalApp'), { ssr: false, loading: () => <LoadingSkeleton /> });
+const PatternsApp = dynamic(() => import('./apps/PatternsApp'), { ssr: false, loading: () => <LoadingSkeleton /> });
+const LearningsApp = dynamic(() => import('./apps/LearningsApp'), { ssr: false, loading: () => <LoadingSkeleton /> });
+const LeetCodeApp = dynamic(() => import('./apps/LeetCodeApp'), { ssr: false, loading: () => <LoadingSkeleton /> });
+const AboutApp = dynamic(() => import('./apps/AboutApp'), { ssr: false, loading: () => <LoadingSkeleton /> });
 
 import { 
   Terminal as TerminalIcon, 
@@ -41,7 +52,9 @@ import {
   AlertCircle, 
   Code2, 
   Mail,
-  FileDown
+  FileDown,
+  Clock,
+  Award
 } from 'lucide-react';
 
 interface DesktopIcon {
@@ -112,6 +125,20 @@ export default function DesktopWorkspace() {
       label: 'CONTACT',
       icon: <Mail size={26} />,
       color: '#14b8a6'
+    },
+    {
+      id: 'qwait',
+      moduleCode: '08',
+      label: 'QWAIT',
+      icon: <Clock size={26} />,
+      color: '#38bdf8'
+    },
+    {
+      id: 'certifications',
+      moduleCode: '09',
+      label: 'CERTS',
+      icon: <Award size={26} />,
+      color: '#10b981'
     },
     {
       moduleCode: 'DOC',
@@ -237,6 +264,14 @@ export default function DesktopWorkspace() {
 
       <WindowFrame id="contact" externalLink="/contact">
         <ContactApp />
+      </WindowFrame>
+
+      <WindowFrame id="qwait" externalLink="https://github.com/bhuvanabcs24-maker/QueueEstimater">
+        <QWaitApp />
+      </WindowFrame>
+
+      <WindowFrame id="certifications" externalLink="/certifications">
+        <CertificationsApp />
       </WindowFrame>
 
       {/* 5. Bottom Interactive System Dock */}

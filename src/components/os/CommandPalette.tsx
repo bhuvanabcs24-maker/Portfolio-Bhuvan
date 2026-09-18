@@ -14,9 +14,11 @@ import {
   Code2, 
   Mail, 
   ExternalLink,
-  X,
   User,
-  CornerDownLeft
+  CornerDownLeft,
+  Clock,
+  Award,
+  X
 } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, LeetCodeIcon } from '@/components/Icons';
 import { PORTFOLIO_DATA } from '@/data/portfolioData';
@@ -24,7 +26,7 @@ import { PORTFOLIO_DATA } from '@/data/portfolioData';
 interface PaletteItem {
   id: string;
   title: string;
-  category: 'Modules' | 'Engineering' | 'External Links';
+  category: 'Modules' | 'Engineering' | 'External Links' | 'Projects' | 'Credentials';
   description: string;
   icon: React.ReactNode;
   action: () => void;
@@ -147,6 +149,22 @@ export default function CommandPalette() {
       description: 'https://leetcode.com/u/BHUVANab2006/ (100+ Solved)',
       icon: <LeetCodeIcon size={16} color="#f97316" />,
       action: () => { window.open(socials.leetcode, '_blank'); setCommandPaletteOpen(false); }
+    },
+    {
+      id: 'cmd-qwait',
+      title: 'Open QWait Estimator',
+      category: 'Projects',
+      description: 'Clinical queue telematics, QR check-in & operational dashboard',
+      icon: <Clock size={16} color="#38bdf8" />,
+      action: () => { openWindow('qwait'); setCommandPaletteOpen(false); }
+    },
+    {
+      id: 'cmd-certifications',
+      title: 'Open Certifications',
+      category: 'Credentials',
+      description: 'Verified industry certifications (Red Hat, AI/ML, Governance)',
+      icon: <Award size={16} color="#10b981" />,
+      action: () => { openWindow('certifications'); setCommandPaletteOpen(false); }
     }
   ];
 
