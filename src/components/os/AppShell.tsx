@@ -6,6 +6,7 @@ import { useOS } from './OSContext';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import CommandPalette from './CommandPalette';
+import { Cursor, GridBackground, NoiseOverlay } from './visual';
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -14,22 +15,28 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const isHomepage = pathname === '/';
   const showOSDesktop = isHomepage && mode === 'os';
 
-  if (showOSDesktop) {
-    return (
-      <>
-        {children}
-      </>
-    );
-  }
-
   return (
     <>
-      <Navbar />
-      <main style={{ flex: 1 }}>
-        {children}
-      </main>
-      <Footer />
-      <CommandPalette />
+      {/* Visual Foundation Layer: Noise Texture, Engineering Grid, and Dynamic Cursor */}
+      <NoiseOverlay />
+      <GridBackground showScan={true} />
+      <Cursor />
+
+      {showOSDesktop ? (
+        <>
+          {children}
+        </>
+      ) : (
+        <>
+          <Navbar />
+          <main style={{ flex: 1, position: 'relative', zIndex: 1 }}>
+            {children}
+          </main>
+          <Footer />
+          <CommandPalette />
+        </>
+      )}
     </>
   );
 }
+

@@ -228,6 +228,7 @@ export default function ForgeIQSystemMap({ compact = false }: ForgeIQSystemMapPr
                   aria-selected={isSelected}
                   tabIndex={0}
                   className={`forgeiq-flow-node ${isSelected ? 'selected' : ''}`}
+                  data-cursor="inspect"
                   onMouseEnter={() => !pinnedNodeId && setActiveNodeId(node.id)}
                   onFocus={() => !pinnedNodeId && setActiveNodeId(node.id)}
                   onClick={() => handleNodeClick(node.id)}

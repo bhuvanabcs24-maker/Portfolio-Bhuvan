@@ -169,6 +169,7 @@ export default function DesktopWorkspace() {
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="os-desktop-icon"
+                data-cursor="external"
               >
                 <div className="os-icon-graphic" style={{ color: d.color, background: `${d.color}15`, borderColor: `${d.color}35` }}>
                   {d.icon}
@@ -185,6 +186,7 @@ export default function DesktopWorkspace() {
             <button
               key={i}
               className="os-desktop-icon"
+              data-cursor="open"
               onDoubleClick={() => d.id && openWindow(d.id)}
               onClick={() => d.id && openWindow(d.id)}
             >

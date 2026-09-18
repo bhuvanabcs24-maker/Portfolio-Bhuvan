@@ -12,6 +12,7 @@ import {
   Layers,
   Sparkles
 } from 'lucide-react';
+import { MagneticButton, SystemStatus, TechnicalLabel } from './visual';
 
 export default function OSEntryScreen() {
   const { enterWorkspace } = useOS();
@@ -40,20 +41,15 @@ export default function OSEntryScreen() {
       {/* Top Telematics Bar */}
       <header className="os-entry-header">
         <div className="os-entry-header-left">
-          <div className="os-entry-pill">
-            <span className="os-status-dot pulse" />
-            <span className="os-entry-mono-tag">SYSTEM ONLINE</span>
-          </div>
-          <span className="os-entry-divider">/</span>
-          <span className="os-entry-mono-sub">HOST: BLR-DC-01</span>
+          <SystemStatus statusText="SYSTEM ONLINE" subsystem="HOST: BLR-DC-01" showPing={true} className="os-entry-mono-tag" />
           <span className="os-entry-divider">/</span>
           <span className="os-entry-mono-sub">KERNEL: DARWIN_X86_64</span>
         </div>
 
         <div className="os-entry-header-right">
-          <span className="os-entry-mono-sub">47/47 AUTOMATED TESTS PASSING</span>
+          <TechnicalLabel label="47/47 TESTS PASSING" dot={true} variant="accent" />
           <span className="os-entry-divider">/</span>
-          <span className="os-entry-mono-tag">BUILD 2.4.0-PROD</span>
+          <TechnicalLabel label="BUILD 2.4.0-PROD" variant="dim" />
         </div>
       </header>
 
@@ -96,22 +92,22 @@ export default function OSEntryScreen() {
 
           {/* Quick Metrics Bar */}
           <div className="os-entry-metrics-preview">
-            <div className="os-entry-metric-item">
+            <div className="os-entry-metric-item" data-cursor="inspect">
               <span className="os-entry-metric-val">33/33</span>
               <span className="os-entry-metric-key">Unit/Int Tests</span>
             </div>
             <div className="os-entry-metric-divider" />
-            <div className="os-entry-metric-item">
+            <div className="os-entry-metric-item" data-cursor="inspect">
               <span className="os-entry-metric-val">14</span>
               <span className="os-entry-metric-key">E2E Tests</span>
             </div>
             <div className="os-entry-metric-divider" />
-            <div className="os-entry-metric-item">
+            <div className="os-entry-metric-item" data-cursor="inspect">
               <span className="os-entry-metric-val">5.5×</span>
               <span className="os-entry-metric-key">Throughput Gain</span>
             </div>
             <div className="os-entry-metric-divider" />
-            <div className="os-entry-metric-item">
+            <div className="os-entry-metric-item" data-cursor="inspect">
               <span className="os-entry-metric-val">96.9%</span>
               <span className="os-entry-metric-key">Pricing Accuracy</span>
             </div>
@@ -119,15 +115,17 @@ export default function OSEntryScreen() {
 
           {/* Primary & Secondary Interactions */}
           <div className="os-entry-actions">
-            <button 
+            <MagneticButton 
               id="enter-workspace-btn"
               className="os-entry-btn-primary"
               onClick={enterWorkspace}
+              strength={7}
+              cursorType="open"
               autoFocus
             >
               <span className="os-entry-btn-text">ENTER WORKSPACE</span>
               <span className="os-entry-btn-key">↵ ENTER</span>
-            </button>
+            </MagneticButton>
 
             <a 
               id="view-resume-btn"
@@ -135,6 +133,7 @@ export default function OSEntryScreen() {
               target="_blank" 
               rel="noopener noreferrer" 
               className="os-entry-btn-secondary"
+              data-cursor="external"
             >
               <FileText size={16} />
               <span>VIEW RESUME</span>
@@ -144,12 +143,12 @@ export default function OSEntryScreen() {
           {/* Module Capabilities Bar */}
           <div className="os-entry-modules-bar">
             <span className="os-entry-mod-label">6 MODULES LOADED:</span>
-            <span className="os-entry-mod-item">01 SYSTEM</span>
-            <span className="os-entry-mod-item">02 FORGEIQ</span>
-            <span className="os-entry-mod-item">03 ENGINEERING LAB</span>
-            <span className="os-entry-mod-item">04 OPEN SOURCE</span>
-            <span className="os-entry-mod-item">05 NOTES</span>
-            <span className="os-entry-mod-item">06 PROFILE</span>
+            <span className="os-entry-mod-item" data-cursor="inspect">01 SYSTEM</span>
+            <span className="os-entry-mod-item" data-cursor="inspect">02 FORGEIQ</span>
+            <span className="os-entry-mod-item" data-cursor="inspect">03 ENGINEERING LAB</span>
+            <span className="os-entry-mod-item" data-cursor="inspect">04 OPEN SOURCE</span>
+            <span className="os-entry-mod-item" data-cursor="inspect">05 NOTES</span>
+            <span className="os-entry-mod-item" data-cursor="inspect">06 PROFILE</span>
           </div>
         </div>
       </main>

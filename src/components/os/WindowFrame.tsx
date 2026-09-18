@@ -113,6 +113,7 @@ export default function WindowFrame({ id, children, externalLink }: WindowFrameP
       {/* Title Bar */}
       <div 
         className="window-titlebar"
+        data-cursor="move"
         onMouseDown={handleMouseDown}
         onDoubleClick={() => maximizeWindow(id)}
       >
