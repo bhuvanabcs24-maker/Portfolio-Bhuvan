@@ -2435,4 +2435,328 @@ code.inline {
   }
 }
 
+/* ==========================================================================
+   BHUVAN.OS — Compact System Navigation Bar & Profile/Contact Styling
+   ========================================================================== */
+
+/* 1. Compact System Navigation Bar */
+.os-system-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: rgba(8, 11, 18, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.os-system-navbar-inner {
+  max-width: 1380px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.os-system-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.os-system-brand {
+  text-decoration: none;
+}
+
+.os-system-brand-text {
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #f8fafc;
+}
+
+.os-system-online-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.15rem 0.5rem;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: var(--radius-full);
+}
+
+.os-online-text {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: #34d399;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+/* Center Module Buttons: [SYS] [FORGEIQ] [LAB] [OSS] [NOTES] [PROFILE] */
+.os-system-modules-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.os-system-nav-btn {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.os-system-btn-bracket {
+  color: #475569;
+}
+
+.os-system-btn-label {
+  margin: 0 0.1rem;
+}
+
+.os-system-nav-btn:hover {
+  color: #f1f5f9;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.os-system-nav-btn.active {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+}
+
+.os-system-nav-btn.active .os-system-btn-bracket {
+  color: #38bdf8;
+}
+
+/* Right Nav Controls */
+.os-system-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.os-system-cmd-launcher-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.25rem 0.6rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: #cbd5e1;
+  font-size: 0.775rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.os-system-cmd-launcher-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}
+
+.os-system-kbd {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  color: #94a3b8;
+}
+
+.os-system-resume-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  background: #2563eb;
+  border: 1px solid #3b82f6;
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 0.775rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+
+.os-system-resume-btn:hover {
+  background: #1d4ed8;
+}
+
+/* Mobile Command Launcher Bar */
+.os-mobile-launcher-bar {
+  display: none;
+  padding: 0.4rem 0.75rem;
+  background: rgba(12, 16, 26, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.os-mobile-modules-scroll {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.os-mobile-mod-pill {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #94a3b8;
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 0.2rem 0.45rem;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.os-mobile-mod-pill.active {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.15);
+}
+
+.os-mobile-cmd-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.725rem;
+  font-weight: 700;
+  color: #93c5fd;
+  background: rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* TopMenuBar compact module buttons */
+.os-topbar-modules-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+  margin-left: 0.75rem;
+}
+
+.os-topbar-mod-btn {
+  font-family: var(--font-mono);
+  font-size: 0.675rem;
+  color: #64748b;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0.15rem 0.35rem;
+  border-radius: 3px;
+  transition: all 0.12s ease;
+}
+
+.os-topbar-mod-btn:hover {
+  color: #e2e8f0;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.os-topbar-mod-btn.active {
+  color: #60a5fa;
+  background: rgba(59, 130, 246, 0.12);
+}
+
+/* Skills Badges */
+.os-skill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.775rem;
+  color: #e2e8f0;
+  transition: all 0.15s ease;
+}
+
+.os-skill-badge:hover {
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(59, 130, 246, 0.3);
+  color: #93c5fd;
+  transform: translateY(-1px);
+}
+
+.os-skill-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: #3b82f6;
+}
+
+/* Contact Channel Rows */
+.os-contact-channel-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1rem;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  transition: all 0.15s ease;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.os-contact-channel-row:hover {
+  background: rgba(255, 255, 255, 0.04);
+  transform: translateY(-1px);
+}
+
+.os-contact-channel-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.os-term-inline-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #f8fafc;
+  outline: none;
+}
+
+.os-term-inline-input::placeholder {
+  color: #475569;
+}
+
+@media (max-width: 768px) {
+  .os-system-modules-nav,
+  .os-system-nav-right,
+  .os-topbar-modules-bar {
+    display: none;
+  }
+  .os-mobile-launcher-bar {
+    display: flex;
+  }
+}
+
+
 

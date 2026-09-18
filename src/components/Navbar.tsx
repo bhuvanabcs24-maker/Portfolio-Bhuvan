@@ -1,189 +1,119 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { FileText, Menu, X, ExternalLink } from 'lucide-react';
-import { PORTFOLIO_DATA } from '@/data/portfolioData';
+import { 
+  Terminal, 
+  Zap, 
+  Cpu, 
+  Package, 
+  BookOpen, 
+  User, 
+  FileText, 
+  Command, 
+  ExternalLink,
+  Search
+} from 'lucide-react';
+import { useOS } from './os/OSContext';
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [isOpen, setIsOpen] = useState(false);
+  const { toggleCommandPalette, mode, toggleMode } = useOS();
 
-  const navLinks = [
-    { href: '/', label: 'Home' },
-    { href: '/projects', label: 'Projects' },
-    { href: '/forgeiq-case-study', label: 'ForgeIQ Case Study' },
-    { href: '/engineering', label: 'Engineering' },
-    { href: '/opensource', label: 'Open Source' },
-    { href: '/writing', label: 'Writing / Notes' },
-    { href: '/about', label: 'About' },
-    { href: '/certifications', label: 'Certifications' },
-    { href: '/contact', label: 'Contact' },
+  const systemModules = [
+    { code: 'SYS', label: 'SYS', href: '/', id: 'system' },
+    { code: 'FORGEIQ', label: 'FORGEIQ', href: '/forgeiq-case-study', id: 'forgeiq' },
+    { code: 'LAB', label: 'LAB', href: '/engineering', id: 'lab' },
+    { code: 'OSS', label: 'OSS', href: '/opensource', id: 'opensource' },
+    { code: 'NOTES', label: 'NOTES', href: '/writing', id: 'notes' },
+    { code: 'PROFILE', label: 'PROFILE', href: '/about', id: 'profile' }
   ];
 
   return (
-    <header style={{
-      position: 'sticky',
-      top: 0,
-      zIndex: 50,
-      backdropFilter: 'blur(16px)',
-      backgroundColor: 'rgba(8, 12, 20, 0.85)',
-      borderBottom: '1px solid var(--border-subtle)',
-    }}>
-      <div className="container" style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        height: '4.25rem',
-      }}>
-        {/* Brand / Name */}
-        <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-          <div style={{
-            width: '2.1rem',
-            height: '2.1rem',
-            borderRadius: 'var(--radius-md)',
-            background: 'linear-gradient(135deg, #2563eb, #10b981)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#fff',
-            fontWeight: 800,
-            fontSize: '0.95rem',
-            letterSpacing: '-0.02em',
-          }}>
-            B
-          </div>
-          <div>
-            <span style={{ fontWeight: 700, fontSize: '1rem', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>
-              {PORTFOLIO_DATA.personal.name}
-            </span>
-            <span style={{ display: 'block', fontSize: '0.72rem', color: 'var(--text-muted)' }}>
-              BMSCE · Expected 2028
-            </span>
-          </div>
-        </Link>
-
-        {/* Desktop Navigation */}
-        <nav style={{
-          display: 'none',
-          alignItems: 'center',
-          gap: '1.25rem',
-        }} className="desktop-nav">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                style={{
-                  fontSize: '0.86rem',
-                  fontWeight: isActive ? 600 : 500,
-                  color: isActive ? 'var(--text-accent)' : 'var(--text-secondary)',
-                  position: 'relative',
-                  padding: '0.4rem 0.2rem',
-                  transition: 'color 0.15s ease',
-                }}
-              >
-                {link.label}
-                {isActive && (
-                  <span style={{
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    height: '2px',
-                    background: 'var(--accent-blue)',
-                    borderRadius: '2px',
-                  }} />
-                )}
-              </Link>
-            );
-          })}
-
-          <a
-            href={PORTFOLIO_DATA.personal.resumeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn btn-sm btn-primary"
-            style={{ marginLeft: '0.5rem', gap: '0.4rem' }}
-          >
-            <FileText size={14} />
-            <span>Resume</span>
-          </a>
-        </nav>
-
-        {/* Mobile menu trigger */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle navigation menu"
-          style={{
-            display: 'flex',
-            background: 'none',
-            border: 'none',
-            color: 'var(--text-primary)',
-            cursor: 'pointer',
-            padding: '0.5rem',
-          }}
-          className="mobile-nav-btn"
-        >
-          {isOpen ? <X size={22} /> : <Menu size={22} />}
-        </button>
-      </div>
-
-      {/* Mobile Menu Dropdown */}
-      {isOpen && (
-        <div style={{
-          padding: '1.25rem 1.5rem 1.75rem',
-          borderBottom: '1px solid var(--border-subtle)',
-          backgroundColor: 'var(--bg-secondary)',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '0.85rem',
-        }}>
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsOpen(false)}
-                style={{
-                  padding: '0.5rem 0',
-                  fontSize: '0.95rem',
-                  fontWeight: isActive ? 600 : 500,
-                  color: isActive ? 'var(--text-accent)' : 'var(--text-primary)',
-                }}
-              >
-                {link.label}
-              </Link>
-            );
-          })}
-          <div style={{ paddingTop: '0.75rem', borderTop: '1px solid var(--border-subtle)' }}>
-            <a
-              href={PORTFOLIO_DATA.personal.resumeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary"
-              style={{ width: '100%', gap: '0.4rem' }}
-            >
-              <FileText size={16} />
-              <span>Download Resume</span>
-            </a>
+    <header className="os-system-navbar">
+      <div className="os-system-navbar-inner">
+        {/* Left: Brand + Status Indicator */}
+        <div className="os-system-nav-left">
+          <Link href="/" className="os-system-brand">
+            <span className="os-system-brand-text">BHUVAN.OS</span>
+          </Link>
+          <div className="os-system-online-indicator">
+            <span className="os-status-dot-sm" />
+            <span className="os-online-text">ONLINE</span>
           </div>
         </div>
-      )}
 
-      <style jsx>{`
-        @media (min-width: 960px) {
-          .desktop-nav {
-            display: flex !important;
-          }
-          .mobile-nav-btn {
-            display: none !important;
-          }
-        }
-      `}</style>
+        {/* Center: Compact System Bar Navigation [SYS] [FORGEIQ] [LAB] [OSS] [NOTES] [PROFILE] */}
+        <nav className="os-system-modules-nav" aria-label="System Modules">
+          {systemModules.map((mod) => {
+            const isActive = pathname === mod.href || (mod.href !== '/' && pathname.startsWith(mod.href));
+            return (
+              <Link
+                key={mod.code}
+                href={mod.href}
+                className={`os-system-nav-btn ${isActive ? 'active' : ''}`}
+                title={`Module ${mod.code}`}
+              >
+                <span className="os-system-btn-bracket">[</span>
+                <span className="os-system-btn-label">{mod.code}</span>
+                <span className="os-system-btn-bracket">]</span>
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Right: Cmd+K Search Launcher & Resume */}
+        <div className="os-system-nav-right">
+          <button
+            className="os-system-cmd-launcher-btn"
+            onClick={toggleCommandPalette}
+            title="Open Command Palette (⌘K / Ctrl+K)"
+          >
+            <Search size={13} className="os-cmd-search-icon" />
+            <span className="os-cmd-launcher-text">Search</span>
+            <kbd className="os-system-kbd">⌘K</kbd>
+          </button>
+
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="os-system-resume-btn"
+            title="View Official Resume (PDF)"
+          >
+            <FileText size={13} />
+            <span className="os-resume-btn-text">Resume</span>
+          </a>
+        </div>
+      </div>
+
+      {/* Mobile Compact Command Launcher Bar */}
+      <div className="os-mobile-launcher-bar">
+        <div className="os-mobile-modules-scroll">
+          {systemModules.map((mod) => {
+            const isActive = pathname === mod.href || (mod.href !== '/' && pathname.startsWith(mod.href));
+            return (
+              <Link
+                key={mod.code}
+                href={mod.href}
+                className={`os-mobile-mod-pill ${isActive ? 'active' : ''}`}
+              >
+                [{mod.code}]
+              </Link>
+            );
+          })}
+        </div>
+
+        <button
+          className="os-mobile-cmd-btn"
+          onClick={toggleCommandPalette}
+          aria-label="Open Command Palette"
+        >
+          <Command size={14} />
+          <span>⌘K</span>
+        </button>
+      </div>
     </header>
   );
 }

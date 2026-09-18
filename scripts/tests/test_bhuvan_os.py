@@ -283,6 +283,47 @@ def run_os_tests():
         assert len(line_nums) > 10, "Line numbers missing in IDE doc view"
         print(f"✓ IDE Technical Notes Document Viewer verified ({len(line_nums)} rendered lines with gutter).")
 
+        # D. Open PROFILE via Dock
+        profile_dock_btn = driver.find_element(By.CSS_SELECTOR, ".os-dock-item[title*='PROFILE']")
+        driver.execute_script("arguments[0].click();", profile_dock_btn)
+        time.sleep(0.6)
+
+        profile_win = driver.find_element(By.CSS_SELECTOR, "[data-window-id='profile']")
+        profile_text = profile_win.text
+        assert "BHUVAN A B" in profile_text, "Profile name missing"
+        assert "B.E. Computer Science & Engineering" in profile_text, "B.E. degree missing"
+        assert "BMSCE" in profile_text, "BMSCE missing"
+        assert "Expected 2028" in profile_text, "Expected 2028 missing"
+        assert "8.08" in profile_text, "CGPA 8.08 missing"
+        assert "100+" in profile_text and "LeetCode" in profile_text, "100+ LeetCode missing"
+        
+        # Check verified skills
+        skills_badges = profile_win.find_elements(By.CLASS_NAME, "os-skill-badge")
+        skill_names = [s.text.strip() for s in skills_badges]
+        print(f"✓ Found {len(skill_names)} skills in Profile: {skill_names}")
+        expected_skills = [
+            'Java', 'Python', 'C', 'JavaScript', 'FastAPI', 'Next.js', 
+            'SQL', 'DBMS', 'System Design', 'Generative AI', 'Machine Learning', 'Neural Networks'
+        ]
+        for es in expected_skills:
+            assert es in skill_names, f"Skill '{es}' missing from Profile"
+        print("✓ All 12 required skills and academic metrics verified in Profile.")
+
+        # E. Open CONTACT via Dock
+        contact_dock_btn = driver.find_element(By.CSS_SELECTOR, ".os-dock-item[title*='CONTACT']")
+        driver.execute_script("arguments[0].click();", contact_dock_btn)
+        time.sleep(0.6)
+
+        contact_win = driver.find_element(By.CSS_SELECTOR, "[data-window-id='contact']")
+        contact_rows = contact_win.find_elements(By.CLASS_NAME, "os-contact-channel-row")
+        print(f"✓ Found {len(contact_rows)} contact channels.")
+        contact_texts = [r.text for r in contact_rows]
+        assert any("EMAIL" in t for t in contact_texts), "EMAIL channel missing"
+        assert any("LinkedIn" in t for t in contact_texts), "LinkedIn channel missing"
+        assert any("GitHub" in t for t in contact_texts), "GitHub channel missing"
+        assert any("LeetCode" in t for t in contact_texts), "LeetCode channel missing"
+        print("✓ Minimal communication terminal verified with EMAIL, LinkedIn, GitHub, LeetCode.")
+
         # ----------------------------------------------------
         # 8. Test Command Palette (Cmd+K)
         # ----------------------------------------------------
@@ -292,7 +333,39 @@ def run_os_tests():
         time.sleep(0.3)
         palette = driver.find_element(By.CLASS_NAME, "os-palette-modal")
         assert palette.is_displayed(), "Command palette modal not displayed"
+
+        # Verify placeholder
         palette_input = driver.find_element(By.CLASS_NAME, "os-palette-input")
+        placeholder = palette_input.get_attribute("placeholder")
+        print(f"✓ Command Palette placeholder: {placeholder}")
+        assert "> Search Bhuvan.OS" in placeholder, "Placeholder mismatch"
+
+        # Verify exact required commands
+        cmd_items = driver.find_elements(By.CLASS_NAME, "os-palette-item-title")
+        cmd_titles = [c.text for c in cmd_items]
+        print(f"✓ Found {len(cmd_titles)} palette commands:")
+        for ct in cmd_titles:
+            print(f"  • {ct}")
+
+        expected_cmds = [
+            "Open ForgeIQ",
+            "Open Engineering Lab",
+            "Open Architecture Decisions",
+            "Open AI Evaluation",
+            "Open Design Patterns",
+            "Open Engineering Learnings",
+            "Open Open Source",
+            "Open Notes",
+            "Open Profile",
+            "Open Resume",
+            "Open GitHub",
+            "Open LinkedIn",
+            "Open LeetCode"
+        ]
+        for ec in expected_cmds:
+            assert ec in cmd_titles, f"Command '{ec}' missing from palette"
+        print("✓ All 13 required palette commands verified.")
+
         palette_input.send_keys(Keys.ESCAPE)
         time.sleep(0.3)
         print("✓ Command palette tested and closed.")
@@ -300,7 +373,7 @@ def run_os_tests():
         # ----------------------------------------------------
         # 9. Test Lock Screen / Return to Entry Experience
         # ----------------------------------------------------
-        print("\n--- 9. Testing Lock Screen / Exit Workspace ---")
+        print("\n--- 9. Testing Lock Screen & Compact System Navigation ---")
         brand_btn = driver.find_element(By.CLASS_NAME, "os-brand")
         driver.execute_script("arguments[0].click();", brand_btn)
         time.sleep(0.3)
@@ -313,10 +386,31 @@ def run_os_tests():
         assert entry_again.is_displayed(), "Failed to return to OSEntryScreen upon locking workspace"
         print("✓ Lock Screen successfully returned to OSEntryScreen.")
 
-        # Re-enter workspace
-        enter_again = driver.find_element(By.ID, "enter-workspace-btn")
-        driver.execute_script("arguments[0].click();", enter_again)
-        time.sleep(0.8)
+        # Navigate to /about to test Compact System Navigation bar
+        driver.get("http://localhost:3003/about")
+        time.sleep(1.0)
+        sys_nav = driver.find_element(By.CLASS_NAME, "os-system-navbar")
+        assert sys_nav.is_displayed(), "Compact system navbar missing on /about"
+        assert "BHUVAN.OS" in sys_nav.text and "ONLINE" in sys_nav.text, "System brand or ONLINE status missing"
+        nav_btns = driver.find_elements(By.CLASS_NAME, "os-system-nav-btn")
+        nav_btn_labels = [b.text for b in nav_btns]
+        print(f"✓ Compact System Bar buttons: {nav_btn_labels}")
+        assert any("SYS" in l for l in nav_btn_labels), "SYS button missing"
+        assert any("FORGEIQ" in l for l in nav_btn_labels), "FORGEIQ button missing"
+        assert any("LAB" in l for l in nav_btn_labels), "LAB button missing"
+        assert any("OSS" in l for l in nav_btn_labels), "OSS button missing"
+        assert any("NOTES" in l for l in nav_btn_labels), "NOTES button missing"
+        assert any("PROFILE" in l for l in nav_btn_labels), "PROFILE button missing"
+        print("✓ Compact System Bar [SYS] [FORGEIQ] [LAB] [OSS] [NOTES] [PROFILE] verified.")
+
+        # Return to workspace root
+        driver.get("http://localhost:3003/")
+        time.sleep(1.0)
+        # Check if entry screen is shown or if directly in workspace
+        entry_elems = driver.find_elements(By.ID, "enter-workspace-btn")
+        if len(entry_elems) > 0 and entry_elems[0].is_displayed():
+            driver.execute_script("arguments[0].click();", entry_elems[0])
+            time.sleep(0.8)
         print("✓ Re-entered workspace successfully.")
 
         # ----------------------------------------------------

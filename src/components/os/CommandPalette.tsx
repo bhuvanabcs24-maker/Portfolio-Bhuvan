@@ -14,13 +14,17 @@ import {
   Code2, 
   Mail, 
   ExternalLink,
-  X
+  X,
+  User,
+  CornerDownLeft
 } from 'lucide-react';
+import { GithubIcon, LinkedinIcon, LeetCodeIcon } from '@/components/Icons';
+import { PORTFOLIO_DATA } from '@/data/portfolioData';
 
 interface PaletteItem {
   id: string;
   title: string;
-  category: string;
+  category: 'Modules' | 'Engineering' | 'External Links';
   description: string;
   icon: React.ReactNode;
   action: () => void;
@@ -37,167 +41,202 @@ export default function CommandPalette() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  const { socials } = PORTFOLIO_DATA.personal;
+
   const items: PaletteItem[] = [
     {
-      id: 'app-forgeiq',
-      title: 'ForgeIQ Flagship Platform',
-      category: 'Applications',
-      description: 'Open 40+ endpoint CAD & pricing architecture showcase',
+      id: 'cmd-forgeiq',
+      title: 'Open ForgeIQ',
+      category: 'Modules',
+      description: 'AI-powered manufacturing intelligence flagship platform',
       icon: <Zap size={16} color="#3b82f6" />,
       action: () => { openWindow('forgeiq'); setCommandPaletteOpen(false); }
     },
     {
-      id: 'app-terminal',
-      title: 'Launch bhuvan-sh (zsh)',
-      category: 'Applications',
-      description: 'Open interactive engineering terminal',
-      icon: <Terminal size={16} color="#10b981" />,
-      action: () => { openWindow('terminal'); setCommandPaletteOpen(false); }
+      id: 'cmd-eng-lab',
+      title: 'Open Engineering Lab',
+      category: 'Modules',
+      description: '10 ADRs, 8-dimension AI eval, 4 design patterns, 4 retrospectives',
+      icon: <Cpu size={16} color="#a855f7" />,
+      action: () => { openWindow('lab'); setCommandPaletteOpen(false); }
     },
     {
-      id: 'app-cad',
-      title: 'CAD Topology Visualizer',
-      category: 'Applications',
-      description: 'Interactive KD-Tree vertex snapping & polygon cycle canvas',
-      icon: <Activity size={16} color="#a855f7" />,
-      action: () => { openWindow('cad-viewer'); setCommandPaletteOpen(false); }
-    },
-    {
-      id: 'app-adrs',
-      title: 'Architecture Decisions (10 ADRs)',
-      category: 'Architecture',
-      description: 'PostgreSQL vs Mongo, FastAPI vs Express, pgvector, etc.',
+      id: 'cmd-adrs',
+      title: 'Open Architecture Decisions',
+      category: 'Engineering',
+      description: '10 Architecture Decision Records (ADRs)',
       icon: <FileText size={16} color="#60a5fa" />,
       action: () => { openWindow('adrs'); setCommandPaletteOpen(false); }
     },
     {
-      id: 'app-eval',
-      title: 'AI Evaluation Lab',
+      id: 'cmd-eval',
+      title: 'Open AI Evaluation',
       category: 'Engineering',
-      description: '96.9% pricing benchmark, RAG precision, & JSON schema guardrails',
+      description: '8-dimension verification framework & test benchmarks',
       icon: <Activity size={16} color="#ec4899" />,
       action: () => { openWindow('eval-lab'); setCommandPaletteOpen(false); }
     },
     {
-      id: 'app-patterns',
-      title: 'Production Design Patterns',
-      category: 'Architecture',
-      description: 'AI Provider Abstraction, CAD Guardrails, State Machine, RBAC',
+      id: 'cmd-patterns',
+      title: 'Open Design Patterns',
+      category: 'Engineering',
+      description: '4 production system patterns (Provider Abstraction, Guardrails, FSM, RBAC)',
       icon: <Cpu size={16} color="#f59e0b" />,
       action: () => { openWindow('patterns'); setCommandPaletteOpen(false); }
     },
     {
-      id: 'app-learnings',
-      title: 'Engineering Failures & Retrospectives',
+      id: 'cmd-learnings',
+      title: 'Open Engineering Learnings',
       category: 'Engineering',
-      description: '5.5x Celery concurrency gain, vector search tuning, schema migrations',
+      description: '4 failure retrospectives & root-cause mitigations',
       icon: <Activity size={16} color="#ef4444" />,
       action: () => { openWindow('learnings'); setCommandPaletteOpen(false); }
     },
     {
-      id: 'app-opensource',
-      title: 'Open Source — dxf-contour-extractor',
-      category: 'Open Source',
-      description: 'Standalone Python package + extraction roadmap',
+      id: 'cmd-opensource',
+      title: 'Open Open Source',
+      category: 'Modules',
+      description: 'dxf-contour-extractor live pipeline & package architecture',
       icon: <Package size={16} color="#06b6d4" />,
       action: () => { openWindow('opensource'); setCommandPaletteOpen(false); }
     },
     {
-      id: 'app-writing',
-      title: 'Why CAD Understanding Is Difficult',
-      category: 'Technical Notes',
-      description: 'Published essay on geometry parsing vs vision AI models',
+      id: 'cmd-notes',
+      title: 'Open Notes',
+      category: 'Modules',
+      description: 'IDE technical writing workspace across 5 core topics',
       icon: <BookOpen size={16} color="#8b5cf6" />,
-      action: () => { openWindow('writing'); setCommandPaletteOpen(false); }
+      action: () => { openWindow('notes'); setCommandPaletteOpen(false); }
     },
     {
-      id: 'app-leetcode',
-      title: 'LeetCode Telemetry (100+ Solved)',
-      category: 'Problem Solving',
-      description: 'Algorithmic practice across trees, graphs, DP, arrays',
-      icon: <Code2 size={16} color="#f97316" />,
-      action: () => { openWindow('leetcode'); setCommandPaletteOpen(false); }
+      id: 'cmd-profile',
+      title: 'Open Profile',
+      category: 'Modules',
+      description: 'Bhuvan A B — BMSCE (Expected 2028, CGPA 8.08), Skills, LeetCode 100+',
+      icon: <User size={16} color="#94a3b8" />,
+      action: () => { openWindow('profile'); setCommandPaletteOpen(false); }
     },
     {
-      id: 'sys-mode',
-      title: 'Switch Display Mode',
-      category: 'System',
-      description: 'Toggle between OS Desktop Mode and Editorial Document Mode',
-      icon: <FileText size={16} color="#94a3b8" />,
-      action: () => { toggleMode(); setCommandPaletteOpen(false); }
-    },
-    {
-      id: 'ext-resume',
-      title: 'Download Official Resume (PDF)',
-      category: 'External',
-      description: 'Bhuvan A B — B.E. Computer Science, BMSCE (CGPA: 8.08)',
+      id: 'cmd-resume',
+      title: 'Open Resume',
+      category: 'External Links',
+      description: 'Download official resume (PDF)',
       icon: <ExternalLink size={16} color="#e2e8f0" />,
       action: () => { window.open('/resume.pdf', '_blank'); setCommandPaletteOpen(false); }
     },
     {
-      id: 'app-contact',
-      title: 'Contact Bhuvan (Recruiter Channel)',
-      category: 'Contact',
-      description: 'Direct recruiter email & outreach form',
-      icon: <Mail size={16} color="#14b8a6" />,
-      action: () => { openWindow('contact'); setCommandPaletteOpen(false); }
+      id: 'cmd-github',
+      title: 'Open GitHub',
+      category: 'External Links',
+      description: 'https://github.com/bhuvanabcs24-maker',
+      icon: <GithubIcon size={16} color="#34d399" />,
+      action: () => { window.open(socials.github, '_blank'); setCommandPaletteOpen(false); }
+    },
+    {
+      id: 'cmd-linkedin',
+      title: 'Open LinkedIn',
+      category: 'External Links',
+      description: 'https://www.linkedin.com/in/bhuvan-a-b-4805a2330/',
+      icon: <LinkedinIcon size={16} color="#38bdf8" />,
+      action: () => { window.open(socials.linkedin, '_blank'); setCommandPaletteOpen(false); }
+    },
+    {
+      id: 'cmd-leetcode',
+      title: 'Open LeetCode',
+      category: 'External Links',
+      description: 'https://leetcode.com/u/BHUVANab2006/ (100+ Solved)',
+      icon: <LeetCodeIcon size={16} color="#f97316" />,
+      action: () => { window.open(socials.leetcode, '_blank'); setCommandPaletteOpen(false); }
     }
   ];
 
-  const filteredItems = items.filter(
-    (item) =>
-      item.title.toLowerCase().includes(query.toLowerCase()) ||
-      item.category.toLowerCase().includes(query.toLowerCase()) ||
-      item.description.toLowerCase().includes(query.toLowerCase())
-  );
+  // Filter items based on query
+  const filteredItems = items.filter(item => {
+    const q = query.toLowerCase();
+    return (
+      item.title.toLowerCase().includes(q) ||
+      item.description.toLowerCase().includes(q) ||
+      item.category.toLowerCase().includes(q)
+    );
+  });
 
+  // Reset selected index when query changes
+  useEffect(() => {
+    setSelectedIndex(0);
+  }, [query]);
+
+  // Focus input when opened
   useEffect(() => {
     if (commandPaletteOpen) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 50);
+    } else {
       setQuery('');
-      setSelectedIndex(0);
-      setTimeout(() => inputRef.current?.focus(), 50);
     }
   }, [commandPaletteOpen]);
 
-  // Keyboard navigation inside palette
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      setCommandPaletteOpen(false);
-    } else if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      setSelectedIndex((prev) => (prev + 1) % (filteredItems.length || 1));
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      setSelectedIndex((prev) => (prev - 1 + filteredItems.length) % (filteredItems.length || 1));
-    } else if (e.key === 'Enter') {
-      e.preventDefault();
-      if (filteredItems[selectedIndex]) {
-        filteredItems[selectedIndex].action();
+  // Global Keyboard Listener: ⌘K / Ctrl+K and arrow keys inside modal
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // ⌘K or Ctrl+K toggle
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setCommandPaletteOpen(!commandPaletteOpen);
+        return;
       }
-    }
-  };
 
-  if (!commandPaletteOpen) return null;
+      if (!commandPaletteOpen) return;
+
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        setCommandPaletteOpen(false);
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setSelectedIndex(prev => (prev + 1) % (filteredItems.length || 1));
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        setSelectedIndex(prev => (prev - 1 + (filteredItems.length || 1)) % (filteredItems.length || 1));
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (filteredItems[selectedIndex]) {
+          filteredItems[selectedIndex].action();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [commandPaletteOpen, filteredItems, selectedIndex, setCommandPaletteOpen]);
+
+  if (!commandPaletteOpen) {
+    return null;
+  }
 
   return (
     <div className="os-palette-backdrop" onClick={() => setCommandPaletteOpen(false)}>
-      <div className="os-palette-modal" onClick={(e) => e.stopPropagation()}>
-        {/* Search Header */}
-        <div className="os-palette-input-row">
+      <div 
+        className="os-palette-modal" 
+        onClick={e => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Command Palette"
+      >
+        {/* Search Header Input */}
+        <div className="os-palette-header">
           <Search size={18} className="os-palette-search-icon" />
           <input
             ref={inputRef}
             type="text"
             className="os-palette-input"
-            placeholder="Search systems, ADRs, benchmarks, commands... (ESC to close)"
+            placeholder="> Search Bhuvan.OS"
             value={query}
-            onChange={(e) => { setQuery(e.target.value); setSelectedIndex(0); }}
-            onKeyDown={handleKeyDown}
+            onChange={e => setQuery(e.target.value)}
           />
           <button 
-            className="os-palette-close-btn"
+            className="os-palette-close-btn" 
             onClick={() => setCommandPaletteOpen(false)}
-            aria-label="Close spotlight"
+            aria-label="Close Command Palette"
           >
             <X size={16} />
           </button>
@@ -206,35 +245,55 @@ export default function CommandPalette() {
         {/* Results List */}
         <div className="os-palette-results">
           {filteredItems.length === 0 ? (
-            <div className="os-palette-empty">No results found for "{query}"</div>
+            <div className="os-palette-empty">
+              <span>No commands matching &ldquo;{query}&rdquo;</span>
+            </div>
           ) : (
-            filteredItems.map((item, idx) => (
-              <div
-                key={item.id}
-                className={`os-palette-item ${idx === selectedIndex ? 'palette-item-selected' : ''}`}
-                onClick={item.action}
-                onMouseEnter={() => setSelectedIndex(idx)}
-              >
-                <div className="palette-item-icon-wrapper">
-                  {item.icon}
-                </div>
-                <div className="palette-item-info">
-                  <div className="palette-item-title-row">
-                    <span className="palette-item-title">{item.title}</span>
-                    <span className="palette-item-category">{item.category}</span>
+            filteredItems.map((item, index) => {
+              const isSelected = index === selectedIndex;
+              return (
+                <div
+                  key={item.id}
+                  className={`os-palette-item ${isSelected ? 'selected' : ''}`}
+                  onClick={() => item.action()}
+                  onMouseEnter={() => setSelectedIndex(index)}
+                >
+                  <div className="os-palette-item-icon">
+                    {item.icon}
                   </div>
-                  <div className="palette-item-desc">{item.description}</div>
+                  <div className="os-palette-item-info">
+                    <div className="os-palette-item-title-row">
+                      <span className="os-palette-item-title">{item.title}</span>
+                      <span className="os-palette-item-category">{item.category}</span>
+                    </div>
+                    <span className="os-palette-item-desc">{item.description}</span>
+                  </div>
+                  {isSelected && (
+                    <span className="os-palette-item-enter">
+                      <CornerDownLeft size={13} />
+                    </span>
+                  )}
                 </div>
-              </div>
-            ))
+              );
+            })
           )}
         </div>
 
-        {/* Footer Shortcut hints */}
+        {/* Footer Navigation Hints */}
         <div className="os-palette-footer">
-          <span>Use <strong>↑</strong> <strong>↓</strong> to navigate</span>
-          <span><strong>↵</strong> to select</span>
-          <span><strong>ESC</strong> to dismiss</span>
+          <div className="os-palette-hint">
+            <kbd className="os-kbd">↑</kbd>
+            <kbd className="os-kbd">↓</kbd>
+            <span>Navigate</span>
+          </div>
+          <div className="os-palette-hint">
+            <kbd className="os-kbd">↵</kbd>
+            <span>Select</span>
+          </div>
+          <div className="os-palette-hint">
+            <kbd className="os-kbd">ESC</kbd>
+            <span>Close</span>
+          </div>
         </div>
       </div>
     </div>

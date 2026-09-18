@@ -105,6 +105,7 @@ export default function WindowFrame({ id, children, externalLink }: WindowFrameP
   return (
     <div
       ref={windowRef}
+      data-window-id={id}
       className={`window-frame ${isActive ? 'window-active' : 'window-inactive'} ${win.isMaximized ? 'window-maximized' : ''}`}
       style={style}
       onMouseDown={() => focusWindow(id)}

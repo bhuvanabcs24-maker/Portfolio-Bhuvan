@@ -107,6 +107,13 @@ export default function DesktopWorkspace() {
       color: '#94a3b8'
     },
     {
+      id: 'contact',
+      moduleCode: '07',
+      label: 'CONTACT',
+      icon: <Mail size={26} />,
+      color: '#14b8a6'
+    },
+    {
       moduleCode: 'DOC',
       label: 'RESUME.PDF',
       icon: <FileDown size={26} />,

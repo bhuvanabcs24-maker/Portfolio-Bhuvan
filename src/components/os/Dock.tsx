@@ -9,6 +9,7 @@ import {
   Package, 
   BookOpen, 
   User, 
+  Mail,
   FileDown
 } from 'lucide-react';
 
@@ -60,6 +61,12 @@ export default function Dock() {
       title: '06 PROFILE (Bhuvan A B · BMSCE)',
       icon: <User size={22} />,
       color: '#94a3b8'
+    },
+    {
+      id: 'contact',
+      title: '07 CONTACT (Direct Dispatcher)',
+      icon: <Mail size={22} />,
+      color: '#14b8a6'
     },
     {
       title: 'Resume (PDF Document)',

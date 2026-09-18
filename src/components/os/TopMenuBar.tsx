@@ -89,6 +89,27 @@ export default function TopMenuBar() {
         <div className="os-current-app">
           {activeWin ? activeWin.title : 'Engineering Workspace'}
         </div>
+
+        {/* Compact System Modules Launcher Bar */}
+        <div className="os-topbar-modules-bar">
+          {[
+            { code: 'SYS', id: 'system' as const },
+            { code: 'FORGEIQ', id: 'forgeiq' as const },
+            { code: 'LAB', id: 'lab' as const },
+            { code: 'OSS', id: 'opensource' as const },
+            { code: 'NOTES', id: 'notes' as const },
+            { code: 'PROFILE', id: 'profile' as const },
+          ].map((m) => (
+            <button
+              key={m.code}
+              className={`os-topbar-mod-btn ${activeWindowId === m.id ? 'active' : ''}`}
+              onClick={() => openWindow(m.id)}
+              title={`Open ${m.code} Module`}
+            >
+              [{m.code}]
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Right Telematics & Controls */}
