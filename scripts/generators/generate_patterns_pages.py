@@ -770,14 +770,10 @@ def generate_page(is_nested=False):
     return html_content
 
 def main():
-    # 1. Generate engineering-patterns.html (root level)
-    root_path = "/Users/bhuvanab/Portfolio/engineering-patterns.html"
-    with open(root_path, "w", encoding="utf-8") as f:
-        f.write(generate_page(is_nested=False))
-    print(f"Generated {root_path} ({os.path.getsize(root_path)} bytes)")
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 
-    # 2. Generate engineering/patterns/index.html (nested route /engineering/patterns)
-    nested_dir = "/Users/bhuvanab/Portfolio/engineering/patterns"
+    # Generate engineering/patterns/index.html (nested route /engineering/patterns)
+    nested_dir = os.path.join(repo_root, "engineering", "patterns")
     os.makedirs(nested_dir, exist_ok=True)
     nested_path = os.path.join(nested_dir, "index.html")
     with open(nested_path, "w", encoding="utf-8") as f:

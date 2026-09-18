@@ -16,14 +16,14 @@ def generate_opensource_html(base_path="."):
     case_study_link = "forgeiq-case-study.html" if base_path == "." else "../forgeiq-case-study.html"
     engineering_link = "engineering.html" if base_path == "." else "../engineering.html"
     notes_link = "notes.html" if base_path == "." else "../notes.html"
-    writing_cad_link = "writing-why-cad-understanding-is-difficult.html" if base_path == "." else "../writing-why-cad-understanding-is-difficult.html"
+    writing_cad_link = "writing/why-cad-understanding-is-difficult/index.html" if base_path == "." else "../writing/why-cad-understanding-is-difficult/index.html"
     about_link = "about.html" if base_path == "." else "../about.html"
     cert_link = "certifications.html" if base_path == "." else "../certifications.html"
     contact_link = "contact.html" if base_path == "." else "../contact.html"
     resume_link = "resume.pdf" if base_path == "." else "../resume.pdf"
-    patterns_link = "engineering-patterns.html" if base_path == "." else "../engineering-patterns.html"
-    evaluation_link = "engineering-evaluation.html" if base_path == "." else "../engineering-evaluation.html"
-    decisions_link = "engineering-decisions.html" if base_path == "." else "../engineering-decisions.html"
+    patterns_link = "engineering/patterns/index.html" if base_path == "." else "../engineering/patterns/index.html"
+    evaluation_link = "engineering/evaluation/index.html" if base_path == "." else "../engineering/evaluation/index.html"
+    decisions_link = "engineering/decisions/index.html" if base_path == "." else "../engineering/decisions/index.html"
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -600,16 +600,18 @@ for i, hole in enumerate(result.holes, 1):
 """
 
 def main():
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+
     # 1. Generate root opensource.html
     root_html = generate_opensource_html(".")
-    with open("opensource.html", "w", encoding="utf-8") as f:
+    with open(os.path.join(repo_root, "opensource.html"), "w", encoding="utf-8") as f:
         f.write(root_html)
     print("Generated opensource.html")
 
     # 2. Generate nested opensource/index.html
-    os.makedirs("opensource", exist_ok=True)
+    os.makedirs(os.path.join(repo_root, "opensource"), exist_ok=True)
     nested_html = generate_opensource_html("..")
-    with open("opensource/index.html", "w", encoding="utf-8") as f:
+    with open(os.path.join(repo_root, "opensource", "index.html"), "w", encoding="utf-8") as f:
         f.write(nested_html)
     print("Generated opensource/index.html")
 

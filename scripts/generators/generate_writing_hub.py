@@ -713,13 +713,15 @@ def build_snapped_geometry_graph(msp, tolerance_mm=0.01):
 """
 
 def main():
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+
     # 1. Generate writing.html & writing/index.html (Writing Hub)
-    root_hub = "/Users/bhuvanab/Portfolio/writing.html"
+    root_hub = os.path.join(repo_root, "writing.html")
     with open(root_hub, "w", encoding="utf-8") as f:
         f.write(generate_hub_page(is_nested=False))
     print(f"Generated {root_hub} ({os.path.getsize(root_hub)} bytes)")
 
-    nested_hub_dir = "/Users/bhuvanab/Portfolio/writing"
+    nested_hub_dir = os.path.join(repo_root, "writing")
     os.makedirs(nested_hub_dir, exist_ok=True)
     nested_hub = os.path.join(nested_hub_dir, "index.html")
     with open(nested_hub, "w", encoding="utf-8") as f:
@@ -727,18 +729,13 @@ def main():
     print(f"Generated {nested_hub} ({os.path.getsize(nested_hub)} bytes)")
 
     # 2. Synchronize notes.html as mirror/redirect to writing.html
-    notes_path = "/Users/bhuvanab/Portfolio/notes.html"
+    notes_path = os.path.join(repo_root, "notes.html")
     with open(notes_path, "w", encoding="utf-8") as f:
         f.write(generate_hub_page(is_nested=False))
     print(f"Synchronized {notes_path} ({os.path.getsize(notes_path)} bytes)")
 
-    # 3. Generate Article 1: why-cad-understanding-is-difficult
-    article_root = "/Users/bhuvanab/Portfolio/writing-why-cad-understanding-is-difficult.html"
-    with open(article_root, "w", encoding="utf-8") as f:
-        f.write(generate_article_page(is_nested=False))
-    print(f"Generated {article_root} ({os.path.getsize(article_root)} bytes)")
-
-    article_dir = "/Users/bhuvanab/Portfolio/writing/why-cad-understanding-is-difficult"
+    # 3. Generate Article 1: why-cad-understanding-is-difficult (nested clean folder route)
+    article_dir = os.path.join(repo_root, "writing", "why-cad-understanding-is-difficult")
     os.makedirs(article_dir, exist_ok=True)
     article_nested = os.path.join(article_dir, "index.html")
     with open(article_nested, "w", encoding="utf-8") as f:
