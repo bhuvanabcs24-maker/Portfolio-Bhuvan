@@ -1,0 +1,219 @@
+export interface Project {
+  id: string;
+  title: string;
+  subtitle: string;
+  tagline: string;
+  category: string;
+  tech: string[];
+  metrics: { label: string; value: string; detail?: string }[];
+  bulletPoints: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+  caseStudyUrl?: string;
+}
+
+export interface Certification {
+  title: string;
+  issuer: string;
+  badgeCategory: 'AI/ML' | 'Systems & Linux' | 'Core Skills' | 'Data & Analytics';
+  skills: string[];
+}
+
+export interface LeadershipItem {
+  organization: string;
+  role: string;
+  period: string;
+  focus: string;
+}
+
+export const PORTFOLIO_DATA = {
+  personal: {
+    name: "Bhuvan A B",
+    role: "Computer Science & Engineering Student",
+    subrole: "Backend Engineering · Full-Stack Development · Applied AI · Problem Solving",
+    college: "BMS College of Engineering (BMSCE)",
+    location: "Bengaluru, India",
+    degree: "B.E., Computer Science & Engineering",
+    graduation: "Expected June 2028",
+    cgpa: "8.08 / 10",
+    email: "bhuvanab.cs24@bmsce.ac.in",
+    resumeUrl: "/resume.pdf",
+    socials: {
+      github: "https://github.com/bhuvanabcs24-maker",
+      linkedin: "https://www.linkedin.com/in/bhuvan-a-b-4805a2330/",
+      leetcode: "https://leetcode.com/u/BHUVANab2006/",
+    },
+    bio: [
+      "I am a Computer Science & Engineering student at BMS College of Engineering (BMSCE, Expected June 2028, CGPA: 8.08) focused on backend engineering, full-stack systems, applied AI, and core problem solving.",
+      "My work centers on building reliable software with deterministic foundations—combining robust REST APIs, modern web interfaces, and applied AI workflows. Rather than treating AI as a black box, I emphasize verifiable architecture, explicit error handling, rigorous testing, and systematic performance optimization."
+    ],
+  },
+
+  skills: {
+    languages: ["C", "Java", "Python", "JavaScript"],
+    coreCS: ["Data Structures & Algorithms", "Problem-Solving", "SQL", "DBMS", "System Design"],
+    webAndTools: ["REST APIs", "FastAPI", "Next.js", "PostgreSQL", "Git", "Linux"],
+    appliedAI: ["Machine Learning", "Neural Networks", "Generative AI", "Prompt Engineering"],
+    spokenLanguages: ["English", "Kannada", "Hindi", "Urdu"]
+  },
+
+  problemSolving: {
+    platform: "LeetCode",
+    solvedCount: "100+",
+    profileUrl: "https://leetcode.com/u/BHUVANab2006/",
+    topics: ["Arrays", "Trees", "Graphs", "Dynamic Programming"],
+    statement: "100+ algorithmic problems solved on LeetCode with continuous practice across core data structures and algorithmic paradigms."
+  },
+
+  aiLearning: {
+    summary: "Earned beginner-level badges across 10 AI learning tracks, developing hands-on understanding of foundational AI concepts and applied model integrations.",
+    tracks: [
+      { name: "Machine Learning Foundations", description: "Supervised & unsupervised baseline modeling principles." },
+      { name: "Natural Language Processing (NLP)", description: "Text preprocessing, embeddings, and token semantics." },
+      { name: "Large Language Models (LLMs)", description: "Model capabilities, prompt structures, and grounded generation." },
+      { name: "Agentic AI Concepts", description: "Multi-step tool invocation, state preservation, and task decomposition." }
+    ]
+  },
+
+  projects: [
+    {
+      id: "forgeiq",
+      title: "ForgeIQ",
+      subtitle: "AI-Powered Manufacturing Intelligence Platform",
+      tagline: "Deterministic CAD feature parsing, 40+ secure REST endpoints, 9-stage tracking pipeline, and 5.5x throughput load-tested optimization.",
+      category: "Full-Stack / Systems / Applied AI",
+      tech: ["Python", "FastAPI", "Next.js / React", "PostgreSQL", "CAD Parsing", "NLP"],
+      metrics: [
+        { label: "Pricing Accuracy", value: "96.9%", detail: "Production model benchmark" },
+        { label: "REST Endpoints", value: "40+", detail: "OpenAPI 3.1 & JWT auth" },
+        { label: "Production Stages", value: "9 Stages", detail: "End-to-end tracking" },
+        { label: "Throughput Gain", value: "5.5x", detail: "860 → 4,589 req/s in load test" },
+        { label: "Test Suite", value: "33 Pytest + 14 E2E", detail: "Automated test coverage" }
+      ],
+      bulletPoints: [
+        "Designed and implemented CAD feature parsing and deterministic geometry extraction engine for manufacturing workflows.",
+        "Built secure REST API with 40+ endpoints, JWT authentication, rate limiting, and comprehensive error handling.",
+        "Engineered pricing and quotation system achieving 96.9% accuracy on production benchmark models.",
+        "Built 9-stage production tracking pipeline with real-time order status updates and customer-scoped portal.",
+        "Validated system reliability with 33/33 pytest unit/integration tests, 14 Playwright E2E tests, and load testing achieving a 5.5x throughput improvement."
+      ],
+      githubUrl: "https://github.com/bhuvanabcs24-maker/Forge-IQ",
+      liveUrl: "https://forge-iq-gold.vercel.app",
+      caseStudyUrl: "/forgeiq-case-study"
+    },
+    {
+      id: "qwait",
+      title: "QWait Estimator",
+      subtitle: "Queue & Wait-Time Management Platform",
+      tagline: "QR-based patient check-in, live status tracking, doctor/staff operational dashboard, and venue mapping for healthcare clinics.",
+      category: "Full-Stack Web App",
+      tech: ["Next.js / React", "Supabase", "QR Check-in", "Live Queue Tracking", "Real-time Dashboards", "Interactive Mapping"],
+      metrics: [
+        { label: "Check-in Method", value: "QR-Based", detail: "Instant zero-app friction" },
+        { label: "Status Mode", value: "Real-Time", detail: "Live queue telematics" },
+        { label: "Operational Views", value: "Doctor & Staff", detail: "Multi-role dashboard" },
+        { label: "Spatial Context", value: "Venue Mapping", detail: "Floor & zone navigation" }
+      ],
+      bulletPoints: [
+        "Built queue management system for clinics with QR-based check-in and live status tracking for waiting patients.",
+        "Designed responsive doctor and staff dashboard providing wait-time estimates and operational visibility.",
+        "Implemented interactive venue mapping to streamline patient movement and clinic floor efficiency."
+      ],
+      githubUrl: "https://github.com/bhuvanabcs24-maker/QueueEstimater",
+      caseStudyUrl: "/projects#qwait"
+    }
+  ] as Project[],
+
+  leadership: [
+    {
+      organization: "Rotaract Club of BMSCE",
+      role: "Member & Social Services Volunteer",
+      period: "2024–Present",
+      focus: "Community social service initiatives, student welfare activities, and active club member coordination."
+    },
+    {
+      organization: "Drug Free Karnataka",
+      role: "Health Initiative Volunteer",
+      period: "July 2025",
+      focus: "Community youth awareness outreach and support for drug abuse prevention campaigns."
+    },
+    {
+      organization: "UTASV",
+      role: "Education Initiative Volunteer",
+      period: "April–May 2025",
+      focus: "Supported student learning drives and educational resource distribution campaigns."
+    }
+  ] as LeadershipItem[],
+
+  achievements: [
+    {
+      title: "FFE Scholarship",
+      organization: "Foundation for Excellence",
+      date: "December 2024",
+      description: "Prestigious merit-cum-means scholarship awarded to academically exceptional engineering students."
+    },
+    {
+      title: "100+ LeetCode Problems Solved",
+      organization: "LeetCode",
+      date: "Ongoing",
+      description: "Consistent practice across Arrays, Trees, Graphs, and Dynamic Programming."
+    },
+    {
+      title: "10 AI Learning Tracks Completed",
+      organization: "Industry & Academic Badges",
+      date: "Foundational Badges",
+      description: "Earned beginner-level badges across Machine Learning, NLP, LLMs, and Agentic AI."
+    }
+  ],
+
+  certifications: [
+    {
+      title: "Applied AI Foundations",
+      issuer: "OpenAI Academy",
+      badgeCategory: "AI/ML",
+      skills: ["Applied AI", "Prompt Design", "AI Systems"]
+    },
+    {
+      title: "Generative AI for Everyone",
+      issuer: "DeepLearning.AI",
+      badgeCategory: "AI/ML",
+      skills: ["Generative AI", "LLM Workflows", "Business Impact"]
+    },
+    {
+      title: "Introduction to AI Concepts",
+      issuer: "Microsoft",
+      badgeCategory: "AI/ML",
+      skills: ["AI Principles", "Computer Vision", "Machine Learning"]
+    },
+    {
+      title: "Responsible AI & Risk Management",
+      issuer: "IBM SkillsBuild",
+      badgeCategory: "AI/ML",
+      skills: ["AI Ethics", "Risk Governance", "Bias Mitigation"]
+    },
+    {
+      title: "Red Hat RH104 – Getting Started with Linux Fundamentals",
+      issuer: "Red Hat",
+      badgeCategory: "Systems & Linux",
+      skills: ["Linux CLI", "File Permissions", "Shell Fundamentals"]
+    },
+    {
+      title: "Red Hat RH124 – Red Hat System Administration I",
+      issuer: "Red Hat",
+      badgeCategory: "Systems & Linux",
+      skills: ["Process Management", "Storage Config", "Systemd Services"]
+    },
+    {
+      title: "Data Analytics Job Simulation",
+      issuer: "Deloitte Australia (Forage)",
+      badgeCategory: "Data & Analytics",
+      skills: ["Data Analysis", "Dashboard Insights", "Client Communication"]
+    },
+    {
+      title: "Learning How to Learn",
+      issuer: "Coursera",
+      badgeCategory: "Core Skills",
+      skills: ["Cognitive Chunking", "Focused/Diffuse Thinking", "Memory Retention"]
+    }
+  ] as Certification[]
+};
