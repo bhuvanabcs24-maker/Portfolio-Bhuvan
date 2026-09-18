@@ -105,6 +105,28 @@ export default function EngineeringPage() {
               <span>Explore Patterns →</span>
             </Link>
           </div>
+
+          {/* Engineering Learnings */}
+          <div className="card-elevated" style={{
+            padding: '1.5rem',
+            border: '1px solid rgba(245, 158, 11, 0.35)',
+            background: 'linear-gradient(135deg, rgba(30, 24, 14, 0.95), rgba(15, 23, 42, 0.85))',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: '1rem'
+          }}>
+            <div>
+              <div className="badge badge-amber" style={{ marginBottom: '0.4rem' }}>Retrospective</div>
+              <h3 style={{ fontSize: '1.1rem', marginBottom: '0.25rem' }}>Engineering Learnings</h3>
+              <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.55 }}>
+                6 authentic iteration stories: what was tried, what broke, why it mattered, and what changed.
+              </p>
+            </div>
+            <Link href="/engineering/learnings" className="btn btn-secondary" style={{ fontSize: '0.8rem', padding: '0.45rem 1rem', alignSelf: 'flex-start', color: '#fcd34d', borderColor: 'rgba(245, 158, 11, 0.4)' }}>
+              <span>Read 6 Stories →</span>
+            </Link>
+          </div>
         </div>
 
         {/* Principle 1 */}
