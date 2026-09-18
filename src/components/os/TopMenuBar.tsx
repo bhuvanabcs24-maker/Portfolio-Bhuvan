@@ -9,7 +9,14 @@ import {
   Cpu, 
   FileText, 
   Monitor, 
-  BookOpen
+  BookOpen,
+  Search,
+  X,
+  Zap,
+  Package,
+  User,
+  Mail,
+  FileDown
 } from 'lucide-react';
 
 export default function TopMenuBar() {
@@ -24,6 +31,7 @@ export default function TopMenuBar() {
   } = useOS();
   const [timeStr, setTimeStr] = useState('');
   const [systemMenuOpen, setSystemMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Live Bengaluru Time (IST)
   useEffect(() => {
@@ -149,11 +157,121 @@ export default function TopMenuBar() {
           <span>K</span>
         </button>
 
+        {/* Mobile Controls: [ MENU ] + [ ⌘K ] */}
+        <div className="os-mobile-header-controls">
+          <button
+            className="os-mobile-menu-btn"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Open System Menu"
+          >
+            [ MENU ]
+          </button>
+
+          <button 
+            className="os-cmd-k-btn mobile"
+            onClick={toggleCommandPalette}
+            title="Search systems (Cmd+K)"
+            aria-label="Open Search Command Palette"
+          >
+            <Search size={12} />
+            <span>⌘K</span>
+          </button>
+        </div>
+
         {/* Real-time Bengaluru Clock */}
         <div className="os-clock">
           {timeStr || '12:00:00 IST'}
         </div>
       </div>
+
+      {/* Full-screen Mobile System Panels Launcher Drawer */}
+      {mobileMenuOpen && (
+        <div className="os-mobile-drawer-overlay" role="dialog" aria-label="System Menu">
+          <div className="os-mobile-drawer">
+            <div className="os-mobile-drawer-head">
+              <div className="os-mobile-drawer-title">
+                <span className="os-brand-name">BHUVAN.OS</span>
+                <span className="os-status-dot-sm" />
+                <span className="os-online-text">ONLINE</span>
+              </div>
+              <button 
+                className="os-mobile-drawer-close"
+                onClick={() => setMobileMenuOpen(false)}
+                aria-label="Close Menu"
+              >
+                <X size={16} />
+                <span>CLOSE</span>
+              </button>
+            </div>
+
+            {/* Search-First Navigation Trigger */}
+            <div 
+              className="os-mobile-drawer-search"
+              onClick={() => {
+                setMobileMenuOpen(false);
+                toggleCommandPalette();
+              }}
+              role="button"
+              tabIndex={0}
+              aria-label="Open Command Palette Search"
+            >
+              <Search size={14} color="#38bdf8" />
+              <span>&gt; Search Bhuvan.OS (Cmd+K)</span>
+            </div>
+
+            {/* Modules as Full-Screen System Panel Launchers */}
+            <div className="os-mobile-modules-list">
+              <div className="os-mobile-sec-label">SYSTEM MODULES</div>
+              {[
+                { id: 'system', code: '01 SYS', label: 'SYSTEM', desc: 'Shell, Diagnostics & Telemetry', icon: <Terminal size={18} /> },
+                { id: 'forgeiq', code: '02 FORGEIQ', label: 'FORGEIQ', desc: 'AI Manufacturing Intelligence Flagship', icon: <Zap size={18} /> },
+                { id: 'lab', code: '03 LAB', label: 'ENGINEERING LAB', desc: '10 ADRs, AI Eval & System Patterns', icon: <Cpu size={18} /> },
+                { id: 'opensource', code: '04 OSS', label: 'OPEN SOURCE', desc: 'dxf-contour-extractor Pipeline', icon: <Package size={18} /> },
+                { id: 'notes', code: '05 NOTES', label: 'NOTES', desc: 'Engineering Systems Writing', icon: <BookOpen size={18} /> },
+                { id: 'profile', code: '06 PROFILE', label: 'PROFILE', desc: 'Bhuvan A B · BMSCE 2028', icon: <User size={18} /> },
+                { id: 'contact', code: '07 CONTACT', label: 'CONTACT', desc: 'Minimal Communication Terminal', icon: <Mail size={18} /> },
+              ].map((item) => (
+                <button
+                  key={item.id}
+                  className="os-mobile-module-row"
+                  onClick={() => {
+                    openWindow(item.id as any);
+                    setMobileMenuOpen(false);
+                  }}
+                >
+                  <div className="os-mobile-mod-icon">{item.icon}</div>
+                  <div className="os-mobile-mod-text">
+                    <div className="os-mobile-mod-head">
+                      <span className="os-mobile-mod-code">{item.code}</span>
+                      <span className="os-mobile-mod-name">{item.label}</span>
+                    </div>
+                    <div className="os-mobile-mod-desc">{item.desc}</div>
+                  </div>
+                  <span className="os-system-btn-bracket">[OPEN]</span>
+                </button>
+              ))}
+
+              <a
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="os-mobile-module-row resume"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <div className="os-mobile-mod-icon"><FileDown size={18} /></div>
+                <div className="os-mobile-mod-text">
+                  <div className="os-mobile-mod-head">
+                    <span className="os-mobile-mod-code">DOC</span>
+                    <span className="os-mobile-mod-name">RESUME.PDF</span>
+                  </div>
+                  <div className="os-mobile-mod-desc">Download Official Verified PDF</div>
+                </div>
+                <span className="os-system-btn-bracket">[VIEW]</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

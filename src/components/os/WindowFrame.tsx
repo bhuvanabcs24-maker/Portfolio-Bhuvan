@@ -158,11 +158,21 @@ export default function WindowFrame({ id, children, externalLink }: WindowFrameP
               rel="noopener noreferrer" 
               className="window-action-btn"
               title="Open full page"
+              aria-label={`Open external link for ${win.title}`}
               onClick={(e) => e.stopPropagation()}
             >
               <ExternalLink size={13} />
             </a>
           )}
+          {/* Explicit Mobile Panel Close Button (Non-color reliant) */}
+          <button
+            className="os-mobile-panel-close-btn"
+            onClick={(e) => { e.stopPropagation(); closeWindow(id); }}
+            aria-label={`Close ${win.title}`}
+          >
+            <X size={13} />
+            <span>CLOSE</span>
+          </button>
         </div>
       </div>
 

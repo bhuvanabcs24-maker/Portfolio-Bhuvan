@@ -3292,3 +3292,300 @@ code.inline {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* ==========================================================
+   MOBILE SYSTEM CONTROLS & FULL-SCREEN SYSTEM PANELS
+   ========================================================== */
+
+.os-mobile-header-controls {
+  display: none;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.os-mobile-menu-btn {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.25rem 0.6rem;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #38bdf8;
+  border-radius: 4px;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: all 0.15s ease;
+}
+
+.os-mobile-menu-btn:hover {
+  background: rgba(56, 189, 248, 0.22);
+}
+
+.os-mobile-panel-close-btn {
+  display: none;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #f87171;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .os-mobile-header-controls {
+    display: flex;
+  }
+  .os-topbar-modules-bar,
+  .os-mode-toggle-btn,
+  .os-status-pill {
+    display: none !important;
+  }
+  .os-current-app {
+    display: none !important;
+  }
+  .os-mobile-panel-close-btn {
+    display: inline-flex;
+  }
+  .window-controls {
+    display: none; /* Replaced by explicit non-color-reliant CLOSE button */
+  }
+}
+
+/* Full-Screen Mobile Drawer Overlay */
+.os-mobile-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: rgba(6, 9, 15, 0.85);
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+}
+
+.os-mobile-drawer {
+  background: #090d16;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 100vh;
+  overflow-y: auto;
+  padding: 1.25rem 1rem 2rem;
+}
+
+.os-mobile-drawer-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.os-mobile-drawer-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.os-mobile-drawer-close {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.35rem 0.75rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #f8fafc;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.os-mobile-drawer-search {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 0.85rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-bottom: 1.25rem;
+  cursor: pointer;
+}
+
+.os-mobile-modules-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.os-mobile-sec-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.25rem;
+}
+
+.os-mobile-module-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+  width: 100%;
+}
+
+.os-mobile-module-row:hover,
+.os-mobile-module-row:focus {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+.os-mobile-mod-icon {
+  color: #38bdf8;
+  flex-shrink: 0;
+}
+
+.os-mobile-mod-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.os-mobile-mod-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  margin-bottom: 0.15rem;
+}
+
+.os-mobile-mod-code {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #38bdf8;
+}
+
+.os-mobile-mod-name {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #f8fafc;
+}
+
+.os-mobile-mod-desc {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: #94a3b8;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ==========================================================
+   3D SYSTEM CORE GEOMETRY & DATA FLOW
+   ========================================================== */
+
+.os-system-core-container {
+  background: #0b0f19;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: 8px;
+  padding: 0.85rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.os-system-core-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #38bdf8;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+}
+
+.os-system-core-canvas {
+  width: 100%;
+  height: 240px;
+  display: block;
+  border-radius: 6px;
+  background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.03) 0%, transparent 70%);
+}
+
+.os-core-fallback {
+  padding: 1rem;
+  background: #0e1422;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+/* ==========================================================
+   PHYSICAL SYSTEM MOTION & ANIMATIONS
+   Snappy window opening, smooth panel expansion, zero excessive bounce
+   ========================================================== */
+
+@keyframes windowPhysicsOpen {
+  from {
+    opacity: 0;
+    transform: scale(0.98) translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.window-frame {
+  animation: windowPhysicsOpen 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+/* ==========================================================
+   ACCESSIBILITY: FOCUS VISIBLE & PREFERS-REDUCED-MOTION
+   ========================================================== */
+
+:focus-visible {
+  outline: 2px solid #38bdf8 !important;
+  outline-offset: 2px !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .window-frame {
+    animation: none !important;
+  }
+  .os-status-dot,
+  .os-status-dot-sm,
+  .terminal-cursor {
+    animation: none !important;
+  }
+}
+

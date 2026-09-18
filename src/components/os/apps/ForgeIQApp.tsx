@@ -15,6 +15,7 @@ import {
 import { useOS } from '../OSContext';
 import ForgeIQSystemMap from '@/components/ForgeIQSystemMap';
 import EngineeringEvidenceDashboard from '@/components/EngineeringEvidenceDashboard';
+import ForgeIQSystemCore from '../ForgeIQSystemCore';
 
 export default function ForgeIQApp() {
   const { openWindow } = useOS();
@@ -280,6 +281,11 @@ export default function ForgeIQApp() {
             <p style={{ fontSize: '0.85rem', color: '#94a3b8', lineHeight: 1.6, marginBottom: '1.25rem' }}>
               Generic LLMs fail on CAD files: they cannot perform sub-millimeter Euclidean vertex snapping, trace cycle bases, or reliably extract toolpaths. ForgeIQ splits work across two decoupled layers:
             </p>
+
+            {/* 3D System Core Topology Visualization */}
+            <div style={{ marginBottom: '1.25rem' }}>
+              <ForgeIQSystemCore />
+            </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem' }}>
               <div className="os-card" style={{ padding: '1rem', borderLeft: '3px solid #34d399' }}>

@@ -248,6 +248,18 @@ def run_os_tests():
         assert any("LOAD TEST: 5.5× throughput improvement" in em for em in evidence_metrics), "Load test metric missing"
         print("✓ Engineering Evidence Dashboard verified (40+ endpoints, 33/33 pytest, 14 E2E, 96.9% pricing, 5.5x throughput).")
 
+        # C. Switch to Deterministic Geometry Engine Tab & Verify 3D System Core
+        print("  • Switching to Deterministic Geometry Engine tab...")
+        arch_tab_btn = driver.find_element(By.XPATH, "//button[contains(., 'Deterministic Geometry Engine')]")
+        driver.execute_script("arguments[0].click();", arch_tab_btn)
+        time.sleep(0.4)
+
+        core_container = driver.find_element(By.CLASS_NAME, "os-system-core-container")
+        assert core_container.is_displayed(), "3D System Core container missing"
+        core_canvas = driver.find_element(By.CLASS_NAME, "os-system-core-canvas")
+        assert core_canvas.is_displayed(), "3D System Core canvas missing"
+        print("✓ Lightweight 3D System Core (CAD topology & data-flow) verified.")
+
         # ----------------------------------------------------
         # 6. Verify SYSTEM Application Module (Shell & Benchmarks)
         # ----------------------------------------------------
@@ -500,6 +512,44 @@ def run_os_tests():
         mobile_img = os.path.join(artifacts_dir, "bhuvan_os_mobile.png")
         driver.save_screenshot(mobile_img)
         print(f"✓ Mobile Screenshot saved: {mobile_img}")
+
+        # Test Mobile Menu & Full-screen System Panel
+        print("  • Testing Mobile [ MENU ] Drawer & Full-screen System Panels...")
+        mobile_menu_btn = driver.find_element(By.CLASS_NAME, "os-mobile-menu-btn")
+        assert mobile_menu_btn.is_displayed(), "Mobile [ MENU ] button not visible on mobile"
+        driver.execute_script("arguments[0].click();", mobile_menu_btn)
+        time.sleep(0.4)
+
+        mobile_drawer = driver.find_element(By.CLASS_NAME, "os-mobile-drawer-overlay")
+        assert mobile_drawer.is_displayed(), "Mobile drawer overlay did not open"
+
+        # Verify modules inside drawer
+        drawer_mod_rows = driver.find_elements(By.CLASS_NAME, "os-mobile-module-row")
+        assert len(drawer_mod_rows) >= 7, f"Expected >= 7 modules in mobile drawer, found {len(drawer_mod_rows)}"
+        print(f"  • Found {len(drawer_mod_rows)} system module rows in mobile drawer.")
+
+        # Tap Profile to open as full-screen system panel
+        profile_row = [r for r in drawer_mod_rows if "PROFILE" in r.text][0]
+        driver.execute_script("arguments[0].click();", profile_row)
+        time.sleep(0.5)
+
+        # Verify Profile opened as full-screen panel
+        profile_win = driver.find_element(By.CSS_SELECTOR, "[data-window-id='profile']")
+        assert profile_win.is_displayed(), "Profile panel not open"
+        
+        # Verify close button on mobile
+        mobile_close_btn = profile_win.find_element(By.CLASS_NAME, "os-mobile-panel-close-btn")
+        assert mobile_close_btn.is_displayed(), "Mobile CLOSE button missing on panel"
+        driver.execute_script("arguments[0].click();", mobile_close_btn)
+        time.sleep(0.4)
+        print("✓ Mobile experience verified: [ MENU ] drawer -> full-screen system panels -> non-color-reliant close.")
+
+        # Verify zero horizontal overflow on mobile
+        scroll_width = driver.execute_script("return document.documentElement.scrollWidth;")
+        client_width = driver.execute_script("return document.documentElement.clientWidth;")
+        print(f"  • Mobile Viewport Width: {client_width}px, Scroll Width: {scroll_width}px")
+        assert scroll_width <= client_width + 1, f"Horizontal overflow detected on mobile: {scroll_width} > {client_width}"
+        print("✓ Zero horizontal overflow verified on mobile.")
 
         # ----------------------------------------------------
         # 11. Check Console Errors
