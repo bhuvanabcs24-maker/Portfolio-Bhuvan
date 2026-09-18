@@ -55,4 +55,28 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   });
+
+  // ADR Category Filter Logic
+  const adrFilterBtns = document.querySelectorAll('.adr-filter-btn');
+  const adrCards = document.querySelectorAll('.adr-card');
+
+  if (adrFilterBtns.length > 0 && adrCards.length > 0) {
+    adrFilterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const category = btn.getAttribute('data-category');
+
+        adrFilterBtns.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        adrCards.forEach((card) => {
+          const cardCategories = (card.getAttribute('data-category') || '').split(' ');
+          if (category === 'all' || cardCategories.includes(category)) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  }
 });
