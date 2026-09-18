@@ -3,10 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ForgeIQ Engineering Case Study | Bhuvan A B</title>
-  <meta name="description" content="In-depth engineering retrospective of ForgeIQ: CAD feature parsing, 40+ REST API endpoints, 96.9% quotation accuracy, and 5.5x throughput load-test optimization.">
+  <title>ForgeIQ Case Study — Deterministic CAD & 5.5x Optimization | Bhuvan A B</title>
+  <meta name="description" content="Technical post-mortem on ForgeIQ by Bhuvan A B: building deterministic CAD geometry parsing, 40+ FastAPI endpoints, 9-stage tracking, and 5.5x load test throughput optimization.">
+  <link rel="canonical" href="https://bhuvanab.dev/forgeiq-case-study.html">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://bhuvanab.dev/forgeiq-case-study.html">
+  <meta property="og:title" content="ForgeIQ Case Study — Deterministic CAD & 5.5x Optimization | Bhuvan A B">
+  <meta property="og:description" content="Technical post-mortem on ForgeIQ by Bhuvan A B: building deterministic CAD geometry parsing, 40+ FastAPI endpoints, 9-stage tracking, and 5.5x load test throughput optimization.">
+  <meta property="og:site_name" content="Bhuvan A B Portfolio">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ForgeIQ Case Study — Deterministic CAD & 5.5x Optimization | Bhuvan A B">
+  <meta name="twitter:description" content="Technical post-mortem on ForgeIQ by Bhuvan A B: building deterministic CAD geometry parsing, 40+ FastAPI endpoints, 9-stage tracking, and 5.5x load test throughput optimization.">
+
+  <!-- Performance & Favicon -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="icon" type="image/svg+xml" href="public/favicon.ico">
 </head>
 <body>
 
@@ -207,33 +224,33 @@ class PartGeometryFeatures(BaseModel):
                   <th>Benchmark Metric</th>
                   <th>Baseline (Before)</th>
                   <th>Optimized (After)</th>
-                  <th>Net Improvement</th>
+                  <th>Status / Verified Improvement</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>System Throughput</strong></td>
+                  <td><strong>Peak Throughput (Load Test)</strong></td>
                   <td>860 req/sec</td>
                   <td style="color: #6ee7b7; font-weight: 700;">4,589 req/sec</td>
-                  <td><span class="badge badge-emerald">5.5x (+433.6%)</span></td>
+                  <td><span class="badge badge-emerald">5.5x Throughput Improvement</span></td>
                 </tr>
                 <tr>
-                  <td><strong>End-to-End p95 Latency</strong></td>
-                  <td>58.1 ms</td>
-                  <td style="color: #6ee7b7; font-weight: 700;">10.9 ms</td>
-                  <td><span class="badge badge-blue">-81.2% latency drop</span></td>
+                  <td><strong>Pricing Model Accuracy</strong></td>
+                  <td>Baseline heuristics</td>
+                  <td style="color: #6ee7b7; font-weight: 700;">96.9%</td>
+                  <td><span class="badge badge-blue">Production Model Benchmark</span></td>
                 </tr>
                 <tr>
-                  <td><strong>p99 Latency Spikes</strong></td>
-                  <td>380 ms</td>
-                  <td style="color: #6ee7b7; font-weight: 700;">24.2 ms</td>
-                  <td><span class="badge badge-emerald">-93.6% reduction</span></td>
+                  <td><strong>Automated Test Suite</strong></td>
+                  <td>Manual sanity checks</td>
+                  <td style="color: #6ee7b7; font-weight: 700;">33 Pytest + 14 Playwright</td>
+                  <td><span class="badge badge-emerald">All 47 Tests Passing</span></td>
                 </tr>
                 <tr>
-                  <td><strong>Concurrency Target</strong></td>
-                  <td>50 concurrent users</td>
-                  <td style="color: #6ee7b7; font-weight: 700;">50 concurrent users</td>
-                  <td>Zero dropped connections</td>
+                  <td><strong>Granular p99 APM Latency</strong></td>
+                  <td>Uninstrumented</td>
+                  <td><span style="color: var(--text-muted);">Measurement planned</span></td>
+                  <td><span class="badge">Tracing in progress</span></td>
                 </tr>
               </tbody>
             </table>
