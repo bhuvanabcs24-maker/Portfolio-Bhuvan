@@ -127,6 +127,50 @@ export default function EngineeringPage() {
               <span>Read 6 Stories →</span>
             </Link>
           </div>
+
+          {/* Open Source */}
+          <div className="card-elevated" style={{
+            padding: '1.5rem',
+            border: '1px solid rgba(16, 185, 129, 0.35)',
+            background: 'linear-gradient(135deg, rgba(10, 30, 22, 0.95), rgba(15, 23, 42, 0.85))',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: '1rem'
+          }}>
+            <div>
+              <div className="badge badge-emerald" style={{ marginBottom: '0.4rem' }}>Modularity</div>
+              <h3 style={{ fontSize: '1.1rem', marginBottom: '0.25rem' }}>Open Source</h3>
+              <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.55 }}>
+                Standalone geometric extraction (<code style={{ fontFamily: 'var(--font-mono)', color: '#34d399' }}>dxf-contour-extractor</code>) and 3 candidate decoupling roadmaps.
+              </p>
+            </div>
+            <Link href="/opensource" className="btn btn-secondary" style={{ fontSize: '0.8rem', padding: '0.45rem 1rem', alignSelf: 'flex-start', color: '#34d399', borderColor: 'rgba(16, 185, 129, 0.4)' }}>
+              <span>Explore Packages →</span>
+            </Link>
+          </div>
+
+          {/* Technical Writing */}
+          <div className="card-elevated" style={{
+            padding: '1.5rem',
+            border: '1px solid rgba(96, 165, 250, 0.35)',
+            background: 'linear-gradient(135deg, rgba(14, 26, 45, 0.95), rgba(15, 23, 42, 0.85))',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: '1rem'
+          }}>
+            <div>
+              <div className="badge badge-blue" style={{ marginBottom: '0.4rem' }}>Editorial Hub</div>
+              <h3 style={{ fontSize: '1.1rem', marginBottom: '0.25rem' }}>Technical Notes</h3>
+              <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.55 }}>
+                Deep dives on CAD geometry, AI system safety, manufacturing workflows, and retrieval trade-offs.
+              </p>
+            </div>
+            <Link href="/writing" className="btn btn-secondary" style={{ fontSize: '0.8rem', padding: '0.45rem 1rem', alignSelf: 'flex-start', color: '#60a5fa', borderColor: 'rgba(96, 165, 250, 0.4)' }}>
+              <span>Read Writing Hub →</span>
+            </Link>
+          </div>
         </div>
 
         {/* Principle 1 */}
