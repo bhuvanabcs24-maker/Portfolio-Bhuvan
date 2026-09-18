@@ -84,18 +84,35 @@
           </p>
         </div>
 
-        <!-- Architectural Decision Records Callout -->
-        <div class="card-elevated" style="margin-bottom: 3rem; padding: 1.5rem 1.75rem; border: 1px solid rgba(96, 165, 250, 0.35); background: linear-gradient(135deg, rgba(14, 22, 41, 0.95), rgba(15, 23, 42, 0.85)); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.25rem;">
-          <div>
-            <div class="badge badge-amber" style="margin-bottom: 0.4rem;">New Architectural Records</div>
-            <h3 style="font-size: 1.15rem; margin-bottom: 0.25rem;">Engineering Decisions (14 ADRs)</h3>
-            <p style="font-size: 0.875rem; color: var(--text-secondary); margin: 0; max-width: 540px;">
-              Inspect real architectural choices, rejected alternatives, and trade-offs across PostgreSQL, FastAPI, pgvector, provider abstraction, and testing.
-            </p>
+        <!-- Engineering Artifacts Grid -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+          <!-- ADR Callout -->
+          <div class="card-elevated" style="padding: 1.5rem 1.75rem; border: 1px solid rgba(96, 165, 250, 0.35); background: linear-gradient(135deg, rgba(14, 22, 41, 0.95), rgba(15, 23, 42, 0.85)); display: flex; flex-direction: column; justify-content: space-between; gap: 1rem;">
+            <div>
+              <div class="badge badge-amber" style="margin-bottom: 0.4rem;">Architectural Records</div>
+              <h3 style="font-size: 1.15rem; margin-bottom: 0.25rem;">Engineering Decisions (14 ADRs)</h3>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; line-height: 1.55;">
+                Inspect real architectural choices, rejected alternatives, and trade-offs across PostgreSQL, FastAPI, pgvector, and provider abstraction.
+              </p>
+            </div>
+            <a href="engineering/decisions/index.html" class="btn btn-primary" style="font-size: 0.85rem; padding: 0.55rem 1.15rem; align-self: flex-start;">
+              <span>Browse 14 Decisions →</span>
+            </a>
           </div>
-          <a href="engineering/decisions/index.html" class="btn btn-primary" style="font-size: 0.85rem; padding: 0.55rem 1.15rem;">
-            <span>Browse All 14 Decisions →</span>
-          </a>
+
+          <!-- AI Evaluation Lab Callout -->
+          <div class="card-elevated" style="padding: 1.5rem 1.75rem; border: 1px solid rgba(168, 85, 247, 0.35); background: linear-gradient(135deg, rgba(20, 16, 41, 0.95), rgba(15, 23, 42, 0.85)); display: flex; flex-direction: column; justify-content: space-between; gap: 1rem;">
+            <div>
+              <div class="badge badge-purple" style="margin-bottom: 0.4rem;">Systematic Lab</div>
+              <h3 style="font-size: 1.15rem; margin-bottom: 0.25rem;">AI Evaluation Lab</h3>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; line-height: 1.55;">
+                8-pillar measurement framework, 7 physical failure modes, and deterministic mitigation strategies.
+              </p>
+            </div>
+            <a href="engineering/evaluation/index.html" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.55rem 1.15rem; align-self: flex-start; color: #d8b4fe; border-color: rgba(168, 85, 247, 0.4);">
+              <span>Open Evaluation Lab →</span>
+            </a>
+          </div>
         </div>
 
         <!-- Tenet 1 -->
