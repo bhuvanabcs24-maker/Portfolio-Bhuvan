@@ -216,19 +216,72 @@ def run_os_tests():
         # ----------------------------------------------------
         # 7. Test Dock & Launching Other Modules
         # ----------------------------------------------------
-        print("\n--- 7. Testing Dock Navigation ---")
+        print("\n--- 7. Testing Engineering Lab, Open Source Pipeline & IDE Notes ---")
         dock = driver.find_element(By.CLASS_NAME, "os-dock")
         assert dock.is_displayed(), "System dock missing"
         
-        # Click Open Source icon in dock
+        # A. Open ENGINEERING LAB via Dock
+        eng_lab_btn = driver.find_element(By.CSS_SELECTOR, ".os-dock-item[title*='ENGINEERING LAB']")
+        driver.execute_script("arguments[0].click();", eng_lab_btn)
+        time.sleep(0.6)
+
+        lab_cards = driver.find_elements(By.CLASS_NAME, "os-lab-module-card")
+        assert len(lab_cards) == 4, f"Expected 4 engineering lab module cards, found {len(lab_cards)}"
+        lab_card_texts = [c.text.replace("\n", " ") for c in lab_cards]
+        for lct in lab_card_texts:
+            print(f"  • Lab Module: {lct}")
+        assert any("10 ADRs" in t for t in lab_card_texts), "10 ADRs count missing"
+        assert any("8 DIMENSIONS" in t for t in lab_card_texts), "8 DIMENSIONS count missing"
+        assert any("4 SYSTEM PATTERNS" in t for t in lab_card_texts), "4 SYSTEM PATTERNS count missing"
+        assert any("4 RETROSPECTIVES" in t for t in lab_card_texts), "4 RETROSPECTIVES count missing"
+        print("✓ Engineering Lab verified with exact counts (10 ADRs, 8 Dimensions, 4 Patterns, 4 Retrospectives).")
+
+        # Click AI EVALUATION module card in Lab
+        eval_card = [c for c in lab_cards if "AI EVALUATION" in c.text][0]
+        driver.execute_script("arguments[0].click();", eval_card)
+        time.sleep(0.4)
+        eval_items = driver.find_elements(By.CLASS_NAME, "os-eval-card")
+        print(f"✓ Found {len(eval_items)} evaluation dimension cards.")
+        assert len(eval_items) == 8, f"Expected 8 evaluation dimension cards, found {len(eval_items)}"
+
+        # B. Open OPEN SOURCE via Dock
         opensource_dock_btn = driver.find_element(By.CSS_SELECTOR, ".os-dock-item[title*='OPEN SOURCE']")
         driver.execute_script("arguments[0].click();", opensource_dock_btn)
-        time.sleep(0.5)
+        time.sleep(0.6)
 
-        # Check that Open Source window is open
-        open_wins = driver.find_elements(By.CLASS_NAME, "window-frame")
-        print(f"✓ Active windows after opening Open Source: {len(open_wins)}")
-        assert len(open_wins) >= 3, "Open Source window failed to launch"
+        # Verify 5 Pipeline Stages
+        pipeline_nodes = driver.find_elements(By.CLASS_NAME, "os-pipeline-step-node")
+        print(f"✓ Found {len(pipeline_nodes)} pipeline nodes:")
+        pipeline_names = [n.find_element(By.CLASS_NAME, "os-pipeline-step-name").text for n in pipeline_nodes]
+        print(f"  • Pipeline: {' -> '.join(pipeline_names)}")
+        assert pipeline_names == ["DXF", "Parser", "Topology", "Geometry", "Manufacturing Metrics"], "Pipeline sequence mismatch"
+
+        # Click Geometry step to test interactive live inspection
+        driver.execute_script("arguments[0].click();", pipeline_nodes[3])
+        time.sleep(0.3)
+        inspect_val = driver.find_element(By.CLASS_NAME, "os-inspect-val").text
+        print(f"✓ Inspected Geometry payload: {inspect_val}")
+        print("✓ Open Source dxf-contour-extractor live pipeline & inspection verified.")
+
+        # C. Open NOTES via Dock
+        notes_dock_btn = driver.find_element(By.CSS_SELECTOR, ".os-dock-item[title*='NOTES']")
+        driver.execute_script("arguments[0].click();", notes_dock_btn)
+        time.sleep(0.6)
+
+        # Verify Topic Pills
+        topic_pills = driver.find_elements(By.CLASS_NAME, "os-ide-filter-pill")
+        topic_texts = [p.text for p in topic_pills]
+        print(f"✓ Found IDE Topic filter pills: {topic_texts}")
+        expected_topics = ["All", "CAD", "AI Engineering", "Backend", "Systems", "Testing"]
+        for et in expected_topics:
+            assert et in topic_texts, f"Topic '{et}' missing from Notes"
+
+        # Verify IDE line numbers and editor tab
+        ide_tab = driver.find_element(By.CLASS_NAME, "os-ide-tab").text
+        assert "why_cad_understanding_is_difficult.md" in ide_tab, "Active doc tab missing"
+        line_nums = driver.find_elements(By.CLASS_NAME, "os-ide-line-num")
+        assert len(line_nums) > 10, "Line numbers missing in IDE doc view"
+        print(f"✓ IDE Technical Notes Document Viewer verified ({len(line_nums)} rendered lines with gutter).")
 
         # ----------------------------------------------------
         # 8. Test Command Palette (Cmd+K)
