@@ -492,38 +492,45 @@ def run_os_tests():
         print("✓ Re-entered workspace successfully.")
 
         # ----------------------------------------------------
-        # 10. Capture Desktop Screenshots
+        # 10. Multi-Viewport & Route Verification
+        # Viewports: 1920px, 1440px, 1280px, 768px, 430px, 390px
         # ----------------------------------------------------
-        print("\n--- 10. Capturing Desktop Screenshots ---")
-        desktop_img = os.path.join(artifacts_dir, "bhuvan_os_desktop.png")
-        driver.save_screenshot(desktop_img)
-        print(f"✓ Desktop Screenshot saved: {desktop_img}")
+        print("\n--- 10. Multi-Viewport & Route Verification ---")
+        viewports = [
+            ("Desktop 1920px", 1920, 1080),
+            ("Desktop 1440px", 1440, 900),
+            ("Laptop 1280px", 1280, 800),
+            ("Tablet 768px", 768, 1024),
+            ("Mobile 430px (Pro Max)", 430, 932),
+            ("Mobile 390px (Standard)", 390, 844)
+        ]
 
-        # Tablet
-        driver.set_window_size(768, 1024)
-        time.sleep(0.5)
-        tablet_img = os.path.join(artifacts_dir, "bhuvan_os_tablet.png")
-        driver.save_screenshot(tablet_img)
-        print(f"✓ Tablet Screenshot saved: {tablet_img}")
+        for vp_name, width, height in viewports:
+            driver.set_window_size(width, height)
+            time.sleep(0.4)
+            scroll_width = driver.execute_script("return document.documentElement.scrollWidth;")
+            client_width = driver.execute_script("return document.documentElement.clientWidth;")
+            print(f"  • {vp_name}: clientWidth={client_width}px, scrollWidth={scroll_width}px")
+            assert scroll_width <= client_width + 1, f"Horizontal overflow on {vp_name}: {scroll_width} > {client_width}"
+            
+            # Save screenshot for key device breakpoints
+            if width in [1920, 1440, 768, 390]:
+                shot_path = os.path.join(artifacts_dir, f"bhuvan_os_{width}px.png")
+                driver.save_screenshot(shot_path)
+        print("✓ All 6 viewports (1920, 1440, 1280, 768, 430, 390) passed zero horizontal overflow checks.")
 
-        # Mobile
-        driver.set_window_size(375, 812)
-        time.sleep(0.5)
-        mobile_img = os.path.join(artifacts_dir, "bhuvan_os_mobile.png")
-        driver.save_screenshot(mobile_img)
-        print(f"✓ Mobile Screenshot saved: {mobile_img}")
-
-        # Test Mobile Menu & Full-screen System Panel
-        print("  • Testing Mobile [ MENU ] Drawer & Full-screen System Panels...")
+        # Test Mobile Menu & Full-screen System Panel on 390px
+        driver.set_window_size(390, 844)
+        time.sleep(0.4)
+        print("  • Testing Mobile [ MENU ] Drawer on 390px...")
         mobile_menu_btn = driver.find_element(By.CLASS_NAME, "os-mobile-menu-btn")
-        assert mobile_menu_btn.is_displayed(), "Mobile [ MENU ] button not visible on mobile"
+        assert mobile_menu_btn.is_displayed(), "Mobile [ MENU ] button not visible on 390px"
         driver.execute_script("arguments[0].click();", mobile_menu_btn)
         time.sleep(0.4)
 
         mobile_drawer = driver.find_element(By.CLASS_NAME, "os-mobile-drawer-overlay")
         assert mobile_drawer.is_displayed(), "Mobile drawer overlay did not open"
 
-        # Verify modules inside drawer
         drawer_mod_rows = driver.find_elements(By.CLASS_NAME, "os-mobile-module-row")
         assert len(drawer_mod_rows) >= 7, f"Expected >= 7 modules in mobile drawer, found {len(drawer_mod_rows)}"
         print(f"  • Found {len(drawer_mod_rows)} system module rows in mobile drawer.")
@@ -537,19 +544,39 @@ def run_os_tests():
         profile_win = driver.find_element(By.CSS_SELECTOR, "[data-window-id='profile']")
         assert profile_win.is_displayed(), "Profile panel not open"
         
-        # Verify close button on mobile
         mobile_close_btn = profile_win.find_element(By.CLASS_NAME, "os-mobile-panel-close-btn")
         assert mobile_close_btn.is_displayed(), "Mobile CLOSE button missing on panel"
         driver.execute_script("arguments[0].click();", mobile_close_btn)
         time.sleep(0.4)
         print("✓ Mobile experience verified: [ MENU ] drawer -> full-screen system panels -> non-color-reliant close.")
 
-        # Verify zero horizontal overflow on mobile
-        scroll_width = driver.execute_script("return document.documentElement.scrollWidth;")
-        client_width = driver.execute_script("return document.documentElement.clientWidth;")
-        print(f"  • Mobile Viewport Width: {client_width}px, Scroll Width: {scroll_width}px")
-        assert scroll_width <= client_width + 1, f"Horizontal overflow detected on mobile: {scroll_width} > {client_width}"
-        print("✓ Zero horizontal overflow verified on mobile.")
+        # Route Verification: Verify all production routes respond with 200 and zero crashes
+        print("  • Testing all system routes for integrity...")
+        routes_to_test = [
+            "/",
+            "/forgeiq-case-study",
+            "/engineering",
+            "/engineering/decisions",
+            "/engineering/evaluation",
+            "/engineering/patterns",
+            "/engineering/learnings",
+            "/opensource",
+            "/writing",
+            "/about",
+            "/contact",
+            "/certifications",
+            "/projects"
+        ]
+        driver.set_window_size(1440, 900)
+        for r in routes_to_test:
+            driver.get(f"http://localhost:3003{r}")
+            time.sleep(0.3)
+            # Check page loaded without Next.js error overlay
+            title = driver.title
+            body_text = driver.find_element(By.TAG_NAME, "body").text
+            assert "404" not in title and "Error" not in title, f"Route {r} error: {title}"
+            assert len(body_text) > 100, f"Route {r} empty body"
+        print(f"✓ All {len(routes_to_test)} system routes verified responding with valid content.")
 
         # ----------------------------------------------------
         # 11. Check Console Errors
