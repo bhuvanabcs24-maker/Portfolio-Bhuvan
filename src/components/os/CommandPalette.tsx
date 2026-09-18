@@ -63,6 +63,14 @@ export default function CommandPalette() {
       action: () => { openWindow('lab'); setCommandPaletteOpen(false); }
     },
     {
+      id: 'cmd-engineering',
+      title: 'Open Engineering',
+      category: 'Modules',
+      description: 'Full-screen engineering environment & architecture decisions (/engineering)',
+      icon: <Cpu size={16} color="#c084fc" />,
+      action: () => { window.location.href = '/engineering'; setCommandPaletteOpen(false); }
+    },
+    {
       id: 'cmd-adrs',
       title: 'Open Architecture Decisions',
       category: 'Engineering',
@@ -117,6 +125,14 @@ export default function CommandPalette() {
       description: 'Bhuvan A B — BMSCE (Expected 2028, CGPA 8.08), Skills, LeetCode 100+',
       icon: <User size={16} color="#94a3b8" />,
       action: () => { openWindow('profile'); setCommandPaletteOpen(false); }
+    },
+    {
+      id: 'cmd-contact',
+      title: 'Open Contact',
+      category: 'Modules',
+      description: 'Minimal communication dispatcher (Email, LinkedIn, GitHub, LeetCode)',
+      icon: <Mail size={16} color="#ec4899" />,
+      action: () => { openWindow('contact'); setCommandPaletteOpen(false); }
     },
     {
       id: 'cmd-resume',
@@ -247,7 +263,7 @@ export default function CommandPalette() {
             ref={inputRef}
             type="text"
             className="os-palette-input"
-            placeholder="> Search Bhuvan.OS"
+            placeholder="> Search Bhuvan.OS..."
             value={query}
             onChange={e => setQuery(e.target.value)}
           />
