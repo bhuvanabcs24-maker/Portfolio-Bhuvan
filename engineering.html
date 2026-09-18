@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Engineering Philosophy & Principles | Bhuvan A B</title>
-  <meta name="description" content="Technical principles, deterministic vs probabilistic design, testing discipline, and API architecture by Bhuvan A B.">
+  <title>Engineering Philosophy | Bhuvan A B | BMSCE (2028)</title>
+  <meta name="description" content="Technical principles, deterministic vs probabilistic systems, testing discipline, and schema contracts by Bhuvan A B.">
   <link rel="stylesheet" href="css/style.css">
   <link rel="icon" type="image/svg+xml" href="public/favicon.ico">
 </head>
@@ -16,7 +16,7 @@
         <div class="brand-icon">B</div>
         <div>
           <span style="font-weight: 700; font-size: 1rem; color: var(--text-primary); display: block;">Bhuvan A B</span>
-          <span style="font-size: 0.72rem; color: var(--text-muted); display: block;">BMSCE · Expected 2028</span>
+          <span style="font-size: 0.72rem; color: var(--text-muted); display: block;">BMSCE · Expected June 2028</span>
         </div>
       </a>
 
@@ -60,87 +60,97 @@
     <div class="section" style="padding-top: 4rem; padding-bottom: 6rem;">
       <div class="container" style="max-width: 900px;">
         <div style="margin-bottom: 3.5rem;">
-          <div class="badge badge-emerald" style="margin-bottom: 0.65rem;">Technical Discipline & Practices</div>
-          <h1>Engineering Philosophy</h1>
+          <div class="badge badge-emerald" style="margin-bottom: 0.65rem;">Production Discipline &amp; Architecture</div>
+          <h1>Engineering Principles for Production Systems</h1>
           <p style="font-size: 1.15rem; color: var(--text-secondary); margin-top: 0.75rem; line-height: 1.65;">
-            Principles that guide how I architect systems, write tests, separate concerns between deterministic code and AI models, and optimize performance.
+            How I approach system design, test verification, boundary separation between deterministic math and probabilistic AI, and latency profiling.
           </p>
         </div>
 
-        <!-- Principle 1 -->
-        <article class="card-elevated" style="margin-bottom: 2.5rem; padding: 2rem;">
-          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-            <div style="width: 2.25rem; height: 2.25rem; border-radius: var(--radius-sm); background: rgba(59, 130, 246, 0.15); display: flex; align-items: center; justify-content: center; color: #60a5fa; font-weight: 800;">
+        <!-- Tenet 1 -->
+        <article class="card-elevated" style="margin-bottom: 2.5rem; padding: 2.25rem;">
+          <div style="display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1rem;">
+            <div style="width: 2.25rem; height: 2.25rem; border-radius: var(--radius-md); background: rgba(37, 99, 235, 0.15); display: flex; align-items: center; justify-content: center; color: #60a5fa; font-weight: 800; font-family: var(--font-mono);">
               01
             </div>
-            <h2 style="font-size: 1.5rem;">Deterministic Foundations Over Probabilistic Guesses</h2>
+            <h2 style="font-size: 1.45rem;">Deterministic Foundations First, AI Where It Adds True Value</h2>
           </div>
-          <p style="line-height: 1.7; color: var(--text-secondary); margin-bottom: 1rem;">
-            Modern AI is powerful for unstructured semantic understanding and synthesis. However, in engineering and transactional workflows (such as CAD manufacturing geometry, pricing formulas, and healthcare queue states), relying on probabilistic language models introduces severe hallucination risks.
+          <p style="line-height: 1.75; color: var(--text-secondary); margin-bottom: 1rem;">
+            Generative AI excels at exploratory user interaction, summarization, and extracting structure from natural language. But for transactional systems, numerical calculations, and physical constraints (like manufacturing dimensions or financial billing), AI models must never be the single source of truth.
           </p>
           <div class="callout">
-            <strong style="color: var(--text-primary);">Rule in Practice:</strong>
-            <p style="font-size: 0.875rem; margin-top: 0.35rem; color: var(--text-secondary);">
-              In <strong>ForgeIQ</strong>, physical dimensions, cutting contours, and part pricing are calculated purely with deterministic vector parsing (Python/ezdxf) and mathematical formulas (achieving 96.9% benchmark accuracy). AI is strictly isolated to NLP tasks like extracting customer notes or RFQ metadata.
+            <strong style="color: var(--text-primary);">Architecture Rule:</strong>
+            <p style="font-size: 0.875rem; margin-top: 0.35rem; color: var(--text-secondary); line-height: 1.6;">
+              In <strong>ForgeIQ</strong>, physical CAD feature parsing (cutting contours, sheet area, hole piercing count) is 100% deterministic using Python geometry algorithms (achieving 96.9% quotation accuracy). NLP models are used strictly to parse unstructured buyer notes and alloy specifications.
             </p>
           </div>
         </article>
 
-        <!-- Principle 2 -->
-        <article class="card-elevated" style="margin-bottom: 2.5rem; padding: 2rem;">
-          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-            <div style="width: 2.25rem; height: 2.25rem; border-radius: var(--radius-sm); background: rgba(16, 185, 129, 0.15); display: flex; align-items: center; justify-content: center; color: #34d399; font-weight: 800;">
+        <!-- Tenet 2 -->
+        <article class="card-elevated" style="margin-bottom: 2.5rem; padding: 2.25rem;">
+          <div style="display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1rem;">
+            <div style="width: 2.25rem; height: 2.25rem; border-radius: var(--radius-md); background: rgba(16, 185, 129, 0.15); display: flex; align-items: center; justify-content: center; color: #34d399; font-weight: 800; font-family: var(--font-mono);">
               02
             </div>
-            <h2 style="font-size: 1.5rem;">Rigorous Test Discipline Over "It Works on My Machine"</h2>
+            <h2 style="font-size: 1.45rem;">Testing is Part of the Feature, Not an Afterthought</h2>
           </div>
-          <p style="line-height: 1.7; color: var(--text-secondary); margin-bottom: 1rem;">
-            Code without automated verification is technical debt. A robust test suite allows fearless refactoring, ensures edge cases in algorithmic logic are preserved, and validates that optimizations do not break system correctness.
+          <p style="line-height: 1.75; color: var(--text-secondary); margin-bottom: 1.25rem;">
+            Without automated tests, code cannot be safely refactored or optimized under load. A reliable test harness verifies business edge cases and guarantees zero regressions when optimizing throughput.
           </p>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1rem;">
-            <div class="card" style="background: rgba(8, 12, 20, 0.5);">
-              <div style="color: #60a5fa; font-weight: 700; margin-bottom: 0.4rem;">Unit & Integration (Pytest)</div>
-              <p style="font-size: 0.85rem; color: var(--text-secondary);">
-                33 automated unit tests validating CAD entity parsing, bounding box limits, piercing counters, and edge-case exceptions.
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem;">
+            <div class="card" style="background: rgba(8, 12, 20, 0.6);">
+              <div style="color: #60a5fa; font-weight: 700; margin-bottom: 0.4rem;">33 Pytest Tests (Unit &amp; Integration)</div>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.55;">
+                Verifies CAD parsing edge cases: degenerate splines, zero-area contours, unclosed loops, and parametric pricing rule outputs.
               </p>
             </div>
-            <div class="card" style="background: rgba(8, 12, 20, 0.5);">
-              <div style="color: #34d399; font-weight: 700; margin-bottom: 0.4rem;">End-to-End Browser (Playwright)</div>
-              <p style="font-size: 0.85rem; color: var(--text-secondary);">
-                14 automated Playwright browser tests validating buyer sign-in, multi-file uploads, real-time calculation renders, and order status transitions.
+            <div class="card" style="background: rgba(8, 12, 20, 0.6);">
+              <div style="color: #34d399; font-weight: 700; margin-bottom: 0.4rem;">14 Playwright E2E Tests</div>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.55;">
+                Validates the browser journey: multi-file DXF upload, instant quotation calculation rendering, customer order confirmation, and status progression.
               </p>
             </div>
           </div>
         </article>
 
-        <!-- Principle 3 -->
-        <article class="card-elevated" style="margin-bottom: 2.5rem; padding: 2rem;">
-          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-            <div style="width: 2.25rem; height: 2.25rem; border-radius: var(--radius-sm); background: rgba(168, 85, 247, 0.15); display: flex; align-items: center; justify-content: center; color: #c084fc; font-weight: 800;">
+        <!-- Tenet 3 -->
+        <article class="card-elevated" style="margin-bottom: 2.5rem; padding: 2.25rem;">
+          <div style="display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1rem;">
+            <div style="width: 2.25rem; height: 2.25rem; border-radius: var(--radius-md); background: rgba(168, 85, 247, 0.15); display: flex; align-items: center; justify-content: center; color: #c084fc; font-weight: 800; font-family: var(--font-mono);">
               03
             </div>
-            <h2 style="font-size: 1.5rem;">Explicit API Contracts & Type Safety</h2>
+            <h2 style="font-size: 1.45rem;">Explicit Schema Contracts &amp; Edge Validation</h2>
           </div>
-          <p style="line-height: 1.7; color: var(--text-secondary); margin-bottom: 1rem;">
-            System boundaries should be explicitly defined with schemas and types, eliminating silent runtime errors. By using Pydantic schemas in FastAPI and TypeScript interfaces on the frontend, data structures are validated at compile time and runtime boundaries.
+          <p style="line-height: 1.75; color: var(--text-secondary); margin-bottom: 1rem;">
+            Eliminate runtime bugs at the edge. By strictly defining request and response schemas with Pydantic in FastAPI and TypeScript interfaces in web clients, systems reject malformed data immediately before executing business logic.
           </p>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.65rem; font-size: 0.9rem; color: var(--text-secondary);">
+            <li style="display: flex; align-items: flex-start; gap: 0.6rem;">
+              <span style="color: #3b82f6;">✔</span>
+              <span><strong>OpenAPI 3.1 Documentation:</strong> 40+ endpoints documented with strict schema models and error codes.</span>
+            </li>
+            <li style="display: flex; align-items: flex-start; gap: 0.6rem;">
+              <span style="color: #3b82f6;">✔</span>
+              <span><strong>Tenant Isolation:</strong> JWT claims enforce data partitioning at the database query layer.</span>
+            </li>
+          </ul>
         </article>
 
-        <!-- Principle 4 -->
-        <article class="card-elevated" style="margin-bottom: 3.5rem; padding: 2rem;">
-          <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1rem;">
-            <div style="width: 2.25rem; height: 2.25rem; border-radius: var(--radius-sm); background: rgba(245, 158, 11, 0.15); display: flex; align-items: center; justify-content: center; color: #fbbf24; font-weight: 800;">
+        <!-- Tenet 4 -->
+        <article class="card-elevated" style="margin-bottom: 3.5rem; padding: 2.25rem;">
+          <div style="display: flex; align-items: center; gap: 0.85rem; margin-bottom: 1rem;">
+            <div style="width: 2.25rem; height: 2.25rem; border-radius: var(--radius-md); background: rgba(245, 158, 11, 0.15); display: flex; align-items: center; justify-content: center; color: #fbbf24; font-weight: 800; font-family: var(--font-mono);">
               04
             </div>
-            <h2 style="font-size: 1.5rem;">Data-Driven Profiling & Evidence-Based Optimization</h2>
+            <h2 style="font-size: 1.45rem;">Evidence-Based Performance Profiling</h2>
           </div>
-          <p style="line-height: 1.7; color: var(--text-secondary); margin-bottom: 1rem;">
-            Premature optimization is wasteful, but profiling under load is essential. Rather than assuming where latency lies, I measure real query execution times, inspect database query plans, and stress-test endpoints under concurrency.
+          <p style="line-height: 1.75; color: var(--text-secondary); margin-bottom: 1rem;">
+            Don't guess where latency originates—measure it. Profiling query execution plans (<code>EXPLAIN ANALYZE</code>) and load testing with simulated concurrent users exposes real bottlenecks in connection pools, joins, and event loops.
           </p>
           <div class="callout callout-emerald">
-            <strong style="color: var(--text-primary);">Verified Optimization Result:</strong>
-            <p style="font-size: 0.875rem; margin-top: 0.35rem; color: var(--text-secondary);">
-              Profiling ForgeIQ under a continuous 50-client load test isolated N+1 roundtrips and event-loop thread contention. Systematic database indexing and process-pool offloading increased throughput by <strong>5.5x</strong> (from 860 to 4,589 req/sec) and lowered p95 latency from 58.1 ms to 10.9 ms.
+            <strong style="color: var(--text-primary);">Validated Benchmark Result:</strong>
+            <p style="font-size: 0.875rem; margin-top: 0.35rem; color: var(--text-secondary); line-height: 1.6;">
+              Under a 50-client load test, ForgeIQ scaled throughput from <strong>860 to 4,589 req/sec (5.5x gain)</strong> and dropped p95 latency from 58.1 ms down to 10.9 ms through single-trip CTE queries, composite B-Tree indexes, and asynchronous process-pool execution.
             </p>
           </div>
         </article>

@@ -32,4 +32,27 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  // Interactive Architecture Tab Switching
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  tabBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-target');
+      const parentContainer = btn.closest('.tab-wrapper');
+      if (!parentContainer || !targetId) return;
+
+      // Update button active state
+      parentContainer.querySelectorAll('.tab-btn').forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      // Update pane active state
+      parentContainer.querySelectorAll('.tab-pane').forEach((pane) => {
+        if (pane.id === targetId) {
+          pane.style.display = 'block';
+        } else {
+          pane.style.display = 'none';
+        }
+      });
+    });
+  });
 });
