@@ -23,7 +23,7 @@ export default function EngineeringPage() {
     <div className="section" style={{ paddingTop: '4rem', paddingBottom: '6rem' }}>
       <div className="container" style={{ maxWidth: '900px' }}>
         {/* Page Header */}
-        <div style={{ marginBottom: '3.5rem' }}>
+        <div style={{ marginBottom: '3rem' }}>
           <div className="badge badge-emerald" style={{ marginBottom: '0.65rem' }}>
             Technical Discipline & Practices
           </div>
@@ -31,6 +31,80 @@ export default function EngineeringPage() {
           <p style={{ fontSize: '1.15rem', color: 'var(--text-secondary)', marginTop: '0.75rem', lineHeight: 1.65 }}>
             Principles that guide how I architect systems, write tests, separate concerns between deterministic code and AI models, and optimize performance.
           </p>
+        </div>
+
+        {/* Engineering Deep Dives Grid */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+          gap: '1.25rem',
+          marginBottom: '3rem'
+        }}>
+          {/* ADRs */}
+          <div className="card-elevated" style={{
+            padding: '1.5rem',
+            border: '1px solid rgba(96, 165, 250, 0.35)',
+            background: 'linear-gradient(135deg, rgba(14, 22, 41, 0.95), rgba(15, 23, 42, 0.85))',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: '1rem'
+          }}>
+            <div>
+              <div className="badge badge-amber" style={{ marginBottom: '0.4rem' }}>ADRs</div>
+              <h3 style={{ fontSize: '1.1rem', marginBottom: '0.25rem' }}>Engineering Decisions</h3>
+              <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.55 }}>
+                14 Architectural Decision Records documenting real system constraints and trade-offs.
+              </p>
+            </div>
+            <Link href="/engineering/decisions" className="btn btn-primary" style={{ fontSize: '0.8rem', padding: '0.45rem 1rem', alignSelf: 'flex-start' }}>
+              <span>Browse 14 ADRs →</span>
+            </Link>
+          </div>
+
+          {/* AI Evaluation */}
+          <div className="card-elevated" style={{
+            padding: '1.5rem',
+            border: '1px solid rgba(168, 85, 247, 0.35)',
+            background: 'linear-gradient(135deg, rgba(20, 16, 41, 0.95), rgba(15, 23, 42, 0.85))',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: '1rem'
+          }}>
+            <div>
+              <div className="badge badge-purple" style={{ marginBottom: '0.4rem' }}>Verification Lab</div>
+              <h3 style={{ fontSize: '1.1rem', marginBottom: '0.25rem' }}>AI Evaluation Lab</h3>
+              <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.55 }}>
+                8-pillar measurement framework, 7 physical failure modes, and mitigation strategies.
+              </p>
+            </div>
+            <Link href="/engineering/evaluation" className="btn btn-secondary" style={{ fontSize: '0.8rem', padding: '0.45rem 1rem', alignSelf: 'flex-start', color: '#d8b4fe', borderColor: 'rgba(168, 85, 247, 0.4)' }}>
+              <span>Open Eval Lab →</span>
+            </Link>
+          </div>
+
+          {/* Engineering Patterns */}
+          <div className="card-elevated" style={{
+            padding: '1.5rem',
+            border: '1px solid rgba(52, 211, 153, 0.35)',
+            background: 'linear-gradient(135deg, rgba(14, 30, 25, 0.95), rgba(15, 23, 42, 0.85))',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            gap: '1rem'
+          }}>
+            <div>
+              <div className="badge badge-emerald" style={{ marginBottom: '0.4rem' }}>Handbook</div>
+              <h3 style={{ fontSize: '1.1rem', marginBottom: '0.25rem' }}>Engineering Patterns</h3>
+              <p style={{ fontSize: '0.825rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.55 }}>
+                5 genuine reusable patterns: AI Factory, Grounding, RBAC State Machine, Hybrid Search, and Worker Offload.
+              </p>
+            </div>
+            <Link href="/engineering/patterns" className="btn btn-secondary" style={{ fontSize: '0.8rem', padding: '0.45rem 1rem', alignSelf: 'flex-start', color: '#6ee7b7', borderColor: 'rgba(52, 211, 153, 0.4)' }}>
+              <span>Explore Patterns →</span>
+            </Link>
+          </div>
         </div>
 
         {/* Principle 1 */}

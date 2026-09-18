@@ -79,4 +79,29 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  // Engineering Patterns Category Filter Logic
+  const patternFilterBtns = document.querySelectorAll('.pattern-filter-btn');
+  const patternCards = document.querySelectorAll('.pattern-card');
+
+  if (patternFilterBtns.length > 0 && patternCards.length > 0) {
+    patternFilterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const category = btn.getAttribute('data-category');
+
+        patternFilterBtns.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        patternCards.forEach((card) => {
+          const cardCategories = (card.getAttribute('data-category') || '').split(' ');
+          if (category === 'all' || cardCategories.includes(category)) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  }
 });
+
