@@ -26,6 +26,13 @@ export interface LeadershipItem {
   focus: string;
 }
 
+export interface TimelineItem {
+  year: string;
+  title: string;
+  description: string;
+  badges: string[];
+}
+
 export const PORTFOLIO_DATA = {
   personal: {
     name: "Bhuvan A B",
@@ -64,6 +71,33 @@ export const PORTFOLIO_DATA = {
     topics: ["Arrays", "Trees", "Graphs", "Dynamic Programming"],
     statement: "100+ algorithmic problems solved on LeetCode with continuous practice across core data structures and algorithmic paradigms."
   },
+
+  timeline: [
+    {
+      year: "2024",
+      title: "Foundations & Full-Stack Experimentation",
+      description: "Explored fundamental computer science principles, core data structures in C and Java, and modern web application development with React and JavaScript.",
+      badges: ["Core CS", "Data Structures", "JavaScript", "C & Java"]
+    },
+    {
+      year: "2025",
+      title: "Backend + Databases + AI Exploration",
+      description: "Deepened backend systems engineering: relational modeling with PostgreSQL, high-performance async APIs with FastAPI, and early experiments with LLM prompting and vector retrieval.",
+      badges: ["FastAPI", "PostgreSQL", "Relational Modeling", "LLM APIs"]
+    },
+    {
+      year: "2026",
+      title: "ForgeIQ + Production-Oriented AI Engineering",
+      description: "Architected and engineered ForgeIQ: combining deterministic CAD computational geometry with LLM intelligence, 40+ REST endpoints, 47 automated tests, and 5.5x throughput optimization.",
+      badges: ["ForgeIQ", "CAD Geometry", "Systems Architecture", "47 Tests"]
+    },
+    {
+      year: "2027",
+      title: "Software Engineering Interview Preparation + Deeper Systems/AI",
+      description: "Deepening algorithmic problem solving (100+ LeetCode problems solved), distributed system design patterns, concurrency models, and resilient AI system architectures.",
+      badges: ["LeetCode 100+", "System Design", "Distributed Systems", "Applied AI"]
+    }
+  ] as TimelineItem[],
 
   aiLearning: {
     summary: "Earned beginner-level badges across 10 AI learning tracks, developing hands-on understanding of foundational AI concepts and applied model integrations.",

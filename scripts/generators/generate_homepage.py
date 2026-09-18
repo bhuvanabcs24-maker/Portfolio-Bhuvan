@@ -1,4 +1,13 @@
-<!DOCTYPE html>
+#!/usr/bin/env python3
+"""
+Generator for index.html (Static HTML Homepage).
+Strictly matches the 10-step recruiter hierarchy and narrative arc of src/app/page.tsx.
+"""
+
+import os
+
+def generate_homepage_html():
+    return """<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -931,3 +940,14 @@
   <script src="js/main.js"></script>
 </body>
 </html>
+"""
+
+def main():
+    repo_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+    index_path = os.path.join(repo_root, "index.html")
+    with open(index_path, "w", encoding="utf-8") as f:
+        f.write(generate_homepage_html())
+    print(f"Generated {index_path} ({os.path.getsize(index_path)} bytes)")
+
+if __name__ == "__main__":
+    main()
