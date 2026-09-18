@@ -28,3 +28,6 @@ yarn-error.log*
 # TypeScript cache
 *.tsbuildinfo
 next-env.d.ts
+
+# Scratch
+scratch/
