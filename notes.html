@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Writing & Technical Notes | Bhuvan A B</title>
+  <meta name="description" content="Technical notes and architectural writeups by Bhuvan A B on applied AI, deterministic systems, algorithmic patterns, and queue modeling.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="public/favicon.ico">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav-container">
+      <a href="index.html" class="nav-brand">
+        <div class="brand-icon">B</div>
+        <div>
+          <span style="font-weight: 700; font-size: 1rem; color: var(--text-primary); display: block;">Bhuvan A B</span>
+          <span style="font-size: 0.72rem; color: var(--text-muted); display: block;">BMSCE · Expected 2028</span>
+        </div>
+      </a>
+
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="forgeiq-case-study.html">ForgeIQ Case Study</a>
+        <a href="engineering.html">Engineering</a>
+        <a href="notes.html" class="active">Writing / Notes</a>
+        <a href="about.html">About</a>
+        <a href="certifications.html">Certifications</a>
+        <a href="contact.html">Contact</a>
+        <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-primary" style="margin-left: 0.5rem; gap: 0.4rem;">
+          <span>Resume</span>
+        </a>
+      </nav>
+
+      <button class="mobile-toggle" aria-label="Toggle navigation menu">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <div class="mobile-menu">
+      <a href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="forgeiq-case-study.html">ForgeIQ Case Study</a>
+      <a href="engineering.html">Engineering</a>
+      <a href="notes.html" style="color: var(--text-accent); font-weight: 600;">Writing / Notes</a>
+      <a href="about.html">About</a>
+      <a href="certifications.html">Certifications</a>
+      <a href="contact.html">Contact</a>
+      <div style="padding-top: 0.75rem; border-top: 1px solid var(--border-subtle);">
+        <a href="resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="width: 100%;">
+          Download Resume (PDF)
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="section" style="padding-top: 4rem; padding-bottom: 6rem;">
+      <div class="container" style="max-width: 900px;">
+        <div style="margin-bottom: 3.5rem;">
+          <div class="badge badge-purple" style="margin-bottom: 0.65rem;">Technical Documentation & Retrospectives</div>
+          <h1>Writing &amp; Notes</h1>
+          <p style="font-size: 1.15rem; color: var(--text-secondary); margin-top: 0.75rem; line-height: 1.65;">
+            Practical writeups and engineering observations based on real project building, coursework at BMSCE (Expected June 2028), algorithmic problem solving, and foundational AI learning tracks.
+          </p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 2rem;">
+          <article class="card-elevated" style="padding: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+              <span class="badge badge-blue">Systems & CAD</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Engineering Note</span>
+            </div>
+            <h2 style="font-size: 1.45rem; margin-bottom: 0.75rem; color: var(--text-primary); line-height: 1.35;">
+              Deterministic vs. Probabilistic Architecture: Why Manufacturing Can’t Rely on Vision LLMs
+            </h2>
+            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 1.25rem;">
+              When building ForgeIQ, the initial question was whether to feed CAD drawings directly into multimodal models. This note examines why vector-level geometry parsing (ezdxf) is mandatory for physical tolerances, and where LLMs actually provide value (unstructured RFQ text).
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.45rem;">
+              <span class="badge">#CAD Parsing</span>
+              <span class="badge">#FastAPI</span>
+              <span class="badge">#System Architecture</span>
+              <span class="badge">#Applied AI</span>
+            </div>
+          </article>
+
+          <article class="card-elevated" style="padding: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+              <span class="badge badge-purple">Applied AI</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Learning Track Synthesis</span>
+            </div>
+            <h2 style="font-size: 1.45rem; margin-bottom: 0.75rem; color: var(--text-primary); line-height: 1.35;">
+              Synthesizing 10 AI Learning Tracks: What Grounded AI Means for Software Engineers
+            </h2>
+            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 1.25rem;">
+              A structured review of foundational concepts learned across 10 industry tracks (Machine Learning, NLP, LLMs, and Agentic AI). Highlights why prompt engineering and tool invocation require strict input validation and boundary guards.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.45rem;">
+              <span class="badge">#Machine Learning</span>
+              <span class="badge">#NLP</span>
+              <span class="badge">#LLMs</span>
+              <span class="badge">#Agentic AI</span>
+            </div>
+          </article>
+
+          <article class="card-elevated" style="padding: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+              <span class="badge badge-emerald">Core CS</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Problem Solving Retrospective</span>
+            </div>
+            <h2 style="font-size: 1.45rem; margin-bottom: 0.75rem; color: var(--text-primary); line-height: 1.35;">
+              Algorithmic Patterns from 100+ LeetCode Problems and How They Apply to Backend Services
+            </h2>
+            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 1.25rem;">
+              Connecting data structure fundamentals—graphs for dependency trees, dynamic programming for resource allocation, and sliding windows for rate limiters—to real backend engineering problems in FastAPI and PostgreSQL.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.45rem;">
+              <span class="badge">#Data Structures</span>
+              <span class="badge">#Algorithms</span>
+              <span class="badge">#LeetCode</span>
+              <span class="badge">#System Design</span>
+            </div>
+          </article>
+
+          <article class="card-elevated" style="padding: 2rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+              <span class="badge badge-amber">Web Architecture</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Architecture Note</span>
+            </div>
+            <h2 style="font-size: 1.45rem; margin-bottom: 0.75rem; color: var(--text-primary); line-height: 1.35;">
+              Designing Real-Time Queue Dashboards: Lessons from QWait Estimator
+            </h2>
+            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 1.25rem;">
+              Analyzing client-side QR check-in flows, doctor consultation state progression, and interactive venue mapping. How to manage real-time updates and estimate patient wait times under uncertain appointment lengths.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.45rem;">
+              <span class="badge">#Next.js</span>
+              <span class="badge">#Real-time Dashboards</span>
+              <span class="badge">#Queue Theory</span>
+              <span class="badge">#UI/UX</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; font-size: 0.85rem; color: var(--text-muted);">
+        <div>© 2026 Bhuvan A B · BMSCE Bangalore</div>
+        <div>Expected June 2028 · CGPA: 8.08</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
