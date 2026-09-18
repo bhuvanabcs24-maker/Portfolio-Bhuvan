@@ -41,7 +41,7 @@
       <nav class="nav-links" aria-label="Main Navigation">
         <a href="../../index.html">Home</a>
         <a href="../../projects.html">Projects</a>
-        <a href="../../forgeiq-case-study.html" class="active">ForgeIQ Case Study</a>
+        <a href="forgeiq-case-study.html" class="active">ForgeIQ Case Study</a>
         <a href="../../engineering.html">Engineering</a>
         <a href="../../notes.html">Writing / Notes</a>
         <a href="../../about.html">About</a>
@@ -61,7 +61,7 @@
     <div class="mobile-menu">
       <a href="../../index.html">Home</a>
       <a href="../../projects.html">Projects</a>
-      <a href="../../forgeiq-case-study.html" style="color: var(--text-accent); font-weight: 600;">ForgeIQ Case Study</a>
+      <a href="forgeiq-case-study.html" style="color: var(--text-accent); font-weight: 600;">ForgeIQ Case Study</a>
       <a href="../../engineering.html">Engineering</a>
       <a href="../../notes.html">Writing / Notes</a>
       <a href="../../about.html">About</a>
@@ -319,6 +319,191 @@
             </div>
           </div>
         </section>
+        <!-- =======================================================
+             KEY TECHNICAL FEATURES
+             ======================================================= -->
+        <section id="key-technical-features" style="margin-bottom: 3.5rem;">
+          <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #60a5fa; margin-bottom: 0.5rem;">
+            Core Capabilities · Deep Dive
+          </div>
+          <h2 style="font-size: 1.85rem; margin-bottom: 0.75rem;">Key Technical Features</h2>
+          <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 2rem;">
+            An architectural breakdown of the operational mechanisms driving order intake, algorithmic pricing, finite-state tracking, multi-agent orchestration, and marketplace discovery.
+          </p>
+
+          <!-- 1. AI Order Intake -->
+          <div class="card" style="padding: 1.75rem; margin-bottom: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+              <h3 style="font-size: 1.2rem; color: #93c5fd; margin: 0;">AI Order Intake</h3>
+              <span class="badge-implemented">Implemented</span>
+            </div>
+            <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 1rem;">
+              <strong>Document &amp; Drawing Understanding + Requirement Extraction:</strong> Traditional manufacturing intake relies on engineers manually opening technical PDFs, reading drawing title blocks, and inspecting 2D CAD files to decipher specifications. ForgeIQ automates this ingestion via a two-tier extraction pipeline:
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+              <div style="background: rgba(10, 16, 30, 0.7); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+                <div style="font-size: 0.85rem; font-weight: 700; color: #6ee7b7; margin-bottom: 0.35rem;">Deterministic Geometry Extraction (ezdxf)</div>
+                <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.55; margin: 0;">
+                  Parses 2D DXF vector drawings mathematically. Traverses <code>LWPOLYLINE</code>, <code>LINE</code>, and <code>CIRCLE</code> entities to compute exact outer perimeter cut length, inner piercing counts, total bounding box dimensions (X, Y), and true sheet area without probabilistic error.
+                </p>
+              </div>
+              <div style="background: rgba(10, 16, 30, 0.7); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
+                <div style="font-size: 0.85rem; font-weight: 700; color: #d8b4fe; margin-bottom: 0.35rem;">Unstructured Specification Parsing (LLM + Pydantic)</div>
+                <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.55; margin: 0;">
+                  Translates natural language buyer RFQ notes and PDF drawing title blocks into strict Pydantic schemas. Extracts alloy codes (e.g., <code>SS304</code>, <code>AL6061-T6</code>), plate thicknesses (e.g., <code>3.0 mm</code>), surface treatments (powder coated, anodized), and tolerance grades (<code>ISO 2768-m</code>).
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. AI Quotation Engine -->
+          <div class="card" style="padding: 1.75rem; margin-bottom: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+              <h3 style="font-size: 1.2rem; color: #93c5fd; margin: 0;">AI Quotation Engine</h3>
+              <span class="badge-implemented">Implemented · 96.9% Benchmark Accuracy</span>
+            </div>
+            <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 1rem;">
+              <strong>Parametric Pricing Workflow:</strong> Converts extracted physical geometries and material requirements into deterministic, instant manufacturing quotes. Rather than guessing prices via unstructured text generation, ForgeIQ uses an algorithmic cost model grounded in physical shop-floor mechanics:
+            </p>
+            <div style="background: rgba(10, 16, 30, 0.75); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1rem 1.25rem; margin-bottom: 1rem; font-family: var(--font-mono); font-size: 0.82rem; color: #93c5fd; line-height: 1.7;">
+              Total Price = (Material Mass × Raw Cost/kg) + (Cut Length ÷ Feed Rate × Laser Cost/min)<br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+ (Pierce Count × Pierce Dwell Cost) + Bending Operations + Setup/Handling + Target Margin
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin: 0;">
+              Accounts for bounding-box nesting efficiency against standard stock sheet sizes (e.g., 2500 × 1250 mm) to capture scrap factor. Achieved <strong>96.9% quotation accuracy</strong> when evaluated against verified production machine-shop benchmark bids.
+            </p>
+          </div>
+
+          <!-- 3. Production Workflow -->
+          <div class="card" style="padding: 1.75rem; margin-bottom: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+              <h3 style="font-size: 1.2rem; color: #93c5fd; margin: 0;">Production Workflow</h3>
+              <span class="badge-implemented">Implemented · 9 Discrete Stages</span>
+            </div>
+            <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 1rem;">
+              <strong>Configurable Manufacturing Workflow Stages:</strong> Real manufacturing operations require rigorous, auditable stage transitions. ForgeIQ models the entire manufacturing lifecycle as an auditable finite state machine spanning 9 discrete stages:
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+              <span class="tech-tag tech-tag-blue">1. RFQ Submitted</span>
+              <span class="tech-tag tech-tag-blue">2. Quoted</span>
+              <span class="tech-tag tech-tag-blue">3. Order Confirmed</span>
+              <span class="tech-tag tech-tag-blue">4. Material Allocated</span>
+              <span class="tech-tag tech-tag-blue">5. CNC Laser Cut / Machined</span>
+              <span class="tech-tag tech-tag-blue">6. Bending / Secondary Ops</span>
+              <span class="tech-tag tech-tag-blue">7. Quality Inspection</span>
+              <span class="tech-tag tech-tag-blue">8. Dispatched</span>
+              <span class="tech-tag tech-tag-emerald">9. Delivered</span>
+            </div>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin: 0;">
+              <strong>Shop-Floor Configurability:</strong> Machine shops can configure and bypass non-applicable operations (e.g., flat laser jobs bypass Stage 6 Bending). Every stage transition is recorded in an immutable PostgreSQL audit ledger (<code>order_stage_transitions</code>) capturing user ID, timestamp, QA inspector sign-off, and dimensional tolerance notes.
+            </p>
+          </div>
+
+          <!-- 4. ForgeIQ Copilot (Multi-Agent Architecture) -->
+          <div class="card" style="padding: 1.75rem; margin-bottom: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; flex-wrap: wrap; gap: 0.5rem;">
+              <h3 style="font-size: 1.2rem; color: #93c5fd; margin: 0;">ForgeIQ Copilot (Multi-Agent Architecture)</h3>
+              <span class="badge-concept">Multi-Agent System Blueprint</span>
+            </div>
+            <p style="font-size: 0.875rem; color: var(--text-secondary); line-height: 1.65; margin-bottom: 1rem;">
+              The system explores a specialized multi-agent architecture where domain-specific agents collaborate across factory operations. To maintain strict engineering truthfulness, the matrix below clearly distinguishes between <strong>implemented agents</strong> and <strong>planned / architectural concepts</strong>:
+            </p>
+
+            <div class="table-container" style="margin-bottom: 1rem;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Agent Role</th>
+                    <th>Status</th>
+                    <th>Operational Responsibility</th>
+                    <th>Core Technologies</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Quotation Agent</strong></td>
+                    <td><span class="badge-implemented">Implemented</span></td>
+                    <td>Gathers geometry contours, calculates piercing/cut costs, and generates verified quotation breakdowns.</td>
+                    <td><code>ezdxf</code>, Python Math Engine, Pydantic</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Production Agent</strong></td>
+                    <td><span class="badge-implemented">Implemented</span></td>
+                    <td>Executes 9-stage state machine, enforces transition criteria, and logs shop-floor inspection timestamps.</td>
+                    <td>FastAPI, PostgreSQL Audit Ledger</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Sales Agent</strong></td>
+                    <td><span class="badge-concept">Architectural Concept</span></td>
+                    <td>Conversational assistant that queries prospective buyers on tolerances and converts chat into standardized RFQs.</td>
+                    <td>LLM Provider Adapter, Prompt Grounding</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Inventory Agent</strong></td>
+                    <td><span class="badge-planned">Planned</span></td>
+                    <td>Monitors sheet metal stock levels, calculates remnant utilization, and flags material shortage warnings.</td>
+                    <td>PostgreSQL Stock Triggers, Nesting Math</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Purchase Agent</strong></td>
+                    <td><span class="badge-planned">Planned</span></td>
+                    <td>Drafts automated Purchase Orders (POs) to raw material suppliers when sheet stock reaches reorder levels.</td>
+                    <td>Supplier Webhook Handlers, PDF Invoicing</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Finance Agent</strong></td>
+                    <td><span class="badge-planned">Planned</span></td>
+                    <td>Handles milestone escrow disbursements, payment gateway reconciliation, and factory margin reporting.</td>
+                    <td>Razorpay Webhooks, Financial Ledger</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Analytics Agent</strong></td>
+                    <td><span class="badge-planned">Planned</span></td>
+                    <td>Analyzes historical cycle-time variance, quote acceptance win-rates, and predictive delivery delays.</td>
+                    <td>Statistical Aggregation, Timescale Queries</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- 5. Customer Portal & 6. Marketplace Grid -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+            <!-- Customer Portal -->
+            <div class="card" style="padding: 1.5rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem; flex-wrap: wrap; gap: 0.4rem;">
+                <h3 style="font-size: 1.1rem; color: #93c5fd; margin: 0;">Customer Portal</h3>
+                <span class="badge-implemented">Implemented</span>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.85rem;">
+                <strong>Real-Time Order Tracking:</strong> Provides authenticated buyers with an interactive self-service dashboard to monitor their orders across all 9 production stages:
+              </p>
+              <ul style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.55; padding-left: 1.25rem; margin: 0;">
+                <li>Real-time visual progress stepper with stage completion timestamps.</li>
+                <li>Full quotation breakdown inspection (material vs laser cutting vs bending).</li>
+                <li>Digital download of signed Quality Inspection Certificates and dispatch manifests.</li>
+                <li>Strict JWT tenant scoping ensuring buyers only view their own organizational data.</li>
+              </ul>
+            </div>
+
+            <!-- Marketplace -->
+            <div class="card" style="padding: 1.5rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.65rem; flex-wrap: wrap; gap: 0.4rem;">
+                <h3 style="font-size: 1.1rem; color: #93c5fd; margin: 0;">Marketplace &amp; RFQ Matching</h3>
+                <span class="badge-implemented">Implemented</span>
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.85rem;">
+                <strong>Manufacturer Discovery Engine:</strong> Eliminates manual phone and email supplier inquiries by matching incoming buyer RFQs directly to qualified factory equipment capabilities:
+              </p>
+              <ul style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.55; padding-left: 1.25rem; margin: 0;">
+                <li>High-dimensional vector embeddings of factory machine beds (e.g., 3000 × 1500 mm), laser wattage (3kW–12kW), and alloy expertise.</li>
+                <li>Semantic cosine similarity search (<code>pgvector</code>) over factory capability catalogs.</li>
+                <li>Combined with relational SQL B-Tree filters for geographical proximity, lead-time availability, and minimum order quantities.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
 
         <!-- =======================================================
              5. SYSTEM ARCHITECTURE
@@ -468,114 +653,274 @@
         <!-- =======================================================
              9. KEY ENGINEERING DECISIONS
              ======================================================= -->
+        
+        <!-- =======================================================
+             9. TECHNICAL DECISION CARDS
+             ======================================================= -->
         <section id="engineering-decisions" style="margin-bottom: 3.5rem;">
           <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #fbbf24; margin-bottom: 0.5rem;">
-            08 · Trade-Off Analysis
+            Architectural Trade-Off Analysis
           </div>
-          <h2 style="font-size: 1.85rem; margin-bottom: 1.25rem;">Key Engineering Decisions</h2>
+          <h2 style="font-size: 1.85rem; margin-bottom: 0.75rem;">Technical Decision Cards</h2>
+          <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 2rem;">
+            Rigorous engineering decisions evaluated against problem context, architectural choices, technical justification, and accepted trade-offs:
+          </p>
 
-          <div class="decision-card">
-            <div class="decision-header">Decision 1: Mathematical Vector Parsing vs. Multimodal Vision LLMs</div>
-            <div class="decision-section"><strong>Context:</strong> Should we render CAD drawings into images and prompt multimodal models to estimate part price?</div>
-            <div class="decision-section"><strong>Trade-off:</strong> Vision LLMs require zero custom geometry code but hallucinate physical scale, hole counts, and sheet perimeters.</div>
-            <div class="decision-section"><strong>Choice:</strong> Built deterministic vector parsing using <code>ezdxf</code>. Guarantees 100% mathematical precision for physical parameters; AI is restricted to unstructured text notes.</div>
-          </div>
+          <div class="decision-grid">
+            <!-- Card 1: Why PostgreSQL? -->
+            <div class="decision-card">
+              <div class="decision-header">
+                <span>Why PostgreSQL?</span>
+                <span class="badge badge-blue">Database</span>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Problem:</div>
+                <div class="decision-field-value">ForgeIQ needs relational data for customers, orders, quotations, production workflows, and permissions.</div>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Decision:</div>
+                <div class="decision-field-value">PostgreSQL (hosted on Neon Cloud &amp; Supabase).</div>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Reason:</div>
+                <div class="decision-field-value">Strong relational modeling, transactional guarantees, mature indexing, and native compatibility with pgvector for unified storage.</div>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Trade-off:</div>
+                <div class="decision-field-value">More structured schema management compared with document-oriented storage.</div>
+              </div>
+            </div>
 
-          <div class="decision-card">
-            <div class="decision-header">Decision 2: Unified PostgreSQL with pgvector vs. Standalone Vector DB</div>
-            <div class="decision-section"><strong>Context:</strong> Selecting a vector storage engine for matching RFQs with manufacturer capabilities.</div>
-            <div class="decision-section"><strong>Trade-off:</strong> Standalone vector databases (Pinecone, Qdrant) add distributed network latency, dual-write synchronization complexity, and extra operational overhead.</div>
-            <div class="decision-section"><strong>Choice:</strong> Adopted <code>pgvector</code> inside PostgreSQL. Enables transactional consistency between relational RFQ data and vector embeddings within a single ACID boundary.</div>
-          </div>
+            <!-- Card 2: Why FastAPI? -->
+            <div class="decision-card">
+              <div class="decision-header">
+                <span>Why FastAPI?</span>
+                <span class="badge badge-emerald">Backend API</span>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Problem:</div>
+                <div class="decision-field-value">Need high-throughput REST API layer to handle concurrent RFQ submissions, multi-part CAD uploads, and strict data validation across 40+ endpoints.</div>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Decision:</div>
+                <div class="decision-field-value">FastAPI with Python async ASGI server.</div>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Reason:</div>
+                <div class="decision-field-value">Native async/await event loop, automated OpenAPI 3.1 schema generation, robust Pydantic v2 validation, and direct access to Python's CAD geometry ecosystem (<code>ezdxf</code>).</div>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Trade-off:</div>
+                <div class="decision-field-value">CPU-bound tasks (intense DXF vector math) block the single-threaded event loop unless dispatched to a secondary <code>ProcessPoolExecutor</code>.</div>
+              </div>
+            </div>
 
-          <div class="decision-card">
-            <div class="decision-header">Decision 3: Multi-Process Geometry Execution vs. Async In-Thread Execution</div>
-            <div class="decision-section"><strong>Context:</strong> Heavy DXF files with 5,000+ vector entities took 150ms+ of pure CPU calculation time.</div>
-            <div class="decision-section"><strong>Trade-off:</strong> In-thread execution caused event loop blocking for concurrent HTTP requests. Spawning background Celery workers added heavy Redis queue infrastructure.</div>
-            <div class="decision-section"><strong>Choice:</strong> Implemented Python's native <code>ProcessPoolExecutor</code> pool. Offloads CPU-bound geometry math to secondary OS processes while keeping FastAPI's event loop lightweight.</div>
-          </div>
+            <!-- Card 3: Why Next.js? -->
+            <div class="decision-card">
+              <div class="decision-header">
+                <span>Why Next.js?</span>
+                <span class="badge badge-purple">Frontend</span>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Problem:</div>
+                <div class="decision-field-value">Need an interactive, performant web interface serving both prospective buyers and factory operators with modern layouts and reliable state management.</div>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Decision:</div>
+                <div class="decision-field-value">Next.js App Router with TypeScript and Tailwind CSS.</div>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Reason:</div>
+                <div class="decision-field-value">Server-side rendering for fast initial loads, robust App Router layout architecture, strict TypeScript typing for API contracts, and rapid UI development.</div>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Trade-off:</div>
+                <div class="decision-field-value">React hydration bundle overhead and complex server/client component boundaries compared to zero-JS static HTML.</div>
+              </div>
+            </div>
 
-          <div class="decision-card">
-            <div class="decision-header">Decision 4: Pluggable AI Provider Abstraction Interface</div>
-            <div class="decision-section"><strong>Context:</strong> Avoid hard-coding API dependencies during active development and automated testing.</div>
-            <div class="decision-section"><strong>Trade-off:</strong> Extra architectural layer requiring factory patterns and interface contracts.</div>
-            <div class="decision-section"><strong>Choice:</strong> Engineered <code>BaseAIProvider</code> with mock, Gemini, and OpenAI adapters. Allowed fast offline CI testing and resilience against third-party API rate limits.</div>
+            <!-- Card 4: Why pgvector? -->
+            <div class="decision-card">
+              <div class="decision-header">
+                <span>Why pgvector?</span>
+                <span class="badge badge-amber">Vector Storage</span>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Problem:</div>
+                <div class="decision-field-value">Manufacturer capability matching requires high-dimensional semantic similarity search over equipment specs and job constraints.</div>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Decision:</div>
+                <div class="decision-field-value">pgvector extension inside PostgreSQL.</div>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Reason:</div>
+                <div class="decision-field-value">Keeps relational data (orders, users, factories) and vector embeddings inside a single ACID transactional boundary—eliminating dual-write inconsistency, external network latency, and synchronization pipelines.</div>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Trade-off:</div>
+                <div class="decision-field-value">Slightly higher resource footprint on PostgreSQL memory than specialized in-memory vector indices (e.g., Pinecone) at massive billion-vector scale.</div>
+              </div>
+            </div>
+
+            <!-- Card 5: Why Provider Abstraction? -->
+            <div class="decision-card">
+              <div class="decision-header">
+                <span>Why Provider Abstraction?</span>
+                <span class="badge badge-blue">AI Architecture</span>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Problem:</div>
+                <div class="decision-field-value">Direct coupling to a single proprietary LLM API causes vendor lock-in, unreliability during provider outages, and high API token costs during automated CI testing.</div>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Decision:</div>
+                <div class="decision-field-value">Pluggable <code>BaseAIProvider</code> interface with Mock, Gemini, and OpenAI adapters.</div>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Reason:</div>
+                <div class="decision-field-value">Allows unit and E2E tests to run deterministically and offline with zero API cost using <code>MockAIProvider</code>, while allowing production deployments to switch between Gemini and OpenAI via environment variables.</div>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Trade-off:</div>
+                <div class="decision-field-value">Requires maintaining a unified internal interface and serialization wrapper across disparate provider SDK schemas.</div>
+              </div>
+            </div>
+
+            <!-- Card 6: Why Playwright? -->
+            <div class="decision-card">
+              <div class="decision-header">
+                <span>Why Playwright?</span>
+                <span class="badge badge-emerald">Testing</span>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Problem:</div>
+                <div class="decision-field-value">Multi-step manufacturing workflows (multi-file DXF upload, instant quote rendering, multi-role portal state updates) require reliable end-to-end browser verification without flaky test runs.</div>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Decision:</div>
+                <div class="decision-field-value">Playwright for end-to-end automated testing.</div>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Reason:</div>
+                <div class="decision-field-value">Built-in auto-waiting eliminates race conditions in asynchronous client-server interactions; native multi-context isolation enables testing buyer and manufacturer roles concurrently.</div>
+              </div>
+              <div class="decision-field">
+                <div class="decision-field-label">Trade-off:</div>
+                <div class="decision-field-value">Heavier test execution overhead and longer CI runtimes compared to pure in-memory headless unit tests.</div>
+              </div>
+            </div>
           </div>
         </section>
+
 
         <!-- =======================================================
              10. TESTING & RELIABILITY
              ======================================================= -->
+        
+        <!-- =======================================================
+             10. ENGINEERING METRICS
+             ======================================================= -->
         <section id="testing-reliability" style="margin-bottom: 3.5rem;">
           <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #6ee7b7; margin-bottom: 0.5rem;">
-            09 · Verification &amp; Profiling
+            Verification &amp; Observability
           </div>
-          <h2 style="font-size: 1.85rem; margin-bottom: 1rem;">Testing &amp; Reliability</h2>
+          <h2 style="font-size: 1.85rem; margin-bottom: 0.75rem;">Engineering Metrics</h2>
           <p style="font-size: 0.95rem; line-height: 1.7; color: var(--text-secondary); margin-bottom: 1.5rem;">
-            Reliability is verified through a dual test suite comprising <strong>47 automated tests</strong> and empirical load testing:
+            In strict compliance with portfolio truthfulness, we display <strong>empirically verified measurements only</strong>, accompanied by an explicit benchmarking roadmap for unmeasured telematics:
           </p>
 
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-bottom: 2rem;">
-            <div class="card" style="padding: 1.5rem;">
-              <div style="font-size: 1.5rem; font-weight: 800; font-family: var(--font-mono); color: #60a5fa;">33 / 33</div>
-              <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin: 0.35rem 0;">Pytest Unit &amp; Integration Tests</div>
-              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.55;">
-                Covers vector boundary math, arc length integration, piercing coordinate validation, Pydantic schema constraints, and JWT authorization rules.
-              </p>
+          <!-- Verified Metrics Cards -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+            <div class="card" style="padding: 1.25rem;">
+              <div style="font-size: 1.6rem; font-weight: 800; font-family: var(--font-mono); color: #60a5fa;">96.9%</div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.2rem;">Quotation Accuracy</div>
+              <div style="font-size: 0.75rem; color: #34d399; margin-top: 0.2rem;">Verified Benchmark</div>
             </div>
 
-            <div class="card" style="padding: 1.5rem;">
-              <div style="font-size: 1.5rem; font-weight: 800; font-family: var(--font-mono); color: #a855f7;">14 / 14</div>
-              <div style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin: 0.35rem 0;">Playwright End-to-End Tests</div>
-              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.55;">
-                Simulates real browser workflows: user sign-in, multi-file DXF upload, instant quotation calculation display, and order stage progression in the customer portal.
-              </p>
+            <div class="card" style="padding: 1.25rem;">
+              <div style="font-size: 1.6rem; font-weight: 800; font-family: var(--font-mono); color: #34d399;">5.5x Gain</div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.2rem;">860 → 4,589 req/s</div>
+              <div style="font-size: 0.75rem; color: #34d399; margin-top: 0.2rem;">50-Client Load Test</div>
+            </div>
+
+            <div class="card" style="padding: 1.25rem;">
+              <div style="font-size: 1.6rem; font-weight: 800; font-family: var(--font-mono); color: #a855f7;">47 Tests</div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.2rem;">33 Pytest + 14 E2E</div>
+              <div style="font-size: 0.75rem; color: #34d399; margin-top: 0.2rem;">100% Passing</div>
+            </div>
+
+            <div class="card" style="padding: 1.25rem;">
+              <div style="font-size: 1.6rem; font-weight: 800; font-family: var(--font-mono); color: #fbbf24;">40+ Routes</div>
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-top: 0.2rem;">OpenAPI 3.1 &amp; JWT</div>
+              <div style="font-size: 0.75rem; color: #34d399; margin-top: 0.2rem;">Modular Monolith</div>
             </div>
           </div>
 
-          <!-- Verified Load Test Benchmark Table -->
+          <!-- Benchmarking Roadmap Table -->
+          <h3 style="font-size: 1.2rem; margin-bottom: 0.75rem; color: var(--text-primary);">Benchmarking Roadmap</h3>
+          <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
+            Metrics that have not been instrumented with production telemetry are explicitly labeled to avoid fabricated claims:
+          </p>
+
           <div class="table-container" style="margin-bottom: 1.5rem;">
             <table>
               <thead>
                 <tr>
-                  <th>Benchmark Metric</th>
-                  <th>Baseline (Before)</th>
-                  <th>Optimized (After)</th>
-                  <th>Status / Verified Improvement</th>
+                  <th>Metric Category</th>
+                  <th>Observed / Target Value</th>
+                  <th>Current Measurement Status</th>
+                  <th>Instrumentation Method</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Peak Throughput (Load Test)</strong></td>
-                  <td>860 req/sec</td>
-                  <td style="color: #6ee7b7; font-weight: 700;">4,589 req/sec</td>
-                  <td><span class="badge badge-emerald">5.5x Throughput Improvement</span></td>
+                  <td><strong>RFQ Processing Latency</strong></td>
+                  <td>Target: &lt;350ms end-to-end</td>
+                  <td><span class="badge-planned">Benchmark planned</span></td>
+                  <td>Synthetic CAD file batch benchmark suite</td>
                 </tr>
                 <tr>
-                  <td><strong>Pricing Model Accuracy</strong></td>
-                  <td>Baseline heuristics</td>
-                  <td style="color: #6ee7b7; font-weight: 700;">96.9%</td>
-                  <td><span class="badge badge-blue">Production Model Benchmark</span></td>
+                  <td><strong>Document Extraction Accuracy</strong></td>
+                  <td>Target: &gt;95% precision on title blocks</td>
+                  <td><span class="badge-planned">Benchmark planned</span></td>
+                  <td>Curated test corpus of 50 scanned engineering drawings</td>
                 </tr>
                 <tr>
-                  <td><strong>Automated Test Suite</strong></td>
-                  <td>Manual sanity checks</td>
-                  <td style="color: #6ee7b7; font-weight: 700;">33 Pytest + 14 Playwright</td>
-                  <td><span class="badge badge-emerald">All 47 Tests Passing</span></td>
+                  <td><strong>Retrieval Quality (MRR / NDCG@10)</strong></td>
+                  <td>Semantic machine matching ranking</td>
+                  <td><span class="badge-planned">Benchmark planned</span></td>
+                  <td>Offline evaluation against historical machine-shop bid acceptances</td>
                 </tr>
                 <tr>
-                  <td><strong>Granular p99 APM Latency</strong></td>
-                  <td>Uninstrumented</td>
-                  <td><span style="color: var(--text-muted);">Measurement planned</span></td>
-                  <td><span class="badge">Tracing in progress</span></td>
+                  <td><strong>API Throughput (Peak)</strong></td>
+                  <td>4,589 req/sec (5.5x improvement)</td>
+                  <td><span class="badge-implemented">Measured (Load Test)</span></td>
+                  <td>Locust / k6 50-client concurrent request simulator</td>
+                </tr>
+                <tr>
+                  <td><strong>Test Coverage</strong></td>
+                  <td>33 Pytest + 14 Playwright E2E tests</td>
+                  <td><span class="badge-implemented">Measured (CI Suite)</span></td>
+                  <td>GitHub Actions automated test harness</td>
+                </tr>
+                <tr>
+                  <td><strong>Code Coverage %</strong></td>
+                  <td>Target: &gt;85% branch coverage</td>
+                  <td><span class="badge-planned">Benchmark planned</span></td>
+                  <td><code>pytest-cov</code> test execution report</td>
+                </tr>
+                <tr>
+                  <td><strong>Production Error Rate (HTTP 5xx)</strong></td>
+                  <td>Live traffic telemetry</td>
+                  <td><span class="badge" style="background: rgba(148, 163, 184, 0.1); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.2);">Not yet measured</span></td>
+                  <td>OpenTelemetry APM collector &amp; Prometheus</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <p style="font-size: 0.8rem; color: var(--text-muted); font-style: italic;">
-            Note: Load test conducted with 50 concurrent simulated client requests targeting FastAPI microservice endpoints. All claims strictly adhere to resume source-of-truth verification standards.
-          </p>
         </section>
+
 
         <!-- =======================================================
              11. CHALLENGES
@@ -665,62 +1010,90 @@
         <!-- =======================================================
              14. GITHUB & DEMO LINKS
              ======================================================= -->
-        <section id="github" style="margin-bottom: 3.5rem;">
-          <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #60a5fa; margin-bottom: 0.5rem;">
-            13 · Source Code &amp; Demo
+        
+
+        <!-- =======================================================
+             15. NEXT IMPROVEMENTS
+             ======================================================= -->
+        
+        <!-- =======================================================
+             15. WHAT I WOULD BUILD NEXT & GITHUB CTA
+             ======================================================= -->
+        <section id="next-improvements" style="margin-bottom: 3.5rem;">
+          <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #a855f7; margin-bottom: 0.5rem;">
+            Engineering Roadmap
           </div>
-          <h2 style="font-size: 1.85rem; margin-bottom: 1rem;">GitHub Repository &amp; Live Application</h2>
-          <div class="card-elevated" style="padding: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
-            <div>
-              <h3 style="font-size: 1.25rem; margin-bottom: 0.4rem;">Explore the Full Codebase</h3>
-              <p style="font-size: 0.9rem; color: var(--text-secondary);">
-                Inspect FastAPI routers, ezdxf geometry parsing algorithms, Pydantic schemas, and Playwright test suites.
+          <h2 style="font-size: 1.85rem; margin-bottom: 0.75rem;">What I Would Build Next</h2>
+          <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1.75rem;">
+            Targeted engineering initiatives designed to transition ForgeIQ from a verified prototype to a hardened, production-grade manufacturing platform:
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-bottom: 2.5rem;">
+            <div class="card" style="padding: 1.5rem;">
+              <h3 style="font-size: 1.05rem; color: #93c5fd; margin-bottom: 0.5rem;">1. Stronger CAD Parsing (3D STEP / IGES)</h3>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                Integrate OpenCASCADE C++ Python bindings (<code>pythonocc-core</code>) to parse full 3D boundary representation (B-Rep) models. Calculate tool accessibility angles, undercut faces, and roughing volume removal for 3-axis and 5-axis CNC milling quotes.
               </p>
             </div>
 
-            <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-              <a href="https://github.com/bhuvanabcs24-maker/Forge-IQ" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
-                <span>GitHub Repository ↗</span>
+            <div class="card" style="padding: 1.5rem;">
+              <h3 style="font-size: 1.05rem; color: #6ee7b7; margin-bottom: 0.5rem;">2. Improved Evaluation Datasets</h3>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                Curate a standardized benchmark dataset of 200+ annotated industrial DXF and PDF engineering drawings with ground-truth geometric dimensions, cycle times, and alloy prices to systematically evaluate extraction regressions.
+              </p>
+            </div>
+
+            <div class="card" style="padding: 1.5rem;">
+              <h3 style="font-size: 1.05rem; color: #d8b4fe; margin-bottom: 0.5rem;">3. Production Observability</h3>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                Instrument distributed tracing via OpenTelemetry and Prometheus to capture precise p95 and p99 latency percentiles across geometry worker subprocesses, vector index scans, and database connection pools.
+              </p>
+            </div>
+
+            <div class="card" style="padding: 1.5rem;">
+              <h3 style="font-size: 1.05rem; color: #fbbf24; margin-bottom: 0.5rem;">4. Stronger Retrieval Evaluation</h3>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                Benchmark dense vector embeddings against hybrid sparse retrieval (BM25 + pgvector Reciprocal Rank Fusion) to quantitatively evaluate manufacturer matching accuracy using Mean Reciprocal Rank (MRR).
+              </p>
+            </div>
+
+            <div class="card" style="padding: 1.5rem;">
+              <h3 style="font-size: 1.05rem; color: #93c5fd; margin-bottom: 0.5rem;">5. Better Marketplace Matching</h3>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                Engineer a multi-objective constraint optimization algorithm that balances machine capability matching with real-time factory bed utilization, historical on-time delivery rates, and geographical shipping distance.
+              </p>
+            </div>
+
+            <div class="card" style="padding: 1.5rem;">
+              <h3 style="font-size: 1.05rem; color: #f87171; margin-bottom: 0.5rem;">6. Deployment Hardening</h3>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
+                Containerize the stack into a Kubernetes deployment with dedicated Horizontal Pod Autoscalers (HPA) for CPU-intensive CAD worker processes and isolated read-replicas for heavy pgvector similarity queries.
+              </p>
+            </div>
+          </div>
+
+          <!-- Prominent GitHub Repository CTA -->
+          <div id="github" class="card-elevated" style="padding: 2.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem; border: 1px solid rgba(96, 165, 250, 0.35); background: linear-gradient(135deg, rgba(14, 22, 41, 0.95), rgba(15, 23, 42, 0.85));">
+            <div>
+              <div class="badge badge-blue" style="margin-bottom: 0.6rem;">Open Source Engineering Artifact</div>
+              <h3 style="font-size: 1.35rem; margin-bottom: 0.4rem; color: var(--text-primary);">Explore the ForgeIQ Codebase on GitHub</h3>
+              <p style="font-size: 0.9rem; color: var(--text-secondary); max-width: 580px; margin: 0; line-height: 1.6;">
+                Review the 40+ FastAPI route implementations, <code>ezdxf</code> geometry parsing math, Pydantic schemas, pgvector query contracts, and 47 automated Pytest and Playwright test suites.
+              </p>
+            </div>
+
+            <div style="display: flex; gap: 0.85rem; flex-wrap: wrap;">
+              <a href="https://github.com/bhuvanabcs24-maker/Forge-IQ" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="gap: 0.5rem; font-size: 0.95rem; padding: 0.75rem 1.4rem;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+                <span>View Repository on GitHub ↗</span>
               </a>
-              <a href="https://forge-iq-gold.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+              <a href="https://forge-iq-gold.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="gap: 0.5rem; font-size: 0.95rem; padding: 0.75rem 1.4rem;">
                 <span>Visit Live Demo ↗</span>
               </a>
             </div>
           </div>
         </section>
 
-        <!-- =======================================================
-             15. NEXT IMPROVEMENTS
-             ======================================================= -->
-        <section id="next-improvements" style="margin-bottom: 3.5rem;">
-          <div style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #a855f7; margin-bottom: 0.5rem;">
-            14 · Future Roadmap
-          </div>
-          <h2 style="font-size: 1.85rem; margin-bottom: 1rem;">Next Engineering Improvements</h2>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem;">
-            <div class="card" style="padding: 1.5rem;">
-              <h3 style="font-size: 1.05rem; color: #93c5fd; margin-bottom: 0.5rem;">1. 3D STEP/IGES Geometry Support</h3>
-              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
-                Expand parsing beyond 2D DXF profiles to support 3D STEP (AP203/AP214) formats using OpenCASCADE wrappers for CNC 5-axis milling volume calculations.
-              </p>
-            </div>
-
-            <div class="card" style="padding: 1.5rem;">
-              <h3 style="font-size: 1.05rem; color: #d8b4fe; margin-bottom: 0.5rem;">2. WhatsApp Webhook Automation</h3>
-              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
-                Complete integration with WhatsApp Cloud API to push automated milestone notifications (e.g., "Laser Cutting Completed", "Quality Passed") directly to buyer phones.
-              </p>
-            </div>
-
-            <div class="card" style="padding: 1.5rem;">
-              <h3 style="font-size: 1.05rem; color: #6ee7b7; margin-bottom: 0.5rem;">3. Distributed Latency Tracing</h3>
-              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6;">
-                Instrument OpenTelemetry distributed tracing to capture precise p99 latency percentiles across geometry worker processes and PostgreSQL connection pools (<em>Measurement planned</em>).
-              </p>
-            </div>
-          </div>
-        </section>
 
       </div>
     </div>
@@ -749,7 +1122,7 @@
           <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.875rem;">
             <a href="../../index.html" style="color: var(--text-secondary);">Home</a>
             <a href="../../projects.html" style="color: var(--text-secondary);">Projects Overview</a>
-            <a href="../../forgeiq-case-study.html" style="color: var(--text-secondary);">ForgeIQ Case Study</a>
+            <a href="forgeiq-case-study.html" style="color: var(--text-secondary);">ForgeIQ Case Study</a>
             <a href="../../engineering.html" style="color: var(--text-secondary);">Engineering Principles</a>
             <a href="../../notes.html" style="color: var(--text-secondary);">Writing &amp; Notes</a>
             <a href="../../about.html" style="color: var(--text-secondary);">About</a>
