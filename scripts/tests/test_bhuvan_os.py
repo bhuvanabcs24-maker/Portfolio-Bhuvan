@@ -159,11 +159,60 @@ def run_os_tests():
         print("✓ All 6 Primary Application Modules verified on desktop.")
 
         # ----------------------------------------------------
-        # 5. Verify FORGEIQ Flagship Window & Verified Metrics
+        # 5. Verify FORGEIQ Flagship Window & Interactive System Map
         # ----------------------------------------------------
         print("\n--- 5. Testing FORGEIQ Flagship Application Module ---")
-        forgeiq_window = driver.find_element(By.CLASS_NAME, "window-frame")
+        forgeiq_window = driver.find_element(By.CSS_SELECTOR, "[data-window-id='forgeiq']")
         assert forgeiq_window.is_displayed(), "ForgeIQ window not open by default"
+
+        # A. Verify Interactive System Map (The Most Important Visual)
+        print("  • Testing Interactive ForgeIQ System Map (9 Nodes)...")
+        system_map = driver.find_element(By.ID, "forgeiq-system-map")
+        assert system_map.is_displayed(), "ForgeIQ System Map missing"
+
+        nodes = driver.find_elements(By.CLASS_NAME, "forgeiq-flow-node")
+        assert len(nodes) == 9, f"Expected 9 system nodes, found {len(nodes)}"
+        node_labels = [n.find_element(By.CLASS_NAME, "forgeiq-node-label").text for n in nodes]
+        print(f"  • Found {len(node_labels)} pipeline nodes: {' -> '.join(node_labels)}")
+        expected_nodes = [
+            "Buyer", "Requirement", "CAD", "AI / NLP", "Quotation", 
+            "Manufacturer", "Production", "Tracking", "Delivery"
+        ]
+        assert node_labels == expected_nodes, f"Pipeline nodes mismatch: {node_labels}"
+
+        # Test hover / click on CAD node
+        cad_node = driver.find_element(By.CSS_SELECTOR, "[data-node-id='cad']")
+        driver.execute_script("arguments[0].click();", cad_node)
+        time.sleep(0.3)
+
+        inspector_name = driver.find_element(By.CLASS_NAME, "forgeiq-inspector-name").text
+        assert "CAD PARSER" in inspector_name, "CAD PARSER inspector name missing"
+        
+        inspector_purpose = driver.find_element(By.CLASS_NAME, "forgeiq-inspector-purpose").text
+        print(f"  • CAD Purpose: {inspector_purpose[:65]}...")
+        assert "Deterministic geometry extraction" in inspector_purpose, "CAD purpose mismatch"
+
+        tech_tags = [t.text for t in driver.find_elements(By.CLASS_NAME, "forgeiq-tech-tag")]
+        print(f"  • CAD Verified Tech Stack: {tech_tags}")
+        assert "Python" in tech_tags, "Python missing from CAD tech stack"
+        assert "ezdxf" in tech_tags, "ezdxf missing from CAD tech stack"
+        assert "NetworkX" in tech_tags, "NetworkX missing from CAD tech stack"
+
+        inspector_status = driver.find_element(By.CLASS_NAME, "forgeiq-inspector-status-badge").text
+        assert "DETERMINISTIC" in inspector_status, "Deterministic status missing from CAD node"
+        print(f"  • CAD Status: {inspector_status}")
+        print("✓ Interactive ForgeIQ System Map (Buyer -> Delivery) verified with real repo details.")
+
+        # Check Case Study CTA
+        case_study_cta = driver.find_element(By.ID, "forgeiq-case-study-cta")
+        assert "/forgeiq-case-study" in case_study_cta.get_attribute("href"), "Case study CTA link missing"
+        print("✓ Case study CTA verified linking to /forgeiq-case-study.")
+
+        # B. Switch to Flagship Status & Evidence Tab
+        print("  • Switching to Flagship Status & Evidence tab...")
+        status_tab_btn = driver.find_element(By.XPATH, "//button[contains(., 'Flagship Status & Evidence')]")
+        driver.execute_script("arguments[0].click();", status_tab_btn)
+        time.sleep(0.4)
 
         # Check SYSTEM STATUS: CAD ENGINE, AI PIPELINE, API, DATABASE all ONLINE
         status_cards = driver.find_elements(By.CLASS_NAME, "os-status-metric-card")
@@ -187,10 +236,17 @@ def run_os_tests():
         assert any("PRICING MODEL ACCURACY: 96.9%" in mt for mt in metric_texts), "96.9% PRICING ACCURACY metric missing"
         print("✓ Verified strict adherence to only verified production metrics.")
 
-        # Check Case Study CTA
-        case_study_cta = driver.find_element(By.ID, "forgeiq-case-study-cta")
-        assert "/forgeiq-case-study" in case_study_cta.get_attribute("href"), "Case study CTA link missing"
-        print("✓ Case study CTA verified linking to /forgeiq-case-study.")
+        # Check Evidence Dashboard
+        evidence_cards = driver.find_elements(By.CLASS_NAME, "evidence-card")
+        assert len(evidence_cards) == 5, f"Expected 5 evidence cards, found {len(evidence_cards)}"
+        evidence_metrics = [f"{ec.find_element(By.CLASS_NAME, 'evidence-card-category').text}: {ec.find_element(By.CLASS_NAME, 'evidence-metric-number').text} {ec.find_element(By.CLASS_NAME, 'evidence-metric-unit').text}" for ec in evidence_cards]
+        print(f"  • Evidence Dashboard: {evidence_metrics}")
+        assert any("API: 40+ endpoints" in em for em in evidence_metrics), "API metric missing"
+        assert any("TESTS: 33/33 pytest" in em for em in evidence_metrics), "pytest metric missing"
+        assert any("E2E: 14 Playwright tests" in em for em in evidence_metrics), "Playwright metric missing"
+        assert any("PRICING: 96.9% accuracy" in em for em in evidence_metrics), "Pricing accuracy missing"
+        assert any("LOAD TEST: 5.5× throughput improvement" in em for em in evidence_metrics), "Load test metric missing"
+        print("✓ Engineering Evidence Dashboard verified (40+ endpoints, 33/33 pytest, 14 E2E, 96.9% pricing, 5.5x throughput).")
 
         # ----------------------------------------------------
         # 6. Verify SYSTEM Application Module (Shell & Benchmarks)
@@ -368,7 +424,17 @@ def run_os_tests():
 
         palette_input.send_keys(Keys.ESCAPE)
         time.sleep(0.3)
-        print("✓ Command palette tested and closed.")
+        print("✓ Command palette tested and closed via Escape.")
+
+        # Test Escape key closes active engineering window
+        active_wins_before = driver.find_elements(By.CSS_SELECTOR, ".window-frame.window-active")
+        if len(active_wins_before) > 0:
+            active_id = active_wins_before[0].get_attribute("data-window-id")
+            driver.find_element(By.TAG_NAME, "body").send_keys(Keys.ESCAPE)
+            time.sleep(0.4)
+            closed_check = driver.find_elements(By.CSS_SELECTOR, f"[data-window-id='{active_id}']")
+            assert len(closed_check) == 0 or not closed_check[0].is_displayed(), f"Window {active_id} should be closed by Escape"
+            print(f"✓ Escape key interaction verified: closed active window [{active_id}].")
 
         # ----------------------------------------------------
         # 9. Test Lock Screen / Return to Entry Experience

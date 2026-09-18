@@ -3,36 +3,40 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { 
-  Cpu, 
   Layers, 
-  ShieldCheck, 
   ExternalLink, 
-  Activity, 
   ArrowRight,
-  Database,
-  CheckCircle2,
-  Terminal,
   Zap,
-  Radio,
-  Server,
-  Workflow
+  Workflow,
+  MapPin,
+  ShieldCheck,
+  Cpu
 } from 'lucide-react';
 import { useOS } from '../OSContext';
+import ForgeIQSystemMap from '@/components/ForgeIQSystemMap';
+import EngineeringEvidenceDashboard from '@/components/EngineeringEvidenceDashboard';
 
 export default function ForgeIQApp() {
   const { openWindow } = useOS();
-  const [activeTab, setActiveTab] = useState<'status' | 'pipeline' | 'architecture'>('status');
+  const [activeTab, setActiveTab] = useState<'map' | 'status' | 'pipeline' | 'architecture'>('map');
 
   return (
     <div className="os-app-container">
       {/* Subnav Tabs */}
       <div className="os-app-tabs">
         <button 
+          className={`os-tab-btn ${activeTab === 'map' ? 'active' : ''}`}
+          onClick={() => setActiveTab('map')}
+        >
+          <MapPin size={14} />
+          <span>Interactive System Map (Buyer ↓ Delivery)</span>
+        </button>
+        <button 
           className={`os-tab-btn ${activeTab === 'status' ? 'active' : ''}`}
           onClick={() => setActiveTab('status')}
         >
           <Zap size={14} />
-          <span>Flagship Status & Metrics</span>
+          <span>Flagship Status & Evidence</span>
         </button>
         <button 
           className={`os-tab-btn ${activeTab === 'pipeline' ? 'active' : ''}`}
@@ -51,6 +55,47 @@ export default function ForgeIQApp() {
       </div>
 
       <div className="os-app-scroll-content">
+        {/* TAB 1: INTERACTIVE SYSTEM MAP (The Most Important Visual) */}
+        {activeTab === 'map' && (
+          <div className="os-tab-pane">
+            <ForgeIQSystemMap />
+
+            {/* Quick action bar */}
+            <div style={{ display: 'flex', gap: '0.85rem', flexWrap: 'wrap', marginTop: '1rem' }}>
+              <Link 
+                id="forgeiq-case-study-cta"
+                href="/forgeiq-case-study" 
+                className="btn btn-primary"
+                style={{ padding: '0.65rem 1.25rem', fontSize: '0.9rem', gap: '0.5rem' }}
+              >
+                <span>Open Full Case Study</span>
+                <ArrowRight size={15} />
+              </Link>
+              
+              <button 
+                className="btn btn-secondary"
+                onClick={() => openWindow('cad-viewer')}
+                style={{ padding: '0.65rem 1rem', fontSize: '0.85rem', gap: '0.5rem' }}
+              >
+                <Layers size={14} />
+                <span>Launch Interactive CAD Snapper</span>
+              </button>
+
+              <a 
+                href="https://github.com/bhuvanabcs24-maker/Forge-IQ" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn btn-secondary"
+                style={{ padding: '0.65rem 1rem', fontSize: '0.85rem', gap: '0.5rem' }}
+              >
+                <span>GitHub Repository</span>
+                <ExternalLink size={13} />
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 2: FLAGSHIP STATUS & ENGINEERING EVIDENCE */}
         {activeTab === 'status' && (
           <div className="os-tab-pane">
             {/* Flagship Header Card */}
@@ -155,10 +200,14 @@ export default function ForgeIQApp() {
               </div>
             </div>
 
-            {/* Primary Action Button: Open Into Case Study */}
-            <div style={{ marginTop: '1.5rem', display: 'flex', gap: '0.85rem', flexWrap: 'wrap' }}>
+            {/* Evidence Dashboard */}
+            <div style={{ marginTop: '1.25rem' }}>
+              <EngineeringEvidenceDashboard />
+            </div>
+
+            {/* CTAs */}
+            <div style={{ marginTop: '1.25rem', display: 'flex', gap: '0.85rem', flexWrap: 'wrap' }}>
               <Link 
-                id="forgeiq-case-study-cta"
                 href="/forgeiq-case-study" 
                 className="btn btn-primary"
                 style={{ padding: '0.65rem 1.25rem', fontSize: '0.9rem', gap: '0.5rem' }}
@@ -175,21 +224,11 @@ export default function ForgeIQApp() {
                 <Layers size={14} />
                 <span>Launch Interactive CAD Snapper</span>
               </button>
-
-              <a 
-                href="https://github.com/bhuvanabcs24-maker/Forge-IQ" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="btn btn-secondary"
-                style={{ padding: '0.65rem 1rem', fontSize: '0.85rem', gap: '0.5rem' }}
-              >
-                <span>GitHub Repository</span>
-                <ExternalLink size={13} />
-              </a>
             </div>
           </div>
         )}
 
+        {/* TAB 3: 9-STAGE FINITE STATE ORDER LIFECYCLE */}
         {activeTab === 'pipeline' && (
           <div className="os-tab-pane">
             <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: '#93c5fd' }}>
@@ -232,6 +271,7 @@ export default function ForgeIQApp() {
           </div>
         )}
 
+        {/* TAB 4: DETERMINISTIC GEOMETRY ENGINE */}
         {activeTab === 'architecture' && (
           <div className="os-tab-pane">
             <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem', color: '#93c5fd' }}>

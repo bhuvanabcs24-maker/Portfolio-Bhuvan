@@ -14,6 +14,8 @@ import {
 } from 'lucide-react';
 import { GithubIcon } from '@/components/Icons';
 import { PORTFOLIO_DATA } from '@/data/portfolioData';
+import ForgeIQSystemMap from '@/components/ForgeIQSystemMap';
+import EngineeringEvidenceDashboard from '@/components/EngineeringEvidenceDashboard';
 
 export const metadata = {
   title: 'ForgeIQ Engineering Case Study | Bhuvan A B',
@@ -143,9 +145,12 @@ export default function ForgeIQCaseStudyPage() {
             <div>[Pricing Formula Engine] ──&gt; Parametric Cost Model (96.9% Accuracy Verified)</div>
           </div>
 
-          <p style={{ lineHeight: 1.7, color: 'var(--text-secondary)' }}>
+          <p style={{ lineHeight: 1.7, color: 'var(--text-secondary)', marginBottom: '2rem' }}>
             By constraining vector extraction to deterministic mathematical geometry, the system eliminated geometric hallucination while retaining NLP strictly for unstructured RFQ notes and material requirements.
           </p>
+
+          {/* Interactive Topology System Map */}
+          <ForgeIQSystemMap />
         </section>
 
         {/* Section 3: REST API Design */}
@@ -277,6 +282,9 @@ export default function ForgeIQCaseStudyPage() {
               </p>
             </div>
           </div>
+
+          {/* Evidence Dashboard */}
+          <EngineeringEvidenceDashboard />
         </section>
 
         {/* Conclusion / Navigation */}

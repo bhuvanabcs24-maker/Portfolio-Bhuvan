@@ -283,17 +283,23 @@ export function OSProvider({ children }: { children: ReactNode }) {
     setMode(mode === 'os' ? 'editorial' : 'os');
   };
 
-  // Keyboard shortcut listener: Cmd+K / Ctrl+K
+  // Keyboard shortcut listener: Cmd+K / Ctrl+K and Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         setCommandPaletteOpen((prev) => !prev);
+      } else if (e.key === 'Escape') {
+        if (commandPaletteOpen) {
+          setCommandPaletteOpen(false);
+        } else if (activeWindowId) {
+          closeWindow(activeWindowId);
+        }
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [commandPaletteOpen, activeWindowId]);
 
   const focusWindow = (id: AppId) => {
     setHighestZIndex((prev) => prev + 1);
