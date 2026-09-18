@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+import { OSProvider } from '@/components/os/OSContext';
+import AppShell from '@/components/os/AppShell';
 
 export const metadata: Metadata = {
   title: 'Bhuvan A B | Software Engineering Portfolio | BMSCE',
@@ -23,11 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Navbar />
-        <main style={{ flex: 1 }}>
-          {children}
-        </main>
-        <Footer />
+        <OSProvider>
+          <AppShell>
+            {children}
+          </AppShell>
+        </OSProvider>
       </body>
     </html>
   );

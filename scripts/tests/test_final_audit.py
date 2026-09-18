@@ -160,10 +160,20 @@ def run_audit():
         driver.get("http://localhost:3003/")
         time.sleep(1.5)
 
+        # Switch to Editorial Mode on Next.js to verify 10-step document hierarchy
+        mode_btn = driver.find_element(By.CLASS_NAME, "os-mode-toggle-btn")
+        driver.execute_script("arguments[0].click();", mode_btn)
+        time.sleep(1.0)
+
         for s_id, s_name in section_ids:
             elem = driver.find_element(By.ID, s_id)
             assert elem.is_displayed(), f"Next.js Section #{s_id} should be visible"
             print(f"✓ Next.js: {s_name} (#{s_id}) found and displayed.")
+
+        # Toggle back to OS Desktop Mode
+        return_btn = driver.find_element(By.ID, "return-os-btn")
+        driver.execute_script("arguments[0].click();", return_btn)
+        time.sleep(1.0)
 
         # Check Console Errors on Next.js
         next_logs = driver.get_log('browser')

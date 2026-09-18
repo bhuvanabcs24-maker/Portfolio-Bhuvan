@@ -18,17 +18,54 @@ import {
   Workflow,
   Compass,
   Zap,
-  Clock
+  Clock,
+  Monitor
 } from 'lucide-react';
 import { GithubIcon, LinkedinIcon, LeetCodeIcon } from '@/components/Icons';
 import { PORTFOLIO_DATA } from '@/data/portfolioData';
 import ProjectCard from '@/components/ProjectCard';
+import { useOS } from '@/components/os/OSContext';
+import DesktopWorkspace from '@/components/os/DesktopWorkspace';
 
 export default function HomePage() {
   const { personal, skills, problemSolving, projects, timeline } = PORTFOLIO_DATA;
+  const { mode, toggleMode } = useOS();
+
+  // If in OS Desktop Mode, render BHUVAN.OS
+  if (mode === 'os') {
+    return <DesktopWorkspace />;
+  }
 
   return (
     <div>
+      {/* Editorial Mode Floating Bar */}
+      <div style={{
+        background: 'rgba(10, 15, 29, 0.95)',
+        borderBottom: '1px solid rgba(59, 130, 246, 0.3)',
+        padding: '0.6rem 1.5rem',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
+        backdropFilter: 'blur(12px)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.85rem', color: '#cbd5e1' }}>
+          <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#3b82f6' }} />
+          <span>Currently in <strong>Editorial Paper Mode</strong> (Optimized for Fast Document Reading)</span>
+        </div>
+        <button 
+          id="return-os-btn"
+          onClick={toggleMode} 
+          className="btn btn-primary btn-sm"
+          style={{ gap: '0.45rem', fontSize: '0.775rem', padding: '0.35rem 0.85rem' }}
+        >
+          <Monitor size={14} />
+          <span>Launch Interactive BHUVAN.OS 💻</span>
+        </button>
+      </div>
+
       {/* =========================================================================
           1. HERO SECTION — Recruiter-Optimized (15-Second Clarity)
           ========================================================================= */}
