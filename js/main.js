@@ -103,5 +103,30 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  // Engineering Notes / Writing Hub Category Filter Logic
+  const writingFilterBtns = document.querySelectorAll('.writing-filter-btn');
+  const writingCards = document.querySelectorAll('.writing-card');
+
+  if (writingFilterBtns.length > 0 && writingCards.length > 0) {
+    writingFilterBtns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const category = btn.getAttribute('data-category');
+
+        writingFilterBtns.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        writingCards.forEach((card) => {
+          const cardCategories = (card.getAttribute('data-category') || '').split(' ');
+          if (category === 'all' || cardCategories.includes(category)) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  }
 });
+
 
