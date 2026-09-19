@@ -27,9 +27,14 @@ export default function TopMenuBar() {
     windows, 
     toggleCommandPalette, 
     openWindow,
-    exitWorkspace
+    exitWorkspace,
+    theme,
+    cycleTheme,
+    availableThemes
   } = useOS();
-  const [timeStr, setTimeStr] = useState('');
+
+  const currentTheme = availableThemes.find(t => t.id === theme) || availableThemes[0];
+  const [timeStr, setTimeStr] = useState<string>('');
   const [systemMenuOpen, setSystemMenuOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -37,15 +42,13 @@ export default function TopMenuBar() {
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      // Format time in Asia/Kolkata timezone
-      const timeFormatter = new Intl.DateTimeFormat('en-IN', {
+      setTimeStr(now.toLocaleTimeString('en-US', {
         timeZone: 'Asia/Kolkata',
+        hour12: false,
         hour: '2-digit',
         minute: '2-digit',
-        second: '2-digit',
-        hour12: false
-      });
-      setTimeStr(`${timeFormatter.format(now)} IST`);
+        second: '2-digit'
+      }) + ' IST');
     };
 
     updateTime();
@@ -60,9 +63,8 @@ export default function TopMenuBar() {
       {/* Left Menu Items */}
       <div className="os-topbar-left">
         <div className="os-brand" onClick={() => setSystemMenuOpen(!systemMenuOpen)}>
-          <span className="os-apple-icon"></span>
-          <span className="os-brand-name">BHUVAN.OS</span>
-          <span className="os-kernel-badge">v2.4</span>
+          <span className="os-status-dot-sm" style={{ background: '#10b981', marginRight: '6px' }} />
+          <span className="os-brand-name">BHUVAN</span>
         </div>
 
         {/* System Dropdown */}
@@ -81,9 +83,13 @@ export default function TopMenuBar() {
               <span>System & Shell Diagnostics</span>
             </div>
             <div className="os-dropdown-divider" />
+            <div className="os-dropdown-item" onClick={() => { cycleTheme(); setSystemMenuOpen(false); }}>
+              <span>{currentTheme.icon}</span>
+              <span>Change Theme ({currentTheme.name})</span>
+            </div>
             <div className="os-dropdown-item" onClick={() => { toggleMode(); setSystemMenuOpen(false); }}>
               <BookOpen size={14} />
-              <span>Switch to {mode === 'os' ? 'Editorial Mode' : 'OS Desktop Mode'}</span>
+              <span>Switch to {mode === 'os' ? 'Editorial Mode' : 'Workspace Mode'}</span>
             </div>
             <div className="os-dropdown-divider" />
             <div className="os-dropdown-item" onClick={() => { exitWorkspace(); setSystemMenuOpen(false); }}>
@@ -122,6 +128,17 @@ export default function TopMenuBar() {
 
       {/* Right Telematics & Controls */}
       <div className="os-topbar-right">
+        {/* Theme Switcher Toggle */}
+        <button
+          className="os-theme-toggle-btn"
+          onClick={cycleTheme}
+          title={`Current Theme: ${currentTheme.name}. Click to change theme.`}
+          aria-label="Change Color Theme"
+        >
+          <span className="os-theme-icon">{currentTheme.icon}</span>
+          <span className="os-theme-name" style={{ fontSize: '0.75rem', fontWeight: 600 }}>{currentTheme.name.split(' ')[0]}</span>
+        </button>
+
         {/* Automated Test Telematics Pill */}
         <div className="os-status-pill" title="47 Automated Tests (Pytest + Playwright)">
           <span className="os-status-dot" />
@@ -142,7 +159,7 @@ export default function TopMenuBar() {
           ) : (
             <>
               <Monitor size={13} />
-              <span>OS Desktop Mode</span>
+              <span>Workspace Mode</span>
             </>
           )}
         </button>
@@ -190,7 +207,7 @@ export default function TopMenuBar() {
           <div className="os-mobile-drawer">
             <div className="os-mobile-drawer-head">
               <div className="os-mobile-drawer-title">
-                <span className="os-brand-name">BHUVAN.OS</span>
+                <span className="os-brand-name">BHUVAN</span>
                 <span className="os-status-dot-sm" />
                 <span className="os-online-text">ONLINE</span>
               </div>

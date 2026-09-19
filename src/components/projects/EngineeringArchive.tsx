@@ -66,36 +66,42 @@ const ARTIFACTS: EngineeringArtifact[] = [
   {
     id: 'forgeiq',
     projectId: 'PROJECT 01',
-    system: 'MANUFACTURING INTELLIGENCE SYSTEM',
-    status: 'PRODUCTION ARTIFACT // DEPLOYED & TESTED',
+    system: 'AUTONOMOUS AI MANUFACTURING INTELLIGENCE & COMMERCE OS',
+    status: 'PRODUCTION ARTIFACT // DEPLOYED & VERIFIED',
     badgeColor: '#f59e0b',
     accentColor: '#f59e0b',
     accentGlow: 'rgba(245, 158, 11, 0.25)',
-    stack: ['Next.js 14', 'FastAPI', 'Python (ezdxf, NetworkX)', 'PostgreSQL', 'TailwindCSS', 'Pytest', 'Playwright'],
-    problem: 'Custom sheet-metal manufacturing quotes traditionally require 2–4 days of manual CAD geometry extraction and manual shop-floor rate lookups. Human estimation is prone to calculation drift, dimensional oversight, and costly quoting backlogs.',
-    result: 'Engineered an end-to-end intelligence system achieving 96.9% quotation accuracy against shop-floor production models, 5.5× throughput speedup under concurrent load (860 → 4,589 req/s), 40+ secure REST endpoints, and automated reliability verified by 47 automated tests (33 pytest + 14 Playwright).',
-    solution: 'Designed a dual-core architecture: a deterministic Python CAD computational geometry parser that extracts cutting contours, piercing counts, and bend lengths directly from 2D vector drawings without generative hallucination, coupled with an automated pricing engine and 9-stage order tracking pipeline.',
+    stack: ['Next.js 15', 'React 19', 'FastAPI', 'Python 3.11', 'PostgreSQL 18', 'AI Agents', 'Pytest (109)', 'Playwright (22)'],
+    problem: 'Precision contract manufacturing ($450B+ global industry) suffers from severe quoting bottlenecks (estimators spending 2–8 hours per RFQ), unstructured order chaos across WhatsApp/PDFs, shop-floor blindspots, and 20–35% margin cuts by aggregator brokers like Xometry.',
+    result: 'Engineered an autonomous shop-floor OS delivering 2-second algorithmic quoting with 96.9% accuracy (100% zero numerical hallucinations), 5.5× throughput speedup (860 → 4,589 req/s), 7-stage order lifecycle telematics, 40+ secure REST endpoints, verified across 109 Pytest unit tests, 22 Playwright E2E journeys, and 8 AI production gates.',
+    solution: 'Designed a deterministic-first hybrid architecture: pure Python physical calculators (DIN 6935 bend deductions, ISO 9013 thermal cutting speeds, material densities) combined with multi-agent AI orchestration (DFM Feasibility Agent, Cost Agent, RAG Knowledge Base with BenDFM/NIST standards, Fleet Dispatcher), factory telematics, and an automated commercial settlement layer.',
     architecture: {
       layers: [
-        { name: 'Deterministic CAD Parser', description: 'Extracts 2D DXF vector contours, entity loops, hole diameters, and bend lines using ezdxf & NetworkX graph cycle algorithms.', tech: 'Python / ezdxf / NetworkX' },
-        { name: 'Core Microservices API', description: '40+ REST endpoints with OpenAPI 3.1 schema validation, JWT role-based access control, and sliding-window rate limiting.', tech: 'FastAPI / Pydantic / PostgreSQL' },
-        { name: 'Parametric Quotation Engine', description: 'Laser cutting travel time, piercing wear, sheet utilization algorithms yielding verified 96.9% quotation accuracy.', tech: 'Python / Async Workers' },
-        { name: '9-Stage Production Pipeline', description: 'End-to-end lifecycle tracking: RFQ Ingest → CAD Analysis → Quoting → Confirmed → Laser → Bending → QA → Dispatched.', tech: 'PostgreSQL / Next.js / Supabase' }
+        { name: 'Deterministic Physics & Geometry Core', description: 'Calculates exact part mass, cutting paths, and DIN 6935 / ISO 9013 physical standards directly in pure Python without generative drift.', tech: 'Python / ezdxf / Physical Standards' },
+        { name: 'Multi-Agent AI Orchestration', description: 'Collaborative agent suite: DFM Feasibility Agent, Cost Pricing Agent, RAG Agent (94% cache hit), and Fleet Dispatch Scheduler.', tech: 'LiteLLM / Gemini Flash / Vector RAG' },
+        { name: 'High-Throughput REST API (40+ Endpoints)', description: 'FastAPI microservices with OpenAPI 3.1 contract validation, JWT/RBAC auth, in-flight request deduplication, and 12 PostgreSQL indexes.', tech: 'FastAPI / Pydantic / PostgreSQL 18' },
+        { name: '7-Stage Order Commerce & Telematics', description: 'Real-time lifecycle state machine tracking: Receive ➔ Quote ➔ Plan ➔ Manufacture ➔ QC ➔ Dispatch ➔ Get Paid with escrow settlement.', tech: 'Next.js 15 / PostgreSQL / Razorpay' }
       ],
       dataFlow: [
-        'Buyer uploads DXF / DWG vector drawing',
-        'Deterministic engine parses 2D geometry loops & bend lines',
-        'Parametric rules compute cut duration & material yield',
-        'Instant quotation generated (96.9% verified benchmark)',
-        'Order moves across 9 verifiable production stages'
+        'Client submits RFQ with CAD drawing or specifications',
+        'Deterministic engine evaluates geometry, material density & machine cycle times',
+        'Multi-agent AI validates DFM feasibility and applies RAG manufacturing standards',
+        'Instant quotation generated in 2 seconds (96.9% benchmark, 100% zero hallucinations)',
+        'Order tracked across 7 verifiable production stages to final settlement'
       ]
     },
     features: [
       {
-        title: 'Deterministic CAD Feature Parsing',
-        description: 'Direct vector boundary extraction, inner hole identification, and cut perimeter calculation eliminating generative dimensional hallucinations.',
-        tag: 'GEOMETRY ENGINE',
-        metricsOrDetail: '100% Vector Precision'
+        title: 'Deterministic-First Physical Models',
+        description: 'Pure Python deterministic calculators for mass, ISO 9013 laser cutting speeds, and DIN 6935 bend deductions ensuring zero mathematical hallucinations.',
+        tag: 'PHYSICS CORE',
+        metricsOrDetail: '100% Zero Hallucinations'
+      },
+      {
+        title: 'Multi-Agent AI Orchestrator',
+        description: 'Specialized agents for DFM manufacturability review, pricing math, RAG retrieval across BenDFM/NIST/NASA guidelines, and press/laser fleet scheduling.',
+        tag: 'AI AGENTS',
+        metricsOrDetail: '96.9% Benchmark Accuracy'
       },
       {
         title: 'Secure REST API (40+ Endpoints)',
@@ -104,29 +110,23 @@ const ARTIFACTS: EngineeringArtifact[] = [
         metricsOrDetail: '40+ Endpoints'
       },
       {
-        title: 'Parametric Pricing Automation',
-        description: 'Mathematical cost modeling accounting for laser pierce cycles, contour linear inches, machine wear, and material density.',
-        tag: 'AUTOMATION',
-        metricsOrDetail: '96.9% Accuracy Benchmark'
-      },
-      {
-        title: '9-Stage Production State Machine',
-        description: 'Granular status progression tracking parts from RFQ submission through laser cutting, forming, quality inspection, and dispatch.',
-        tag: 'PIPELINE',
-        metricsOrDetail: '9 Monitored Stages'
+        title: '7-Stage Order Commerce State Machine',
+        description: 'Granular status progression tracking parts from RFQ submission through quotation, production dispatch, QC inspection, and escrow settlement.',
+        tag: 'COMMERCE PIPELINE',
+        metricsOrDetail: '7 Monitored Stages'
       },
       {
         title: '5.5x Throughput Optimization',
-        description: 'Refactored async database connection pooling, query batching, and index restructuring to increase load capacity from 860 to 4,589 req/s.',
+        description: 'Accelerated load capacity from 860 to 4,589 req/s via 12 targeted PostgreSQL indexes, in-flight request deduplication, and vector caching.',
         tag: 'PERFORMANCE',
         metricsOrDetail: '5.5x Load Improvement'
       }
     ],
     technology: [
-      { category: 'Computational Core', items: ['Python 3.11', 'FastAPI', 'ezdxf', 'NetworkX', 'NumPy'] },
-      { category: 'Persistence & Services', items: ['PostgreSQL', 'SQLAlchemy', 'Pydantic v2', 'JWT Auth'] },
-      { category: 'Frontend Interface', items: ['Next.js 14', 'React 18', 'TypeScript', 'TailwindCSS', 'Canvas API'] },
-      { category: 'Test & Verification Harness', items: ['33 Pytest Unit/Integration', '14 Playwright E2E Tests', 'Locust Load Suite'] }
+      { category: 'Computational & AI Core', items: ['Python 3.11', 'FastAPI', 'AI Agents', 'Vector RAG', 'DIN 6935 / ISO 9013 Models', 'ezdxf'] },
+      { category: 'Persistence & Security', items: ['Neon PostgreSQL 18', '12 Custom Indexes', 'JWT / RBAC', 'Pydantic v2', 'Audit Logging'] },
+      { category: 'Frontend & Telematics', items: ['Next.js 15', 'React 19', 'TypeScript', 'Executive Cockpit', 'Shop-Floor Telematics'] },
+      { category: 'Verification Harness', items: ['109 Pytest Unit Tests', '22 Playwright E2E Tests', '8 AI Production Gates', 'Locust Load Suite'] }
     ],
     githubUrl: 'https://github.com/bhuvanabcs24-maker/Forge-IQ',
     liveUrl: 'https://forge-iq-gold.vercel.app',
@@ -303,7 +303,7 @@ export default function EngineeringArchive() {
             }}
           >
             <ArrowLeft size={13} />
-            <span>RETURN TO BHUVAN.OS</span>
+            <span>RETURN TO OVERVIEW</span>
           </Link>
           <span style={{ color: 'rgba(255, 255, 255, 0.2)' }}>/</span>
           <span style={{ color: '#f59e0b', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.05em' }}>

@@ -50,7 +50,7 @@ export default function CommandPalette() {
       id: 'cmd-forgeiq',
       title: 'Open ForgeIQ',
       category: 'Modules',
-      description: 'AI-powered manufacturing intelligence flagship platform',
+      description: 'Autonomous AI manufacturing intelligence & commerce OS',
       icon: <Zap size={16} color="#3b82f6" />,
       action: () => { openWindow('forgeiq'); setCommandPaletteOpen(false); }
     },
@@ -263,14 +263,17 @@ export default function CommandPalette() {
             ref={inputRef}
             type="text"
             className="os-palette-input"
-            placeholder="> Search Bhuvan.OS..."
+            placeholder="Type a command or search systems..."
             value={query}
             onChange={e => setQuery(e.target.value)}
+            autoFocus
+            spellCheck={false}
           />
           <button 
             className="os-palette-close-btn" 
             onClick={() => setCommandPaletteOpen(false)}
             aria-label="Close Command Palette"
+            title="Close (ESC)"
           >
             <X size={16} />
           </button>

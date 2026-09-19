@@ -18,8 +18,8 @@ import ForgeIQSystemMap from '@/components/ForgeIQSystemMap';
 import EngineeringEvidenceDashboard from '@/components/EngineeringEvidenceDashboard';
 
 export const metadata = {
-  title: 'ForgeIQ Engineering Case Study | Bhuvan A B',
-  description: 'In-depth case study of ForgeIQ: CAD feature parsing, 40+ REST API endpoints, 96.9% quotation accuracy, and 5.5x throughput load-test optimization.',
+  title: 'ForgeIQ Engineering Case Study | Autonomous AI Manufacturing OS',
+  description: 'In-depth case study of ForgeIQ: autonomous AI manufacturing intelligence & commerce OS, deterministic physical models, 40+ REST API endpoints, 96.9% AI accuracy, and 5.5x throughput load-test optimization.',
 };
 
 export default function ForgeIQCaseStudyPage() {
@@ -50,15 +50,15 @@ export default function ForgeIQCaseStudyPage() {
             Systems & Performance Case Study
           </div>
           <h1 style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.25rem)', lineHeight: 1.2, marginBottom: '1rem' }}>
-            Engineering ForgeIQ: CAD Parsing, 40+ Endpoints, & 5.5x Throughput Optimization
+            Engineering ForgeIQ: Autonomous AI Manufacturing Intelligence & Commerce OS
           </h1>
           <p style={{ fontSize: '1.2rem', color: 'var(--text-accent)', fontWeight: 600, marginBottom: '1.25rem' }}>
-            How deterministic geometry extraction and storage-layer tuning delivered 96.9% quotation accuracy and scaled throughput from 860 to 4,589 req/sec.
+            How a deterministic-first hybrid architecture, multi-agent AI orchestration, and database optimization delivered 96.9% quotation accuracy, 100% zero numerical hallucinations, and 5.5x throughput scaling.
           </p>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1.5rem', alignItems: 'center', paddingTop: '1rem', borderTop: '1px solid var(--border-subtle)', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
             <div><strong>Author:</strong> Bhuvan A B (CS & Engineering Student, BMSCE)</div>
-            <div><strong>Stack:</strong> Python, FastAPI, Next.js, PostgreSQL</div>
+            <div><strong>Stack:</strong> Python 3.11, FastAPI, Next.js 15, PostgreSQL 18, AI Agents</div>
             <div style={{ display: 'flex', gap: '1rem' }}>
               <a href={forgeiq.githubUrl} target="_blank" rel="noopener noreferrer" style={{ color: '#60a5fa', display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
                 <GithubIcon size={14} /> GitHub Repo
@@ -83,8 +83,8 @@ export default function ForgeIQCaseStudyPage() {
         }}>
           <div>
             <div style={{ fontSize: '1.85rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#60a5fa' }}>96.9%</div>
-            <div style={{ fontSize: '0.825rem', fontWeight: 600, color: 'var(--text-primary)' }}>Pricing Accuracy</div>
-            <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)' }}>On production benchmark models</div>
+            <div style={{ fontSize: '0.825rem', fontWeight: 600, color: 'var(--text-primary)' }}>AI Accuracy</div>
+            <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)' }}>100% Zero Hallucinations</div>
           </div>
           <div>
             <div style={{ fontSize: '1.85rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#34d399' }}>5.5x</div>
@@ -94,12 +94,12 @@ export default function ForgeIQCaseStudyPage() {
           <div>
             <div style={{ fontSize: '1.85rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#a855f7' }}>40+</div>
             <div style={{ fontSize: '0.825rem', fontWeight: 600, color: 'var(--text-primary)' }}>REST Endpoints</div>
-            <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)' }}>OpenAPI 3.1 & JWT authentication</div>
+            <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)' }}>OpenAPI 3.1 & JWT / RBAC</div>
           </div>
           <div>
-            <div style={{ fontSize: '1.85rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#fbbf24' }}>33 + 14</div>
+            <div style={{ fontSize: '1.85rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#fbbf24' }}>109 + 22</div>
             <div style={{ fontSize: '0.825rem', fontWeight: 600, color: 'var(--text-primary)' }}>Automated Tests</div>
-            <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)' }}>33 Pytest unit + 14 Playwright E2E</div>
+            <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)' }}>109 Pytest + 22 Playwright E2E</div>
           </div>
         </div>
 
@@ -228,25 +228,31 @@ export default function ForgeIQCaseStudyPage() {
           </div>
 
           <h3 style={{ fontSize: '1.25rem', marginBottom: '0.75rem', color: '#93c5fd' }}>
-            Bottlenecks Identified & Solved:
+            The 4 Architectural Optimization Tiers (From Case Study):
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
             <div className="card" style={{ padding: '1.25rem' }}>
-              <strong style={{ color: 'var(--text-primary)' }}>1. Database Connection Exhaustion & Roundtrip Bloat:</strong>
+              <strong style={{ color: 'var(--text-primary)' }}>Tier 1: Strategic PostgreSQL Indexing (37.6x Query Acceleration):</strong>
               <p style={{ fontSize: '0.875rem', marginTop: '0.35rem', color: 'var(--text-secondary)' }}>
-                Baseline queries executed N+1 roundtrips for order line items and status logs. Optimized by refactoring to single-trip CTE queries with composite B-Tree indexes on `(tenant_id, order_id, stage_timestamp)`.
+                Eliminated 45.2ms sequential scans on high-volume tables (`orders`, `production_jobs`) by introducing 12 targeted B-Tree indexes on status discriminators and tenant foreign keys, dropping query times down to 1.2ms.
               </p>
             </div>
             <div className="card" style={{ padding: '1.25rem' }}>
-              <strong style={{ color: 'var(--text-primary)' }}>2. Geometry Vector Cache Invalidation:</strong>
+              <strong style={{ color: 'var(--text-primary)' }}>Tier 2: In-Flight Request Deduplication (Coalescing Thundering Herds):</strong>
               <p style={{ fontSize: '0.875rem', marginTop: '0.35rem', color: 'var(--text-secondary)' }}>
-                Repeated requests for identical CAD hash profiles triggered redundant disk parsing. Implemented SHA-256 fingerprint hashing of DXF file buffers with in-memory caching of parsed geometry primitives.
+                Coalesced simultaneous identical query requests triggered when executive KPI cards, live trackers, and AI grounding components mount concurrently. Merged 3 parallel queries per user into one in-flight Promise.
               </p>
             </div>
             <div className="card" style={{ padding: '1.25rem' }}>
-              <strong style={{ color: 'var(--text-primary)' }}>3. Async Event Loop Non-Blocking Execution:</strong>
+              <strong style={{ color: 'var(--text-primary)' }}>Tier 3: Pre-Normalized Float32 Hardware Vector Dot-Product:</strong>
               <p style={{ fontSize: '0.875rem', marginTop: '0.35rem', color: 'var(--text-secondary)' }}>
-                Offloaded CPU-bound polygon boundary computations from FastAPI&apos;s main async event loop into an asynchronous process executor pool, preventing thread starvation during heavy concurrency.
+                Replaced looped Euclidean vector norm computations with pre-normalized Float32 dot products for RAG retrieval over BenDFM/NIST/NASA fabrication standards, accelerating vector search 5.2x (1.17ms → 0.22ms) with SHA-256 embedding caching.
+              </p>
+            </div>
+            <div className="card" style={{ padding: '1.25rem' }}>
+              <strong style={{ color: 'var(--text-primary)' }}>Tier 4: Bounded LRU Memoization for Physical Calculators:</strong>
+              <p style={{ fontSize: '0.875rem', marginTop: '0.35rem', color: 'var(--text-secondary)' }}>
+                Implemented LRU caching (`_CALC_CACHE`) across 18 deterministic manufacturing formulas (material density, ISO 9013 laser speeds, DIN 6935 bend deductions), achieving a 4.5x execution speedup.
               </p>
             </div>
           </div>
@@ -258,27 +264,27 @@ export default function ForgeIQCaseStudyPage() {
             5. Automated Verification & Test Suite
           </h2>
           <p style={{ lineHeight: 1.7, marginBottom: '1.25rem', color: 'var(--text-secondary)' }}>
-            To guarantee zero regression during architectural optimizations, the codebase is protected by automated tests:
+            To guarantee zero regression during architectural optimizations, the codebase is protected by a production verification harness:
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem', marginBottom: '1.5rem' }}>
             <div className="card">
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
                 <CheckCircle2 size={18} color="#34d399" />
-                <h4 style={{ fontSize: '1.05rem' }}>33 Pytest Tests (100% Passing)</h4>
+                <h4 style={{ fontSize: '1.05rem' }}>109 Pytest Tests (100% Passing)</h4>
               </div>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
-                Covers DXF entity parsing, hole boundary bounding boxes, parametric pricing rule formulas, and error response schemas across the FastAPI endpoints.
+                Adversarial edge cases, physical invariant bounds, schema validation, and performance tests across all FastAPI backend endpoints.
               </p>
             </div>
 
             <div className="card">
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
                 <CheckCircle2 size={18} color="#34d399" />
-                <h4 style={{ fontSize: '1.05rem' }}>14 Playwright E2E Tests</h4>
+                <h4 style={{ fontSize: '1.05rem' }}>22 Playwright E2E Journeys</h4>
               </div>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
-                Simulates real browser workflows: buyer authentication, file upload, instant quotation calculation display, and order stage progression in the portal.
+                Full user journey tests: RFQ creation, 2-sec quote generation, production kanban stage progression, and payment reconciliation.
               </p>
             </div>
           </div>

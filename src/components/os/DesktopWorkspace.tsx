@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useOS, AppId } from './OSContext';
 import OSEntryScreen from './OSEntryScreen';
 import TopMenuBar from './TopMenuBar';
@@ -8,6 +8,8 @@ import Dock from './Dock';
 import WindowFrame from './WindowFrame';
 import CommandPalette from './CommandPalette';
 import EngineeringCanvasBackground from './EngineeringCanvasBackground';
+import TransitionOverlay from './TransitionOverlay';
+import { useTransitionEngine } from './useTransitionEngine';
 
 import dynamic from 'next/dynamic';
 import SpatialWorkspaceCanvas from './spatial/SpatialWorkspaceCanvas';
@@ -41,7 +43,18 @@ const LeetCodeApp = dynamic(() => import('./apps/LeetCodeApp'), { ssr: false, lo
 const AboutApp = dynamic(() => import('./apps/AboutApp'), { ssr: false, loading: () => <LoadingSkeleton /> });
 
 export default function DesktopWorkspace() {
-  const { hasEnteredWorkspace } = useOS();
+  const { hasEnteredWorkspace, pendingTransition, clearPendingTransition, openWindow, enterWorkspace } = useOS();
+  const { transitionState, runTransition } = useTransitionEngine();
+
+  // Watch for pending transitions from OSContext and run them
+  useEffect(() => {
+    if (!pendingTransition) return;
+    const { type, label, targetId } = pendingTransition;
+    clearPendingTransition();
+    runTransition(type, label, () => {
+      openWindow(targetId);
+    });
+  }, [pendingTransition, clearPendingTransition, runTransition, openWindow]);
 
   // If user has not yet entered workspace, render the technical Entry Screen
   if (!hasEnteredWorkspace) {
@@ -138,6 +151,9 @@ export default function DesktopWorkspace() {
 
       {/* 6. Spotlight Command Palette */}
       <CommandPalette />
+
+      {/* 7. Global Transition Overlay — cinematic environment transitions */}
+      <TransitionOverlay state={transitionState} />
     </div>
   );
 }

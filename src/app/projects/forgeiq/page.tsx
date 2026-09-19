@@ -4,8 +4,8 @@ import { ArrowLeft, ArrowRight, ExternalLink, ShieldCheck } from 'lucide-react';
 import ForgeIQSystemWorld from '@/components/forgeiq/ForgeIQSystemWorld';
 
 export const metadata = {
-  title: 'ForgeIQ — Manufacturing Intelligence System | Bhuvan.OS',
-  description: 'Inspect ForgeIQ: AI-powered manufacturing system architecture, deterministic 2D CAD geometry parser, 96.9% quotation accuracy, and 40+ REST API endpoints.',
+  title: 'ForgeIQ — Autonomous AI Manufacturing Intelligence & Commerce OS | Bhuvan',
+  description: 'Inspect ForgeIQ: Autonomous AI manufacturing intelligence & commerce OS, deterministic physical models, 7-stage order lifecycle, 96.9% AI accuracy, and 40+ REST API endpoints.',
 };
 
 export default function ForgeIQSystemPage() {
@@ -39,7 +39,7 @@ export default function ForgeIQSystemPage() {
             }}
           >
             <ArrowLeft size={13} />
-            <span>RETURN TO BHUVAN.OS</span>
+            <span>RETURN TO OVERVIEW</span>
           </Link>
           <span style={{ color: 'rgba(255, 255, 255, 0.2)' }}>/</span>
           <span style={{ color: 'var(--os-accent, #f59e0b)', fontWeight: 700 }}>PROJECTS // FORGEIQ</span>

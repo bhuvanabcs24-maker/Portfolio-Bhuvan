@@ -26,50 +26,25 @@ import { PORTFOLIO_DATA } from '@/data/portfolioData';
 import ProjectCard from '@/components/ProjectCard';
 import { useOS } from '@/components/os/OSContext';
 import DesktopWorkspace from '@/components/os/DesktopWorkspace';
+import MobileWorkspace from '@/components/mobile/MobileWorkspace';
+import { useMobile } from '@/hooks/useMobile';
 
 export default function HomePage() {
   const { personal, skills, problemSolving, projects, timeline } = PORTFOLIO_DATA;
   const { mode, toggleMode } = useOS();
+  const { isMobile } = useMobile();
 
-  // If in OS Desktop Mode, render BHUVAN.OS
+  // Route based on mode and viewport
   if (mode === 'os') {
-    return <DesktopWorkspace />;
+    return isMobile ? <MobileWorkspace /> : <DesktopWorkspace />;
   }
 
   return (
-    <div>
-      {/* Editorial Mode Floating Bar */}
-      <div style={{
-        background: 'rgba(10, 15, 29, 0.95)',
-        borderBottom: '1px solid rgba(59, 130, 246, 0.3)',
-        padding: '0.6rem 1.5rem',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
-        backdropFilter: 'blur(12px)'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.85rem', color: '#cbd5e1' }}>
-          <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#3b82f6' }} />
-          <span>Currently in <strong>Editorial Paper Mode</strong> (Optimized for Fast Document Reading)</span>
-        </div>
-        <button 
-          id="return-os-btn"
-          onClick={toggleMode} 
-          className="btn btn-primary btn-sm"
-          style={{ gap: '0.45rem', fontSize: '0.775rem', padding: '0.35rem 0.85rem' }}
-        >
-          <Monitor size={14} />
-          <span>Launch Interactive BHUVAN.OS 💻</span>
-        </button>
-      </div>
-
+    <div className="editorial-page-wrapper">
       {/* =========================================================================
           1. HERO SECTION — Recruiter-Optimized (15-Second Clarity)
           ========================================================================= */}
-      <section id="hero" className="section" style={{ paddingTop: '5.5rem', paddingBottom: '4rem' }}>
+      <section id="hero" className="section" style={{ paddingTop: '3.5rem', paddingBottom: '3.5rem' }}>
         <div className="container">
           <div style={{ maxWidth: '900px' }}>
             {/* Status Pill */}
@@ -111,7 +86,7 @@ export default function HomePage() {
               lineHeight: 1.75,
               marginBottom: '2.25rem',
             }}>
-              Computer Science student at BMSCE. Learned full-stack development, built practical systems, and became interested in production-oriented AI architectures. Builder of <strong>ForgeIQ</strong>—an AI manufacturing intelligence platform combining deterministic CAD geometry parsing, 40+ REST endpoints, and 47 automated tests. Deepening software engineering and AI systems craft.
+              Computer Science student at BMSCE. Focused on backend systems engineering, applied AI, and high-performance architectures. Builder of <strong>ForgeIQ</strong>—an autonomous AI manufacturing intelligence & commerce OS combining deterministic physical modeling, multi-agent AI orchestration, 40+ REST endpoints, and 5.5x throughput acceleration. Deepening software systems and AI craft.
             </p>
 
             {/* 6 Primary Recruiter CTAs */}
@@ -278,13 +253,13 @@ export default function HomePage() {
               <div>
                 <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.65rem' }}>
                   <span className="badge badge-emerald">Flagship Engineering Centerpiece</span>
-                  <span className="badge badge-blue">Manufacturing Intelligence</span>
+                  <span className="badge badge-blue">Autonomous AI Manufacturing OS</span>
                 </div>
                 <h2 style={{ fontSize: '2.5rem', letterSpacing: '-0.03em', marginBottom: '0.35rem' }}>
                   ForgeIQ
                 </h2>
                 <p style={{ fontSize: '1.15rem', color: '#93c5fd', fontWeight: 600 }}>
-                  Automated CAD Geometry Parsing & Production Quotation Platform
+                  Autonomous AI Manufacturing Intelligence & Commerce Operating System
                 </p>
               </div>
 
@@ -333,7 +308,7 @@ export default function HomePage() {
                   The Problem
                 </strong>
                 <p style={{ fontSize: '0.925rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.55 }}>
-                  Manual sheet metal quotation takes hours of manual CAD polyline inspection, human drafting error calculations, and frequent pricing discrepancies across suppliers.
+                  Precision contract manufacturing ($450B+ industry) suffers from quoting bottlenecks (2–8 hours per RFQ), unstructured order chaos across WhatsApp/PDFs, shop-floor blindspots, and 20–35% margin cuts by aggregator brokers.
                 </p>
               </div>
               <div>
@@ -341,7 +316,7 @@ export default function HomePage() {
                   The Engineering Solution
                 </strong>
                 <p style={{ fontSize: '0.925rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.55 }}>
-                  Automated geometry extraction recovering closed boundaries from unlinked DXF primitives with spatial KD-Tree vertex snapping, coupled to parametric pricing formulas and a 9-stage tracking pipeline.
+                  An autonomous shop-floor OS that runs inside the machine shop: combining a deterministic-first hybrid architecture (100% zero numerical hallucinations), 2-second algorithmic quoting (ISO 9013, DIN 6935), multi-agent AI orchestration, and a 7-stage order lifecycle.
                 </p>
               </div>
             </div>
@@ -359,18 +334,18 @@ export default function HomePage() {
             }}>
               <div>
                 <div style={{ fontSize: '1.85rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#60a5fa' }}>96.9%</div>
-                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)', marginTop: '0.2rem' }}>Pricing Accuracy</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Production benchmark test</div>
+                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)', marginTop: '0.2rem' }}>AI Accuracy</div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>100% Zero Hallucinations</div>
               </div>
               <div>
                 <div style={{ fontSize: '1.85rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#60a5fa' }}>40+</div>
                 <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)', marginTop: '0.2rem' }}>REST Endpoints</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>FastAPI & JWT auth</div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>FastAPI & JWT / RBAC</div>
               </div>
               <div>
-                <div style={{ fontSize: '1.85rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#60a5fa' }}>9 Stages</div>
-                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)', marginTop: '0.2rem' }}>Production Pipeline</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>RFQ → Cut → Dispatched</div>
+                <div style={{ fontSize: '1.85rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#60a5fa' }}>7 Stages</div>
+                <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)', marginTop: '0.2rem' }}>Order Lifecycle</div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Receive → Quote → Paid</div>
               </div>
               <div>
                 <div style={{ fontSize: '1.85rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#34d399' }}>5.5x</div>
@@ -378,39 +353,39 @@ export default function HomePage() {
                 <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>860 → 4,589 req/s load test</div>
               </div>
               <div>
-                <div style={{ fontSize: '1.85rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#60a5fa' }}>33 + 14</div>
+                <div style={{ fontSize: '1.85rem', fontWeight: 800, fontFamily: 'var(--font-mono)', color: '#60a5fa' }}>109 + 22</div>
                 <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-primary)', marginTop: '0.2rem' }}>Automated Tests</div>
-                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>33 Pytest + 14 Playwright</div>
+                <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>109 Pytest + 22 Playwright</div>
               </div>
             </div>
 
             {/* 4 Architectural Core Pillars */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
               <div style={{ background: 'rgba(14, 20, 34, 0.5)', borderRadius: 'var(--radius-md)', padding: '1.25rem', border: '1px solid var(--border-subtle)' }}>
-                <h4 style={{ fontSize: '1rem', color: '#93c5fd', marginBottom: '0.4rem' }}>1. CAD Feature Extraction Engine</h4>
+                <h4 style={{ fontSize: '1rem', color: '#93c5fd', marginBottom: '0.4rem' }}>1. Deterministic-First Physical Models</h4>
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
-                  Deterministic extraction of 2D DXF contours, outer perimeters, holes, and bend allowances using <code style={{ fontFamily: 'var(--font-mono)', color: '#60a5fa' }}>ezdxf</code> and KD-Tree vertex snapping. Avoids LLM numerical hallucination.
+                  Pure Python deterministic engines calculating exact material mass, ISO 9013 thermal cutting speeds, and DIN 6935 bend deductions. Eliminates probabilistic hallucination drift on critical production math.
                 </p>
               </div>
 
               <div style={{ background: 'rgba(14, 20, 34, 0.5)', borderRadius: 'var(--radius-md)', padding: '1.25rem', border: '1px solid var(--border-subtle)' }}>
-                <h4 style={{ fontSize: '1rem', color: '#93c5fd', marginBottom: '0.4rem' }}>2. Secure REST API (40+ Endpoints)</h4>
+                <h4 style={{ fontSize: '1rem', color: '#93c5fd', marginBottom: '0.4rem' }}>2. Multi-Agent AI Orchestrator</h4>
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
-                  Engineered modular FastAPI microservices backed by PostgreSQL. Implemented JWT role-based access control, tenant isolation, strict Pydantic validation, and structured error handlers.
+                  Collaborative agent architecture: DFM Feasibility Agent, Cost Pricing Agent, RAG Agent (BenDFM/NIST/NASA guidelines, 94% cache hit), and Fleet Dispatcher for press & laser routing.
                 </p>
               </div>
 
               <div style={{ background: 'rgba(14, 20, 34, 0.5)', borderRadius: 'var(--radius-md)', padding: '1.25rem', border: '1px solid var(--border-subtle)' }}>
-                <h4 style={{ fontSize: '1rem', color: '#93c5fd', marginBottom: '0.4rem' }}>3. Parametric Quotation Automation</h4>
+                <h4 style={{ fontSize: '1rem', color: '#93c5fd', marginBottom: '0.4rem' }}>3. High-Throughput REST Core</h4>
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
-                  Parametric pricing calculations combining piercing counts, cutting tool travel, raw sheet utilization, and surface finishing rules. Achieved verified 96.9% accuracy on benchmark parts.
+                  40+ secure FastAPI endpoints with JWT/RBAC auth, in-flight request deduplication, and 12 targeted PostgreSQL indexes accelerating queries 37.6x while serving 4,589 req/sec.
                 </p>
               </div>
 
               <div style={{ background: 'rgba(14, 20, 34, 0.5)', borderRadius: 'var(--radius-md)', padding: '1.25rem', border: '1px solid var(--border-subtle)' }}>
-                <h4 style={{ fontSize: '1rem', color: '#93c5fd', marginBottom: '0.4rem' }}>4. 9-Stage Order State Machine</h4>
+                <h4 style={{ fontSize: '1rem', color: '#93c5fd', marginBottom: '0.4rem' }}>4. 7-Stage Order Commerce & Telematics</h4>
                 <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.55 }}>
-                  End-to-end multi-state tracking following physical manufacturing progress: RFQ → Quoted → Confirmed → Material allocated → Laser cut → Formed → Inspected → Dispatched.
+                  End-to-end lifecycle telematics tracking parts from customer RFQ submission through quotation, production dispatch, QC inspection, and automated Razorpay escrow settlement.
                 </p>
               </div>
             </div>

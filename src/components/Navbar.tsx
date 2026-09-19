@@ -19,7 +19,9 @@ import { useOS } from './os/OSContext';
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { toggleCommandPalette, mode, toggleMode } = useOS();
+  const { toggleCommandPalette, mode, toggleMode, theme, cycleTheme, availableThemes } = useOS();
+
+  const currentTheme = availableThemes.find(t => t.id === theme) || availableThemes[0];
 
   const systemModules = [
     { code: 'SYS', label: 'SYS', href: '/', id: 'system' },
@@ -36,7 +38,7 @@ export default function Navbar() {
         {/* Left: Brand + Status Indicator */}
         <div className="os-system-nav-left">
           <Link href="/" className="os-system-brand">
-            <span className="os-system-brand-text">BHUVAN.OS</span>
+            <span className="os-system-brand-text">BHUVAN</span>
           </Link>
           <div className="os-system-online-indicator">
             <span className="os-status-dot-sm" />
@@ -63,8 +65,29 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* Right: Cmd+K Search Launcher & Resume */}
+        {/* Right: Theme Switcher, Workspace Mode, Cmd+K Search, Resume */}
         <div className="os-system-nav-right">
+          {/* Theme Switcher Button */}
+          <button
+            className="os-theme-toggle-btn"
+            onClick={cycleTheme}
+            title={`Current Theme: ${currentTheme.name}. Click to cycle themes.`}
+            aria-label="Change Color Theme"
+          >
+            <span className="os-theme-icon">{currentTheme.icon}</span>
+            <span className="os-theme-name">{currentTheme.name.split(' ')[0]}</span>
+          </button>
+
+          {/* Workspace Launcher Button */}
+          <button
+            className="os-system-mode-btn"
+            onClick={toggleMode}
+            title={mode === 'os' ? "Switch to Editorial Reading Mode" : "Launch Interactive Workspace"}
+          >
+            <Command size={13} />
+            <span className="os-mode-btn-text">{mode === 'os' ? 'Editorial' : 'Workspace'}</span>
+          </button>
+
           <button
             className="os-system-cmd-launcher-btn"
             onClick={toggleCommandPalette}

@@ -87,9 +87,9 @@ export const PORTFOLIO_DATA = {
     },
     {
       year: "2026",
-      title: "ForgeIQ + Production-Oriented AI Engineering",
-      description: "Architected and engineered ForgeIQ: combining deterministic CAD computational geometry with LLM intelligence, 40+ REST endpoints, 47 automated tests, and 5.5x throughput optimization.",
-      badges: ["ForgeIQ", "CAD Geometry", "Systems Architecture", "47 Tests"]
+      title: "ForgeIQ — AI Manufacturing Intelligence & Commerce OS",
+      description: "Architected ForgeIQ: an autonomous shop-floor OS uniting a 7-stage order lifecycle, 2-sec algorithmic quoting, deterministic physical models, 40+ REST endpoints, and 5.5x throughput gain.",
+      badges: ["ForgeIQ", "AI Commerce OS", "Deterministic Systems", "5.5x Optimization"]
     },
     {
       year: "2027",
@@ -113,23 +113,23 @@ export const PORTFOLIO_DATA = {
     {
       id: "forgeiq",
       title: "ForgeIQ",
-      subtitle: "AI-Powered Manufacturing Intelligence Platform",
-      tagline: "Deterministic CAD feature parsing, 40+ secure REST endpoints, 9-stage tracking pipeline, and 5.5x throughput load-tested optimization.",
+      subtitle: "Autonomous AI Manufacturing Intelligence & Commerce OS",
+      tagline: "Autonomous shop-floor OS uniting a 7-stage order lifecycle, 2-second algorithmic quoting, deterministic physical models, 40+ REST endpoints, and 5.5x throughput acceleration.",
       category: "Full-Stack / Systems / Applied AI",
-      tech: ["Python", "FastAPI", "Next.js / React", "PostgreSQL", "CAD Parsing", "NLP"],
+      tech: ["Python", "FastAPI", "Next.js 15 / React 19", "PostgreSQL", "AI Agents", "Physical Models", "RAG"],
       metrics: [
-        { label: "Pricing Accuracy", value: "96.9%", detail: "Production model benchmark" },
-        { label: "REST Endpoints", value: "40+", detail: "OpenAPI 3.1 & JWT auth" },
-        { label: "Production Stages", value: "9 Stages", detail: "End-to-end tracking" },
-        { label: "Throughput Gain", value: "5.5x", detail: "860 → 4,589 req/s in load test" },
-        { label: "Test Suite", value: "33 Pytest + 14 E2E", detail: "Automated test coverage" }
+        { label: "AI Accuracy", value: "96.9%", detail: "Zero numerical hallucinations" },
+        { label: "Throughput Gain", value: "5.5x", detail: "860 → 4,589 req/s load-tested" },
+        { label: "REST Endpoints", value: "40+", detail: "OpenAPI 3.1 & JWT / RBAC" },
+        { label: "Test Suite", value: "109 Pytest + 22 E2E", detail: "8/8 AI production gates" },
+        { label: "Production Uptime", value: "99.8%", detail: "Live Vercel + Railway deploy" }
       ],
       bulletPoints: [
-        "Designed and implemented CAD feature parsing and deterministic geometry extraction engine for manufacturing workflows.",
-        "Built secure REST API with 40+ endpoints, JWT authentication, rate limiting, and comprehensive error handling.",
-        "Engineered pricing and quotation system achieving 96.9% accuracy on production benchmark models.",
-        "Built 9-stage production tracking pipeline with real-time order status updates and customer-scoped portal.",
-        "Validated system reliability with 33/33 pytest unit/integration tests, 14 Playwright E2E tests, and load testing achieving a 5.5x throughput improvement."
+        "Architected ForgeIQ as an autonomous AI manufacturing intelligence and commerce OS for precision contract manufacturing job shops.",
+        "Engineered deterministic-first hybrid architecture: deterministic physical calculators (ISO 9013 laser speeds, DIN 6935 bend deductions) and multi-agent AI (DFM, Cost, RAG, Scheduler) ensuring 100% zero numerical hallucinations with 96.9% accuracy.",
+        "Built real-time executive cockpit & factory telematics with 7-stage order tracking (Receive ➔ Quote ➔ Plan ➔ Manufacture ➔ QC ➔ Dispatch ➔ Get Paid) and automated Razorpay escrow settlement.",
+        "Accelerated system throughput 5.5x (860 → 4,589 req/s) via 12 targeted PostgreSQL indexes, in-flight request deduplication, and vector caching.",
+        "Developed robust production backend with 40+ REST endpoints, JWT/RBAC security, structured JSON logging with correlation IDs, verified by 109 Pytest and 22 Playwright E2E tests."
       ],
       githubUrl: "https://github.com/bhuvanabcs24-maker/Forge-IQ",
       liveUrl: "https://forge-iq-gold.vercel.app",

@@ -1,6 +1,7 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
+import type { TransitionType } from './TransitionOverlay';
 
 export type AppId = 
   | 'system'
@@ -34,15 +35,38 @@ export interface WindowState {
   size: { width: number; height: number };
 }
 
+export type ThemeId = 'midnight' | 'clean-light' | 'cyber-amber' | 'matrix-emerald';
+
+export interface ThemeOption {
+  id: ThemeId;
+  name: string;
+  icon: string;
+  accent: string;
+  bg: string;
+}
+
+export const THEME_OPTIONS: ThemeOption[] = [
+  { id: 'midnight', name: 'Midnight Dark', icon: '🌙', accent: '#3b82f6', bg: '#080c14' },
+  { id: 'clean-light', name: 'Clean Light', icon: '☀️', accent: '#2563eb', bg: '#f8fafc' },
+  { id: 'cyber-amber', name: 'Cyber Amber', icon: '⚡', accent: '#f59e0b', bg: '#0b0c10' },
+  { id: 'matrix-emerald', name: 'Matrix Emerald', icon: '📟', accent: '#10b981', bg: '#040806' },
+];
+
 interface OSContextType {
   mode: 'os' | 'editorial';
   setMode: (mode: 'os' | 'editorial') => void;
   toggleMode: () => void;
+  theme: ThemeId;
+  setTheme: (theme: ThemeId) => void;
+  cycleTheme: () => void;
+  availableThemes: ThemeOption[];
   hasEnteredWorkspace: boolean;
   enterWorkspace: () => void;
   exitWorkspace: () => void;
   windows: Record<AppId, WindowState>;
   openWindow: (id: AppId) => void;
+  /** Opens a window with a cinematic environment transition */
+  openWindowWithTransition: (id: AppId, transitionType: TransitionType, label: string) => void;
   closeWindow: (id: AppId) => void;
   minimizeWindow: (id: AppId) => void;
   maximizeWindow: (id: AppId) => void;
@@ -53,6 +77,9 @@ interface OSContextType {
   commandPaletteOpen: boolean;
   setCommandPaletteOpen: (open: boolean) => void;
   toggleCommandPalette: () => void;
+  /** Pending transition state (consumed by TransitionOverlay in DesktopWorkspace) */
+  pendingTransition: { type: TransitionType; label: string; targetId: AppId } | null;
+  clearPendingTransition: () => void;
 }
 
 const DEFAULT_WINDOWS: Record<AppId, WindowState> = {
@@ -60,22 +87,22 @@ const DEFAULT_WINDOWS: Record<AppId, WindowState> = {
     id: 'system',
     title: 'SYSTEM — Shell, Diagnostics & Benchmarks',
     icon: 'Terminal',
-    isOpen: true,
+    isOpen: false,
     isMinimized: false,
     isMaximized: false,
     zIndex: 11,
-    position: { x: 500, y: 65 },
+    position: { x: 480, y: 65 },
     size: { width: 660, height: 470 }
   },
   forgeiq: {
     id: 'forgeiq',
     title: 'FORGEIQ — AI Manufacturing Intelligence Flagship',
     icon: 'Zap',
-    isOpen: true,
+    isOpen: false,
     isMinimized: false,
     isMaximized: false,
     zIndex: 10,
-    position: { x: 40, y: 55 },
+    position: { x: 80, y: 55 },
     size: { width: 780, height: 580 }
   },
   lab: {
@@ -259,20 +286,34 @@ const DEFAULT_WINDOWS: Record<AppId, WindowState> = {
 const OSContext = createContext<OSContextType | undefined>(undefined);
 
 export function OSProvider({ children }: { children: ReactNode }) {
-  const [mode, setModeState] = useState<'os' | 'editorial'>('os');
+  const [mode, setModeState] = useState<'os' | 'editorial'>('editorial');
+  const [theme, setThemeState] = useState<ThemeId>('midnight');
   const [hasEnteredWorkspace, setHasEnteredWorkspace] = useState(false);
   const [windows, setWindows] = useState<Record<AppId, WindowState>>(DEFAULT_WINDOWS);
-  const [activeWindowId, setActiveWindowId] = useState<AppId | null>('forgeiq');
+  const [activeWindowId, setActiveWindowId] = useState<AppId | null>(null);
   const [highestZIndex, setHighestZIndex] = useState(12);
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+  const [pendingTransition, setPendingTransition] = useState<{ type: TransitionType; label: string; targetId: AppId } | null>(null);
 
-  // Restore preferred mode from localStorage if available
+  // Restore preferred mode and theme from localStorage if available
   useEffect(() => {
     try {
-      const savedMode = localStorage.getItem('bhuvan_os_mode');
-      if (savedMode === 'editorial' || savedMode === 'os') {
-        setModeState(savedMode);
+      localStorage.removeItem('bhuvan_os_mode');
+      const savedMode = localStorage.getItem('bhuvan_mode');
+      if (savedMode === 'os') {
+        setModeState('os');
+      } else {
+        setModeState('editorial');
       }
+
+      const savedTheme = localStorage.getItem('bhuvan_theme') as ThemeId;
+      if (savedTheme && ['midnight', 'clean-light', 'cyber-amber', 'matrix-emerald'].includes(savedTheme)) {
+        setThemeState(savedTheme);
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'midnight');
+      }
+
       const savedEntry = sessionStorage.getItem('bhuvan_os_entered');
       if (savedEntry === 'true') {
         setHasEnteredWorkspace(true);
@@ -281,6 +322,20 @@ export function OSProvider({ children }: { children: ReactNode }) {
       // Ignore localstorage errors
     }
   }, []);
+
+  const setTheme = (newTheme: ThemeId) => {
+    setThemeState(newTheme);
+    try {
+      localStorage.setItem('bhuvan_theme', newTheme);
+      document.documentElement.setAttribute('data-theme', newTheme);
+    } catch {}
+  };
+
+  const cycleTheme = () => {
+    const ids: ThemeId[] = ['midnight', 'clean-light', 'cyber-amber', 'matrix-emerald'];
+    const nextIdx = (ids.indexOf(theme) + 1) % ids.length;
+    setTheme(ids[nextIdx]);
+  };
 
   const enterWorkspace = () => {
     setHasEnteredWorkspace(true);
@@ -299,7 +354,7 @@ export function OSProvider({ children }: { children: ReactNode }) {
   const setMode = (newMode: 'os' | 'editorial') => {
     setModeState(newMode);
     try {
-      localStorage.setItem('bhuvan_os_mode', newMode);
+      localStorage.setItem('bhuvan_mode', newMode);
     } catch {}
   };
 
@@ -346,6 +401,14 @@ export function OSProvider({ children }: { children: ReactNode }) {
   const openWindow = (id: AppId) => {
     focusWindow(id);
   };
+
+  const openWindowWithTransition = useCallback((id: AppId, transitionType: TransitionType, label: string) => {
+    setPendingTransition({ type: transitionType, label, targetId: id });
+  }, []);
+
+  const clearPendingTransition = useCallback(() => {
+    setPendingTransition(null);
+  }, []);
 
   const closeWindow = (id: AppId) => {
     setWindows((prev) => ({
@@ -416,11 +479,16 @@ export function OSProvider({ children }: { children: ReactNode }) {
         mode,
         setMode,
         toggleMode,
+        theme,
+        setTheme,
+        cycleTheme,
+        availableThemes: THEME_OPTIONS,
         hasEnteredWorkspace,
         enterWorkspace,
         exitWorkspace,
         windows,
         openWindow,
+        openWindowWithTransition,
         closeWindow,
         minimizeWindow,
         maximizeWindow,
@@ -430,7 +498,9 @@ export function OSProvider({ children }: { children: ReactNode }) {
         activeWindowId,
         commandPaletteOpen,
         setCommandPaletteOpen,
-        toggleCommandPalette
+        toggleCommandPalette,
+        pendingTransition,
+        clearPendingTransition
       }}
     >
       {children}

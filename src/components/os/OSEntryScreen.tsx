@@ -115,7 +115,7 @@ export default function OSEntryScreen() {
       {/* Phased Boot Initializer Layer (Phase 0) */}
       <div className={`os-boot-init-layer ${bootPhase > 0 ? 'hidden' : ''}`}>
         <div className="os-boot-init-content">
-          <div className="os-boot-logo">BHUVAN.OS</div>
+          <div className="os-boot-logo">BHUVAN</div>
           <div className="os-boot-meta">BUILD 2026 // KERNEL: DARWIN_X86_64</div>
           <div className="os-boot-status-row">
             <span className="os-status-dot pulse" />
@@ -149,7 +149,7 @@ export default function OSEntryScreen() {
           {/* Left Column: Identity, Roles & Supporting Statement */}
           <div className={`os-hero-left ${bootPhase >= 1 ? 'phase-visible' : 'phase-hidden'}`}>
             <div className="os-entry-brand-block">
-              <h2 className="os-entry-title">BHUVAN.OS</h2>
+              <h2 className="os-entry-title">BHUVAN</h2>
               <div className="os-entry-system-badge">
                 <span className="os-status-dot-static" />
                 <span>SYSTEM ONLINE</span>

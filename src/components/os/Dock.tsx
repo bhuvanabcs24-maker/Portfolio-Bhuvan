@@ -89,7 +89,8 @@ export default function Dock() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="os-dock-item"
-                title={item.title}
+                data-tooltip={item.title}
+                aria-label={item.title}
               >
                 <div 
                   className="os-dock-icon-wrapper" 
@@ -97,7 +98,6 @@ export default function Dock() {
                 >
                   {item.icon}
                 </div>
-                <span className="os-dock-tooltip">{item.title}</span>
               </a>
             );
           }
@@ -111,7 +111,8 @@ export default function Dock() {
               key={index}
               className={`os-dock-item ${isActive ? 'active' : ''}`}
               onClick={() => item.id && openWindow(item.id)}
-              title={item.title}
+              data-tooltip={item.title}
+              aria-label={item.title}
             >
               <div 
                 className="os-dock-icon-wrapper" 
@@ -122,9 +123,6 @@ export default function Dock() {
               
               {/* Active Indicator Dot under running app */}
               {isOpen && <span className="os-dock-running-dot" />}
-              
-              {/* Tooltip Label */}
-              <span className="os-dock-tooltip">{item.title}</span>
             </button>
           );
         })}

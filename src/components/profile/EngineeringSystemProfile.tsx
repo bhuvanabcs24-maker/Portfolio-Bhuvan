@@ -175,7 +175,7 @@ export default function EngineeringSystemProfile() {
             }}
           >
             <ArrowLeft size={13} />
-            <span>RETURN TO BHUVAN.OS</span>
+            <span>RETURN TO OVERVIEW</span>
           </Link>
           <span style={{ color: 'rgba(255, 255, 255, 0.2)' }}>/</span>
           <span style={{ color: '#60a5fa', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.05em' }}>

@@ -13,7 +13,7 @@ export default function TerminalApp() {
   const [history, setHistory] = useState<TerminalLine[]>([
     {
       type: 'system',
-      content: 'BHUVAN.OS v2.4.0 (x86_64-darwin24.0) — Engineering Workspace Shell'
+      content: 'BHUVAN v2.4.0 (x86_64-darwin24.0) — Engineering Workspace Shell'
     },
     {
       type: 'system',

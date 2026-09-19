@@ -17,10 +17,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      {/* Visual Foundation Layer: Noise Texture, Engineering Grid, and Dynamic Cursor */}
+      {/* Visual Foundation Layer: Noise Texture and Engineering Grid */}
       <NoiseOverlay />
       <GridBackground showScan={true} />
-      <Cursor />
 
       {showOSDesktop ? (
         <>

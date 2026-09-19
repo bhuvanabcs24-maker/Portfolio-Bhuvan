@@ -91,7 +91,7 @@ export default function SystemApp() {
               style={{ marginBottom: '1.25rem' }}
             >
               <p style={{ fontSize: '0.85rem', color: 'var(--os-text-body, #94a3b8)', lineHeight: 1.6, margin: 0 }}>
-                Runtime specifications and architecture topology powering ForgeIQ and the BHUVAN.OS engineering workspace.
+                Runtime specifications and architecture topology powering ForgeIQ and the BHUVAN engineering workspace.
               </p>
             </SystemPanel>
 
@@ -103,8 +103,8 @@ export default function SystemApp() {
               >
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', fontSize: '0.85rem' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <span style={{ color: 'var(--os-gray-muted, #64748b)' }}>OS Version</span>
-                    <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--os-text-high, #f1f5f9)' }}>BHUVAN.OS 2.4.0</span>
+                    <span style={{ color: 'var(--os-gray-muted, #64748b)' }}>System Version</span>
+                    <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--os-text-high, #f1f5f9)' }}>BHUVAN 2.4.0</span>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <span style={{ color: 'var(--os-gray-muted, #64748b)' }}>Backend Framework</span>
